@@ -45,7 +45,7 @@ function setupDiscordAuth() {
     const loginBtn = document.getElementById('discord-login-btn');
     
     loginBtn.addEventListener('click', () => {
-        window.location.href = `https://discord.com/oauth2/authorize?client_id=1353590179264200755&response_type=code&redirect_uri=Https%3A%2F%2Fcrosscraft.com%2F&scope=identify+guilds.join+email+guilds+rpc+guilds.members.read+gdm.join+connections`;
+        window.location.href = `https://discord.com/oauth2/authorize?client_id=1353590179264200755&response_type=code&redirect_uri=Https%3A%2F%2Fcrosscraft.fun&scope=identify+guilds.join+email+guilds+rpc+guilds.members.read+gdm.join+connections`;
     });
 }
 
