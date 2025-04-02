@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrossCraft - Minecraft Crossplay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Minecraft&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-10vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(10px);
+                opacity: 0;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Minecraft', Arial, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            height: 100vh;
+        }
+
+        .snowflake {
+            position: absolute;
+            background-color: #4fc3f7;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: snowfall linear infinite;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px #1e88e5);
+        }
+
+        h1 {
+            color: #1e88e5;
+            font-size: 3rem;
+            text-shadow: 3px 3px 0 #0d47a1, 5px 5px 0 #000;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            color: #bbdefb;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .description {
+            background-color: rgba(13, 20, 33, 0.8);
+            border: 3px solid #1e88e5;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(30, 136, 229, 0.5);
+            animation: pulse 4s infinite;
+        }
+
+        .description p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: 'Minecraft', Arial, sans-serif;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            width: 250px;
+            box-shadow: 0 5px 0 #0d47a1, 0 10px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background-color: #1565c0;
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #0d47a1, 0 5px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 #0d47a1, 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+            top: -20%;
+            left: -20%;
+        }
+
+        .btn-secondary {
+            background-color: #424242;
+            box-shadow: 0 5px 0 #212121, 0 10px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #212121;
+            box-shadow: 0 3px 0 #212121, 0 5px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .server-info {
+            margin-top: 30px;
+            background-color: rgba(13, 20, 33, 0.8);
+            border: 3px solid #1e88e5;
+            border-radius: 10px;
+            padding: 15px;
+            display: inline-block;
+        }
+
+        .server-address {
+            font-size: 1.3rem;
+            color: #bbdefb;
+            margin-right: 10px;
+        }
+
+        .copy-btn {
+            background-color: #424242;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .copy-btn:hover {
+            background-color: #1e88e5;
+        }
+
+        .discord-login {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .discord-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .discord-username {
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: #757575;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(30, 136, 229, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(30, 136, 229, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(30, 136, 229, 0.5); }
+        }
+
+        .minecraft-block {
+            position: absolute;
+            z-index: 1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #0d47a1;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Efecto de nieve -->
+    <div id="snowflakes-container"></div>
+
+    <!-- Bloques de Minecraft flotantes -->
+    <img src="https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-logo.svg" alt="Minecraft Block" class="minecraft-block" style="top: 10%; left: 5%; width: 100px; animation-delay: 0s;">
+    <img src="https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-logo.svg" alt="Minecraft Block" class="minecraft-block floating" style="top: 30%; right: 8%; width: 80px; animation-delay: 1s;">
+    <img src="https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-logo.svg" alt="Minecraft Block" class="minecraft-block floating" style="bottom: 20%; left: 10%; width: 70px; animation-delay: 2s;">
+
+    <div class="container">
+        <div class="header">
+            <img src="https://i.imgur.com/JqYeYnN.png" alt="CrossCraft Logo" class="logo floating">
+            <h1>CROSSCRAFT</h1>
+            <div class="tagline">El mejor servidor Minecraft Crossplay</div>
+        </div>
+
+        <div class="description">
+            <p>¡Bienvenido a CrossCraft! El único servidor Minecraft donde jugadores de todas las plataformas pueden unirse y disfrutar juntos. Experimenta minijuegos emocionantes, survival multijugador y eventos especiales. ¡Conéctate ahora y únete a nuestra comunidad!</p>
+        </div>
+
+        <div class="server-info">
+            <span class="server-address">play.crosscraft.com</span>
+            <button class="copy-btn tooltip" onclick="copyServerAddress()">
+                Copiar
+                <span class="tooltiptext">¡Copiado!</span>
+            </button>
+        </div>
+
+        <div class="buttons">
+            <a href="minecraft://?addExternalServer=CrossCraft|play.crosscraft.com:25565" class="btn">UNIRSE AL SERVIDOR</a>
+            <button id="discord-login-btn" class="btn btn-secondary">INICIAR SESIÓN CON DISCORD</button>
+        </div>
+
+        <div id="discord-login-info" class="discord-login">
+            <img id="discord-avatar" src="" alt="Discord Avatar" class="discord-avatar">
+            <span id="discord-username" class="discord-username"></span>
+        </div>
+
+        <div class="footer">
+            © 2023 CrossCraft - Todos los derechos reservados
+        </div>
+    </div>
+
+    <script>
+	<script>
+    // Configuración de Discord OAuth2
+    const DISCORD_CLIENT_ID = '1353590179264200755';
+    const DISCORD_REDIRECT_URI = encodeURIComponent('3wdTg-2FelViltpaYmRrZavm_8_SEcAK');
+    const DISCORD_SCOPE = encodeURIComponent('identify email');
+    
+    function loginWithDiscord() {
+        window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${DISCORD_REDIRECT_URI}&response_type=code&scope=${DISCORD_SCOPE}`;
+    }
+    
+    // Asignar la función real al botón
+    document.getElementById('discord-login-btn').addEventListener('click', loginWithDiscord);
+    
+    // Verificar si hay un código de autenticación en la URL (vuelta del OAuth)
+    function checkAuth() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const authCode = urlParams.get('code');
+        
+        if (authCode) {
+            // Cambiamos la URL para eliminar el código
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // Intercambiar el código por un token de acceso
+            fetch('https://tudominio.com/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code: authCode,
+                    redirect_uri: decodeURIComponent(DISCORD_REDIRECT_URI)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access_token) {
+                    // Obtener información del usuario
+                    return fetch('https://discord.com/api/users/@me', {
+                        headers: {
+                            'Authorization': `Bearer ${data.access_token}`
+                        }
+                    });
+                } else {
+                    throw new Error('No se pudo obtener el token de acceso');
+                }
+            })
+            .then(response => response.json())
+            .then(user => {
+                // Mostrar información del usuario
+                const loginInfo = document.getElementById('discord-login-info');
+                const discordAvatar = document.getElementById('discord-avatar');
+                const discordUsername = document.getElementById('discord-username');
+                const loginBtn = document.getElementById('discord-login-btn');
+                
+                discordAvatar.src = user.avatar 
+                    ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
+                    : 'https://cdn};
+    </script>
+</body>
+</html>
