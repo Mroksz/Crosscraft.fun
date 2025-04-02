@@ -272,10 +272,10 @@
     </style>
 </head>
 <body>
-    <!-- Efecto de nieve -->
+    
     <div id="snowflakes-container"></div>
 
-    <!-- Bloques de Minecraft flotantes -->
+    
     <img src="https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-logo.svg" alt="Minecraft Block" class="minecraft-block" style="top: 10%; left: 5%; width: 100px; animation-delay: 0s;">
     <img src="https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-logo.svg" alt="Minecraft Block" class="minecraft-block floating" style="top: 30%; right: 8%; width: 80px; animation-delay: 1s;">
     <img src="https://www.minecraft.net/content/dam/minecraft/touchup-2020/minecraft-logo.svg" alt="Minecraft Block" class="minecraft-block floating" style="bottom: 20%; left: 10%; width: 70px; animation-delay: 2s;">
@@ -292,7 +292,7 @@
         </div>
 
         <div class="server-info">
-            <span class="server-address">play.crosscraft.com</span>
+            <span class="server-address">38.97.61.76:19241</span>
             <button class="copy-btn tooltip" onclick="copyServerAddress()">
                 Copiar
                 <span class="tooltiptext">¡Copiado!</span>
@@ -300,7 +300,7 @@
         </div>
 
         <div class="buttons">
-            <a href="minecraft://?addExternalServer=CrossCraft|play.crosscraft.com:25565" class="btn">UNIRSE AL SERVIDOR</a>
+            <a href="https://discord.gg/zuHNT7vzTZ" class="btn">UNIRSE AL SERVIDOR</a>
             <button id="discord-login-btn" class="btn btn-secondary">INICIAR SESIÓN CON DISCORD</button>
         </div>
 
@@ -325,7 +325,7 @@
         window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${DISCORD_REDIRECT_URI}&response_type=code&scope=${DISCORD_SCOPE}`;
     }
     
-    // Asignar la función real al botón
+    
     document.getElementById('discord-login-btn').addEventListener('click', loginWithDiscord);
     
     // Verificar si hay un código de autenticación en la URL (vuelta del OAuth)
@@ -334,10 +334,10 @@
         const authCode = urlParams.get('code');
         
         if (authCode) {
-            // Cambiamos la URL para eliminar el código
+            
             window.history.replaceState({}, document.title, window.location.pathname);
             
-            // Intercambiar el código por un token de acceso
+          
             fetch('https://tudominio.com/auth', {
                 method: 'POST',
                 headers: {
@@ -351,7 +351,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.access_token) {
-                    // Obtener información del usuario
+                    
                     return fetch('https://discord.com/api/users/@me', {
                         headers: {
                             'Authorization': `Bearer ${data.access_token}`
@@ -363,7 +363,7 @@
             })
             .then(response => response.json())
             .then(user => {
-                // Mostrar información del usuario
+                
                 const loginInfo = document.getElementById('discord-login-info');
                 const discordAvatar = document.getElementById('discord-avatar');
                 const discordUsername = document.getElementById('discord-username');
