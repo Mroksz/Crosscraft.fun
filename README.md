@@ -11,3 +11,5 @@ Este proyecto se encuentra en constante desarrollo y se actualizará periódicam
 Cómo Contribuir
 
 Si deseas ayudar a mejorar el proyecto: 1. Haz un fork del repositorio. 2. Crea una rama para tu nueva funcionalidad o corrección. 3. Realiza tus cambios y abre un pull request. 4. ¡Gracias por tu apoyo!
+
+NOTA: La pagina aun sigue en beta asi que te recomiendo que te esperes ala version final
