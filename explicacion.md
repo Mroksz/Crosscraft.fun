@@ -1,115 +1,74 @@
+### 🎨 **1. Estilo Visual (Colores, Tipografía, Fondos)**  
+- **Paleta de colores:**  
+  - **Negro/azul oscuro** (`#0d0d15`, `#1a1a2e`) para fondos.  
+  - **Morado** (`#6a0dad`) y **azul eléctrico** (`#00a8ff`) para acentos.  
+  - **Texto blanco** con transparencias para jerarquía.  
 
+- **Tipografía:**  
+  - Usé `font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif` (limpia y moderna).  
+  - **Gradientes en títulos** (ej: `background: linear-gradient(...)` aplicado a textos).  
 
-## 🌐 Estructura General
+- **Fondos:**  
+  - **Imágenes** de Discord con `opacity: 0.2` para no saturar.  
+  - **Overlay oscuro** (`rgba(13, 13, 21, 0.85)`) para mejorar legibilidad.  
 
-El proyecto consiste en una página web moderna para un servidor Minecraft Crossplay (Java/Bedrock) con:
+---
 
-1. **Diseño futurista** con efectos visuales avanzados
-2. **Sistema de contador de usuarios** de Discord
-3. **Interfaz elegante** con combinación azul/morado
-4. **Totalmente responsive** para todos los dispositivos
+### ✨ **2. Efectos Clave**  
 
-## 🧩 Componentes Principales
+#### **🔹 Animaciones CSS**  
+- **Flotar (Float):**  
+  - Objetos como el logo y tu avatar flotan suavemente con `@keyframes float`.  
+  - **Truco:** Usé `animation-delay` en algunos elementos para que no se sincronicen.  
 
-### 1. Sistema de Partículas Animadas
-- Efecto de partículas flotantes en el fondo
-- Combinación de partículas azules (70%) y moradas (30%)
-- Animación suave con tiempos aleatorios
-- Creadas dinámicamente con JavaScript
+- **Aparecer (FadeIn):**  
+  - Las secciones aparecen con `opacity` y movimiento vertical (`translateY`).  
 
-### 2. Encabezado (Header)
-- Logo central con efecto hover
-- Título con gradiente azul-morado
-- Subtítulo y badge de compatibilidad
-- Tipografía Kanit para títulos (moderna/futurista)
+- **Pulsar (Pulse):**  
+  - Botones al copiar la IP tienen un efecto de escala (`transform: scale`).  
 
-### 3. Panel Principal
-- Muestra la IP del servidor
-- Botón para copiar IP con feedback visual
-- Botones principales:
-  - **Unirse al servidor** (con enlace directo para Minecraft)
-  - **Soporte Discord** con contador de usuarios online
+#### **🔹 Efectos de Hover**  
+- **Botones:**  
+  - Brillan al pasar el mouse (`::before` con `linear-gradient` móvil).  
+  - Se elevan (`transform: translateY(-5px)`).  
 
-### 4. Sección de Características
-- Grid responsive con 4 features principales
-- Tarjetas con efecto hover y bordes luminosos
-- Iconos con gradiente azul-morado
-- Descripciones claras y concisas
+- **Tarjetas de características:**  
+  - Borde morado al hover (`border-color`).  
+  - Sombra más pronunciada (`box-shadow`).  
 
-### 5. Pie de Página (Footer)
-- Copyright automático (año actual)
-- Créditos con enlace a tu GitHub
-- Iconos de GitHub y Discord
-- Diseño minimalista con borde superior sutil
+#### **🔹 Partículas Flotantes**  
+- **Cómo se hizo:**  
+  - **JavaScript** crea divs redondeados (`border-radius: 50%`) con:  
+    - Tamaño/opacidad aleatorios.  
+    - Animación `float` con duración aleatoria.  
+  - Se eliminan automáticamente después de animarse.  
 
-## ⚙️ Funcionalidades JavaScript
+---
 
-### `updateDiscordCount()`
-- Simula/obtiene el número de usuarios online en Discord
-- Actualiza el contador cada minuto
-- Muestra indicador verde de actividad
+### 📱 **3. Responsive Design (Móvil/Tablet/PC)**  
+- **Media Queries:**  
+  - **Pantallas < 768px:**  
+    - Menú de IP en columna (no fila).  
+    - Textos más pequeños.  
+  - **Pantallas < 480px:**  
+    - Logo más compacto.  
+    - Ajuste de padding en tarjetas.  
 
-### Sistema de Copiado de IP
-- Usa la API Clipboard
-- Muestra feedback visual (éxito/error)
-- Temporizador para resetear el estado
+- **Unidades flexibles:**  
+  - `rem` y `%` para tamaños.  
+  - `grid` y `flexbox` para reordenar contenido.  
 
-### Efectos de Partículas
-- Genera partículas dinámicamente
-- Configura tamaños y posiciones aleatorias
-- Controla velocidad y dirección de animación
+---
 
-## 🎨 Diseño y Estilos
+### 🛠️ **4. Librerías/Recursos Externos**  
+- **Font Awesome:** Iconos (Java, cubo, Discord, etc.).  
+- **Google Fonts (implícito):** Tipografía "Segoe UI" (si no está, usa Tahoma/Verdana).  
 
-### Paleta de Colores
-- Azul principal: `#1e88e5`
-- Morado acento: `#9c27b0`
-- Fondo oscuro: `#0a0a15`
-- Texto blanco con variantes de opacidad
+---
 
-### Efectos Visuales
-- Vidrio esmerilado (glassmorphism) en paneles
-- Degradados azul-morado para elementos destacados
-- Sombras suaves y bordes luminosos
-- Transiciones fluidas en hover
+### 💡 **Tips para Modificar**  
+- **Cambiar colores:** Edita las variables CSS en `:root`.  
+- **Eliminar partículas:** Borra el código JavaScript al final.  
+- **Añadir más animaciones:** Usa `@keyframes` con nuevas propiedades.  
 
-### Tipografía
-- **Kanit**: Para títulos y botones (moderno)
-- **Exo 2**: Para texto normal (legibilidad)
-
-## 📱 Responsive Design
-- Ajusta tamaños de texto y padding
-- Reorganiza grids en móviles
-- Optimiza cantidad de partículas
-- Botones apilados verticalmente
-
-## 🛠️ Cómo Extender el Proyecto
-
-1. **Contador real de Discord**:
-   - Implementa la API de Discord
-   - Crea un endpoint en tu backend
-   - Actualiza `updateDiscordCount()`
-
-2. **Más secciones**:
-   - Galería de imágenes
-   - Tabla de rankings
-   - Calendario de eventos
-
-3. **Efectos adicionales**:
-   - Animaciones al hacer scroll
-   - Modo oscuro/nocturno
-   - Sonidos interactivos
-
-## 📂 Estructura de Archivos (Recomendada)
-```
-crosscraft-web/
-├── index.html          # Página principal
-├── css/
-│   └── styles.css      # Estilos (opcional separado)
-├── js/
-│   └── main.js         # Lógica principal
-├── assets/
-│   ├── images/         # Logos e iconos
-│   └── fonts/          # Fuentes locales (opcional)
-└── README.md           # Documentación
-```
+--- 
