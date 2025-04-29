@@ -3,619 +3,721 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrossCraft | Plataforma Multiverso</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&family=Exo+2:wght@400;500&display=swap" rel="stylesheet">
+    <title>CrossCraft - Servidor Crossplay Minecraft</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Variables CSS */
         :root {
-            --primary: #1e88e5;
-            --primary-light: rgba(30, 136, 229, 0.7);
-            --secondary: #0a0a15;
-            --accent: #9c27b0;  /* Morado */
-            --accent-light: rgba(156, 39, 176, 0.6);
-            --text: #ffffff;
-            --text-dim: rgba(255, 255, 255, 0.8);
-            --discord: #7289da;
+            --primary-color: #6a0dad;
+            --secondary-color: #1a1a2e;
+            --accent-color: #00a8ff;
+            --text-color: #ffffff;
+            --dark-bg: #0d0d15;
+            --card-bg: rgba(26, 26, 46, 0.8);
+            --transition: all 0.3s ease;
         }
-        
-        body {
+
+        /* Reset y estilos base */
+        * {
             margin: 0;
             padding: 0;
-            background-color: var(--secondary);
-            color: var(--text);
-            font-family: 'Exo 2', sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
             overflow-x: hidden;
-            min-height: 100vh;
+            background-image: radial-gradient(circle at 20% 30%, rgba(106, 13, 173, 0.15) 0%, transparent 30%), 
+                              radial-gradient(circle at 80% 70%, rgba(0, 168, 255, 0.15) 0%, transparent 30%);
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
             display: flex;
             flex-direction: column;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(30, 136, 229, 0.05) 0%, transparent 25%),
-                radial-gradient(circle at 80% 70%, rgba(156, 39, 176, 0.05) 0%, transparent 25%);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 1s ease-out;
         }
-        
-        /* Efecto de partículas */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0;
-            animation: particle-float linear infinite;
-        }
-        
-        .particle.purple {
-            background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
-        }
-        
-        @keyframes particle-float {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.3;
-            }
-            80% {
-                opacity: 0.3;
-            }
-            100% {
-                transform: translateY(-20vh) translateX(20px);
-                opacity: 0;
-            }
-        }
-        
-        .header {
-            text-align: center;
-            padding: 50px 0 30px;
-            position: relative;
-        }
-        
+
         .logo {
-            width: 180px;
-            height: auto;
-            filter: drop-shadow(0 0 20px var(--primary-light));
-            transition: all 0.5s ease;
-            margin-bottom: 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+            margin-bottom: 1rem;
+            transition: var(--transition);
         }
-        
+
         .logo:hover {
-            filter: drop-shadow(0 0 30px var(--primary-light));
-            transform: scale(1.05);
+            transform: rotate(10deg);
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.8);
         }
-        
-        h1, h2, h3 {
-            font-family: 'Kanit', sans-serif;
-            margin: 0;
-        }
-        
+
         h1 {
-            color: var(--text);
-            font-size: 3.5rem;
-            background: linear-gradient(to right, var(--primary), var(--accent));
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #b388ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin: 10px 0;
-            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-        
-        .tagline {
-            color: var(--text-dim);
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-        
-        .main-container {
-            max-width: 1100px;
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
-            flex-grow: 1;
         }
-        
-        .panel {
-            background: rgba(15, 15, 25, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            margin: 30px 0;
-            padding: 40px;
+
+        /* Hero Section */
+        .hero {
             position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
-        
-        .panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        .panel::before {
-            content: "";
+
+        .hero::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--accent));
+            width: 100%;
+            height: 100%;
+            background: url('https://cdn.discordapp.com/attachments/1352103629330448397/1366653388091166801/IMG_0610.png?ex=68126366&is=681111e6&hm=b7686c560af4cf3ee17355a13ca28c29f5fcff3669ed3a93be27543cc2f7dcd5&') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: -1;
         }
-        
-        .server-info {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 40px 0;
-        }
-        
-        .server-address {
-            font-family: 'Exo 2', sans-serif;
-            font-size: 1.8rem;
-            color: var(--text);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: 500;
-            letter-spacing: 1px;
+
+        .hero-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-out 0.2s both;
         }
-        
-        .btn-container {
+
+        .hero h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* IP Buttons */
+        .ip-section {
+            padding: 3rem 1rem;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--secondary-color) 0%, var(--dark-bg) 100%);
+        }
+
+        .ip-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .ip-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        .ip-buttons {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
-            margin: 40px 0;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
-        
-        .btn {
+
+        .ip-button {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #4b0082 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ip-button.java {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .ip-button.bedrock {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .ip-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .ip-button:active {
+            transform: translateY(0);
+        }
+
+        .ip-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .ip-button:hover::before {
+            left: 100%;
+        }
+
+        .ip-button i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .ip-button .ip-text {
+            margin-right: 10px;
+        }
+
+        .ip-button .copy-icon {
+            transition: var(--transition);
+        }
+
+        .ip-button:hover .copy-icon {
+            transform: scale(1.2);
+        }
+
+        .ip-button.copied {
+            animation: pulse 0.5s;
+        }
+
+        .ip-button.copied::after {
+            content: 'Copiado!';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0;
+            animation: fadeInOut 2s;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 1rem;
+            position: relative;
+            background: url('https://cdn.discordapp.com/attachments/1352103629330448397/1366653404755267646/IMG_0611.png?ex=6812636a&is=681111ea&hm=ca47fc026357e4548e9e511db0662bafd0133d17eb9d5326b433c1d5529508e1&') center/cover no-repeat;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(13, 13, 21, 0.85);
+            z-index: 0;
+        }
+
+        .features-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--accent-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 3px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(106, 13, 173, 0.5);
+        }
+
+        .feature-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .feature-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .feature-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .feature-card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            text-align: center;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            text-align: center;
+        }
+
+        .feature-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        /* Discord Section */
+        .discord-section {
+            padding: 3rem 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .discord-button {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 18px 35px;
-            font-size: 1.1rem;
-            font-family: 'Kanit', sans-serif;
-            text-decoration: none;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background-color: #5865F2;
+            color: white;
             border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
             cursor: pointer;
-            z-index: 1;
-            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            margin-top: 1rem;
         }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), #1565c0);
-            color: var(--text);
-            box-shadow: 0 5px 15px rgba(30, 136, 229, 0.4);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(30, 136, 229, 0.6);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(1px);
-        }
-        
-        .btn-discord {
-            background: linear-gradient(135deg, var(--discord), #5a6abf);
-            color: var(--text);
-            box-shadow: 0 5px 15px rgba(114, 137, 218, 0.4);
-            position: relative;
-            padding-right: 45px;
-        }
-        
-        .discord-count {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.3);
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .discord-count::before {
-            content: "";
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #43b581; /* Verde para usuarios online */
-        }
-        
-        .btn-discord:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(114, 137, 218, 0.6);
-        }
-        
-        .copy-btn {
-            background: rgba(0, 0, 0, 0.3);
-            color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-family: 'Kanit', sans-serif;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .copy-btn:hover {
-            background: rgba(0, 0, 0, 0.4);
-            border-color: var(--primary-light);
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }
-        
-        .feature {
-            background: rgba(20, 20, 35, 0.7);
-            backdrop-filter: blur(5px);
-            border-radius: 10px;
-            padding: 30px;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-        }
-        
-        .feature:hover {
+
+        .discord-button:hover {
+            background-color: #4752c4;
             transform: translateY(-5px);
-            background: rgba(30, 30, 50, 0.7);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+
+        .discord-button i {
+            margin-right: 10px;
+            font-size: 1.5rem;
         }
-        
-        .feature h3 {
-            color: var(--text);
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-        
-        .feature p {
-            color: var(--text-dim);
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        .platforms {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin: 50px 0;
-            flex-wrap: wrap;
-        }
-        
-        .platform {
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            padding: 3rem 1rem;
             text-align: center;
-            transition: all 0.4s ease;
         }
-        
-        .platform:hover {
-            transform: scale(1.05);
-        }
-        
-        .platform-icon {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px rgba(30, 136, 229, 0.3));
-        }
-        
-        .platform-name {
-            color: var(--text);
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-        
-        .compatibility-badge {
-            display: inline-block;
-            background: rgba(156, 39, 176, 0.2);
-            color: var(--text);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin: 10px 0;
-            letter-spacing: 1px;
-            border: 1px solid var(--accent-light);
-            font-family: 'Kanit', sans-serif;
-        }
-        
-        .footer {
-            background: rgba(10, 10, 20, 0.9);
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 80px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .copyright {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-        }
-        
+
         .credits {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
-        .credits a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+
+        .creator-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            margin-bottom: 1rem;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.5);
+            transition: var(--transition);
+        }
+
+        .creator-avatar:hover {
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.8);
+        }
+
+        .creator-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            opacity: 0.7;
             font-size: 0.9rem;
         }
-        
-        .credits a:hover {
-            color: var(--primary);
-        }
-        
-        .social-icon {
-            width: 22px;
-            height: 22px;
-            transition: all 0.3s;
-        }
-        
-        .credits a:hover .social-icon {
-            transform: rotate(15deg) scale(1.2);
-        }
-        
-        /* Efecto de scroll personalizado */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(var(--primary), var(--accent));
-            border-radius: 5px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
-        
-        /* Responsive */
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
-            
-            .tagline {
-                font-size: 1.2rem;
-            }
-            
-            .panel {
-                padding: 30px 20px;
-            }
-            
-            .server-address {
-                font-size: 1.4rem;
-                padding: 12px 20px;
-            }
-            
-            .btn {
-                padding: 15px 25px;
+
+            .subtitle {
                 font-size: 1rem;
             }
-            
-            .features {
+
+            .hero {
+                height: auto;
+            }
+
+            .hero-content {
+                padding: 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+
+            .ip-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .ip-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .platforms {
-                gap: 30px;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
             }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+
+            .feature-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Efectos especiales */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-2 {
+            animation: float 5s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .floating-3 {
+            animation: float 7s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
-    <!-- Fondo con partículas -->
-    <div class="particles" id="particles"></div>
-    
-    <div class="main-container">
-        <div class="header">
-            <img src="https://cdn.discordapp.com/attachments/1352103629330448397/1356875839400050759/Cartel_Puerta_Bienvenido_Bebe_Recien_Nacido_Clinica_Pinguino_Ilustracion_Minimalista_Verde_Logotipo.gif?ex=67f0cb99&is=67ef7a19&hm=2d4864d65e635e6d048f35c90496f8790afbd86c41b34811e1f7722dc7e11374&" alt="CrossCraft Logo" class="logo">
-            <h1>CROSSCRAFT</h1>
-            <div class="tagline">PLATAFORMA MULTIVERSO</div>
-            <div class="compatibility-badge">JAVA & BEDROCK COMPATIBLE</div>
+    <!-- Header con logo y título -->
+    <header>
+        <div class="logo-container">
+            <img src="https://cdn.discordapp.com/attachments/1352103629330448397/1366840573981495296/Cartel_Puerta_Bienvenido_Bebe_Recien_Nacido_Clinica_Pinguino_Ilustracion_Minimalista_Verde_Logotipo.gif?ex=681268fb&is=6811177b&hm=f6b23f190f990b799f1780c682e98d549994497ba11461463627b06bda6543c9&" alt="CrossCraft Logo" class="logo floating">
+            <h1>CrossCraft</h1>
+            <p class="subtitle">El servidor Crossplay donde Java y Bedrock se unen en un solo mundo</p>
         </div>
-        
-        <div class="panel">
-            <div class="server-info">
-                <div class="server-address" id="server-address">38.97.61.76:19241</div>
-                <button class="copy-btn" id="copy-ip-btn">
-                    <i class="fas fa-copy"></i> COPIAR IP
-                </button>
-            </div>
-            
-            <div class="btn-container">
-                <a href="minecraft://?addExternalServer=CrossCraft|play.crosscraft.com:25565" class="btn btn-primary">
-                    <i class="fas fa-gamepad"></i> UNIRSE AL SERVIDOR
-                </a>
-                <a href="https://discord.gg/zuHNT7vzTZ" class="btn btn-discord" target="_blank" id="discord-btn">
-                    <i class="fab fa-discord"></i> SOPORTE
-                    <span class="discord-count" id="discord-count">0</span>
-                </a>
-            </div>
-            
-            <div class="platforms">
-                <div class="platform">
-                    <img src="https://cdn.discordapp.com/attachments/1352103629330448397/1357770383188820209/IMG_0449.webp?ex=67f169b5&is=67f01835&hm=ff4af9eff8a3156baf43dabe55928df269d3a9181f93f99e43354b61c68d12a3&" alt="Java Edition" class="platform-icon">
-                    <div class="platform-name">Java Edition</div>
+    </header>
+
+    <!-- Sección Hero con descripción -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Bienvenido a CrossCraft</h2>
+            <p>Sumérgete en una experiencia única de Minecraft donde los jugadores de Java y Bedrock pueden explorar, construir y aventurarse juntos en un mismo universo. Nuestro servidor ofrece características innovadoras y un sistema anti-lag avanzado para garantizar la mejor experiencia de juego.</p>
+            <p>Con un equipo dedicado y una comunidad activa, CrossCraft es el lugar perfecto para vivir todas tus aventuras Minecraft sin límites entre plataformas.</p>
+        </div>
+    </section>
+
+    <!-- Sección de IPs -->
+    <section class="ip-section">
+        <h2 class="ip-title">Conéctate Ahora</h2>
+        <div class="ip-buttons">
+            <button class="ip-button bedrock" data-ip="na12.holy.gg">
+                <i class="fas fa-cube"></i>
+                <span class="ip-text">Bedrock: na12.holy.gg:19241</span>
+                <i class="fas fa-copy copy-icon"></i>
+            </button>
+            <button class="ip-button java" data-ip="38.97.61.76:19241">
+                <i class="fab fa-java"></i>
+                <span class="ip-text">Java: 38.97.61.76:19241</span>
+                <i class="fas fa-copy copy-icon"></i>
+            </button>
+        </div>
+        <p>¡Haz clic en el botón correspondiente a tu versión para copiar la IP automáticamente!</p>
+    </section>
+
+    <!-- Sección de características -->
+    <section class="features">
+        <div class="features-container">
+            <h2 class="section-title">Nuestras Características</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3 class="feature-title">Crossplay Total</h3>
+                    <p class="feature-desc">CrossCraft es un servidor crossplay donde ambas plataformas como Java y Bedrock pueden jugar en un solo mundo sin restricciones. Rompemos las barreras entre plataformas para una experiencia verdaderamente unificada.</p>
                 </div>
-                <div class="platform">
-                    <img src="https://cdn.discordapp.com/attachments/1352103629330448397/1357770396858056874/IMG_0450.webp?ex=67f169b8&is=67f01838&hm=ff1b843163dc1cdb00bb3f1103826d526b347e087d2393498f19d57a0d1dca74&" alt="Bedrock Edition" class="platform-icon">
-                    <div class="platform-name">Bedrock Edition</div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Sistema de Niveles</h3>
+                    <p class="feature-desc">Avanza en nuestro sistema de niveles único que recompensa tu dedicación. Gana experiencia al jugar, completar misiones y lograr objetivos. Desbloquea recompensas exclusivas y muestra tu progreso a otros jugadores.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chess-queen"></i>
+                    </div>
+                    <h3 class="feature-title">Cofre de la Muerte</h3>
+                    <p class="feature-desc">Nuestro sistema de cofre de la muerte protege tus objetos cuando mueres. Todos tus ítems se guardan en un cofre especial que solo tú puedes abrir, dándote la oportunidad de recuperarlos sin preocupaciones.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <h3 class="feature-title">Mascotas Personalizadas</h3>
+                    <p class="feature-desc">Captura, entrena y haz crecer a tu propia mascota. Cada criatura tiene habilidades únicas que mejoran al subir de nivel. Forma un vínculo especial con tu compañero y desbloquea habilidades exclusivas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Sistema Anti-Lag</h3>
+                    <p class="feature-desc">Nuestra tecnología avanzada elimina automáticamente ítems tirados en menos de 5 minutos para mantener el servidor funcionando sin problemas. Disfruta de un rendimiento óptimo incluso con muchos jugadores.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="feature-title">Niveles de Mods</h3>
+                    <p class="feature-desc">Nuestro sistema de niveles de mods te permite personalizar tu experiencia de juego. Desbloquea nuevas habilidades, objetos y características especiales a medida que avanzas en el servidor.</p>
                 </div>
             </div>
         </div>
-        
-        <div class="panel">
-            <h2 style="text-align: center; margin-bottom: 40px; color: var(--text);">EXPERIENCIA CROSSCRAFT</h2>
-            
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon"><i class="fas fa-globe"></i></div>
-                    <h3>Multiverso</h3>
-                    <p>Conecta con jugadores de todas las plataformas en un mismo universo</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Seguridad</h3>
-                    <p>Sistema avanzado anti-cheat y protección de cuentas</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon"><i class="fas fa-rocket"></i></div>
-                    <h3>Rendimiento</h3>
-                    <p>Infraestructura optimizada para la mejor experiencia</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon"><i class="fas fa-sync-alt"></i></div>
-                    <h3>Sincronización</h3>
-                    <p>Progreso compartido entre todas las plataformas</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <div class="copyright">
-            &copy; 2025 CrossCraft Network. Todos los derechos reservados.
-        </div>
+    </section>
+
+    <!-- Sección Discord -->
+    <section class="discord-section">
+        <h2>¡Únete a nuestra comunidad!</h2>
+        <p>Para soporte, actualizaciones y conocer a otros jugadores, únete a nuestro servidor de Discord.</p>
+        <a href="#" class="discord-button" id="discord-join">
+            <i class="fab fa-discord"></i> Unirse a Discord
+        </a>
+    </section>
+
+    <!-- Footer con créditos -->
+    <footer>
         <div class="credits">
-            <a href="https://github.com/Mroksz" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="social-icon">
-                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord" class="social-icon">
-                DESARROLLADO POR MROKS
-            </a>
+            <img src="https://cdn.discordapp.com/attachments/1352103629330448397/1366841463832313916/IMG_0331.jpg?ex=681269cf&is=6811184f&hm=751e8ff0fd06e7bfb1f8bd176f0d6678dbfcfe0585668eb5ce5d948b9f2408e0&" alt="SoyMr" class="creator-avatar floating-2">
+            <h3 class="creator-name">SoyMr</h3>
+            <p>Creador y desarrollador de CrossCraft</p>
+            <p class="copyright">© 2025 CrossCraft. Todos los derechos reservados.</p>
         </div>
-    </div>
+    </footer>
 
     <script>
-
-        function updateDiscordCount() {
-          //Esto aun sigue en beta
-            const onlineUsers = Math.floor(Math.random() * 500) + 100;
-            document.getElementById('discord-count').textContent = onlineUsers;
-            
-           
-            setTimeout(updateDiscordCount, 60000);
-        }
-        
-       
-        document.getElementById('copy-ip-btn').addEventListener('click', function() {
-            const ip = document.getElementById('server-address').textContent;
-            navigator.clipboard.writeText(ip).then(() => {
-                const originalHTML = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-check"></i> COPIADO';
-                
-                setTimeout(() => {
-                    this.innerHTML = originalHTML;
-                }, 2000);
-            }).catch(err => {
-                console.error('Error al copiar:', err);
-                this.innerHTML = '<i class="fas fa-times"></i> ERROR';
-                setTimeout(() => {
-                    this.innerHTML = '<i class="fas fa-copy"></i> COPIAR IP';
-                }, 2000);
+        // Copiar IP al hacer clic en los botones
+        document.querySelectorAll('.ip-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const ip = this.getAttribute('data-ip');
+                navigator.clipboard.writeText(ip).then(() => {
+                    this.classList.add('copied');
+                    setTimeout(() => {
+                        this.classList.remove('copied');
+                    }, 2000);
+                });
             });
         });
-        
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 20 : 40;
-            
-            for (let i = 0; i < particleCount; i++) {
+
+        // Efecto de partículas
+        document.addEventListener('DOMContentLoaded', () => {
+            const particlesContainer = document.createElement('div');
+            particlesContainer.style.position = 'fixed';
+            particlesContainer.style.top = '0';
+            particlesContainer.style.left = '0';
+            particlesContainer.style.width = '100%';
+            particlesContainer.style.height = '100%';
+            particlesContainer.style.pointerEvents = 'none';
+            particlesContainer.style.zIndex = '-1';
+            document.body.appendChild(particlesContainer);
+
+            function createParticle() {
                 const particle = document.createElement('div');
-                particle.className = 'particle';
+                particle.classList.add('particle');
                 
-                
-                if (Math.random() > 0.7) {
-                    particle.classList.add('purple');
-                }
-                
-                
-                const size = Math.random() * 4 + 2;
+                // Tamaño aleatorio entre 1px y 3px
+                const size = Math.random() * 2 + 1;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
-              
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.top = `${Math.random() * 100}vh`;
+                // Posición aleatoria en la pantalla
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
                 
+                // Opacidad aleatoria
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
-                const duration = Math.random() * 20 + 20;
-                particle.style.animationDuration = `${duration}s`;
-                
-                
-                particle.style.animationDelay = `${Math.random() * 20}s`;
+                // Animación
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s linear infinite`;
                 
                 particlesContainer.appendChild(particle);
+                
+                // Eliminar partícula después de animarse
+                setTimeout(() => {
+                    particle.remove();
+                }, duration * 1000);
             }
-        }
-        
-    
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            updateDiscordCount();
             
+            // Crear partículas continuamente
+            setInterval(createParticle, 300);
             
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
+            // Crear algunas partículas iniciales
+            for (let i = 0; i < 20; i++) {
+                createParticle();
+            }
+        });
+
+        // Enlace de Discord
+        document.getElementById('discord-join').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Enlace de Discord será agregado aquí');
+            // Reemplazar con: window.location.href = 'TU_ENLACE_DE_DISCORD';
         });
     </script>
 </body>
