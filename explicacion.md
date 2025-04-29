@@ -1,4 +1,4 @@
-Aquí tienes una explicación detallada para tu repositorio en GitHub, organizada por secciones:
+
 
 ## 🌐 Estructura General
 
