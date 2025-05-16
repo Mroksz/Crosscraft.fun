@@ -154,47 +154,74 @@
         /* Hero Section */
         .hero {
             position: relative;
-            height: 500px;
+            min-height: 480px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        .hero-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://cdn.discordapp.com/attachments/1352103629330448397/1366653388091166801/IMG_0610.png?ex=68126366&is=681111e6&hm=b7686c560af4cf3ee17355a13ca28c29f5fcff3669ed3a93be27543cc2f7dcd5&') center/cover no-repeat;
-            opacity: 0.2;
-            z-index: -1;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .hero-content {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 800px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-out 0.2s both;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: auto;
+            background: rgba(26, 26, 46, 0.85);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px #0008;
         }
 
-        .hero h2 {
-            font-size: 2rem;
+        .hero-content img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-color);
             margin-bottom: 1rem;
-            color: var(--accent-color);
+            box-shadow: 0 0 20px #00a8ff88;
         }
 
-        .hero p {
-            font-size: 1.1rem;
+        .hero-content h2 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            opacity: 0.95;
             margin-bottom: 1.5rem;
+        }
+
+        .hero-content button {
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 16px #0006;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .hero-content #copy-ip-msg {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--active-color);
+            display: none;
         }
 
         /* IP Buttons */
@@ -759,12 +786,65 @@
 
     <!-- Sección Hero con descripción -->
     <section class="hero" id="home">
+        <div class="hero-bg">
+            <canvas id="particles-bg" style="width:100%;height:100%;display:block;"></canvas>
+        </div>
         <div class="hero-content">
-            <h2>Bienvenido a CrossCraft</h2>
-            <p>Sumérgete en una experiencia única de Minecraft donde los jugadores de Java y Bedrock pueden explorar, construir y aventurarse juntos en un mismo universo. Nuestro servidor ofrece características innovadoras y un sistema anti-lag avanzado para garantizar la mejor experiencia de juego.</p>
-            <p>Con un equipo dedicado y una comunidad activa, CrossCraft es el lugar perfecto para vivir todas tus aventuras Minecraft sin límites entre plataformas.</p>
+            <h2>¡Bienvenido a CrossCraft!</h2>
+            <p>
+                El primer servidor <span style="color:var(--primary-color);font-weight:bold;">Crossplay</span> donde <b>Java</b> y <b>Bedrock</b> juegan juntos.<br>
+                Disfruta de aventuras, eventos, sistemas únicos y una comunidad activa.<br>
+                <span style="color:#ff0;">¡Únete hoy y vive la experiencia sin límites!</span>
+            </p>
         </div>
     </section>
+    <script>
+        // Copiar IP al portapapeles
+        document.getElementById('copy-ip-btn').onclick = function() {
+            navigator.clipboard.writeText('na12.holy.gg');
+            const msg = document.getElementById('copy-ip-msg');
+            msg.style.display = 'block';
+            setTimeout(()=>{msg.style.display='none';}, 2000);
+        };
+
+        // Efecto de partículas simple
+        const canvas = document.getElementById('particles-bg');
+        if(canvas){
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = document.querySelector('.hero').offsetHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+            for(let i=0;i<40;i++){
+                particles.push({
+                    x: Math.random()*canvas.width,
+                    y: Math.random()*canvas.height,
+                    r: Math.random()*2+1,
+                    dx: (Math.random()-0.5)*0.5,
+                    dy: (Math.random()-0.5)*0.5,
+                    c: `rgba(${100+Math.random()*155},${100+Math.random()*155},255,0.15)`
+                });
+            }
+            function animate(){
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                for(let p of particles){
+                    ctx.beginPath();
+                    ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+                    ctx.fillStyle=p.c;
+                    ctx.fill();
+                    p.x+=p.dx;
+                    p.y+=p.dy;
+                    if(p.x<0||p.x>canvas.width) p.dx*=-1;
+                    if(p.y<0||p.y>canvas.height) p.dy*=-1;
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    </script>
 
     <!-- Sección de IPs -->
     <section class="ip-section" id="ip">
@@ -789,6 +869,79 @@
             </a>
         </div>
     </section>
+
+    <!-- Nueva sección: Buscar mi Skin -->
+    <section class="skin-section" id="buscar-skin" style="padding:3rem 1rem; background:var(--card-bg); text-align:center;">
+        <h2 class="section-title">Busca tu Skin de Minecraft</h2>
+        <form id="skin-form" style="margin-bottom:2rem;">
+            <input type="text" id="skin-username" placeholder="Ingresa tu usuario de Minecraft" style="padding:0.7rem 1rem; border-radius:8px; border:none; font-size:1rem; width:250px; max-width:90%;">
+            <button type="submit" style="padding:0.7rem 1.5rem; border-radius:8px; border:none; background:var(--accent-color); color:white; font-weight:bold; margin-left:10px; cursor:pointer;">Buscar</button>
+        </form>
+        <div id="skin-result"></div>
+    </section>
+    <script>
+    document.getElementById('skin-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('skin-username').value.trim();
+        const resultDiv = document.getElementById('skin-result');
+        if (!username) {
+            resultDiv.innerHTML = '<p style="color:#e74c3c;">Por favor ingresa un usuario válido.</p>';
+            return;
+        }
+        resultDiv.innerHTML = 'Buscando...';
+
+        // Intenta obtener la skin desde SkinsRestorer API
+        try {
+            const apiUrl = `https://na12.holy.gg:19100/skins/${username}`;
+            const res = await fetch(apiUrl);
+            if (res.ok) {
+                const data = await res.json();
+                if (data.skinUrl) {
+                    resultDiv.innerHTML = `
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:1rem;">
+                            <img src="${data.skinUrl}" alt="Skin de ${username}" style="background:#222; border-radius:12px; box-shadow:0 4px 16px #0008; width:140px; height:220px;">
+                            <p style="color:var(--accent-color); font-weight:bold;">${username}</p>
+                            <span style="color:#0f0;">Esta es la skin que se ve en el servidor.</span>
+                            <a href="https://namemc.com/search?q=${username}" target="_blank" style="color:var(--primary-color); text-decoration:underline;">Ver perfil en NameMC</a>
+                            <button id="show-cape" style="margin-top:10px; padding:0.5rem 1rem; border-radius:8px; border:none; background:var(--accent-color); color:white; font-weight:bold; cursor:pointer;">Ver capa (si tiene)</button>
+                            <div id="cape-result"></div>
+                        </div>
+                    `;
+                    document.getElementById('show-cape').onclick = function() {
+                        const capeUrl = `https://crafatar.com/capes/${username}`;
+                        document.getElementById('cape-result').innerHTML = `
+                            <img src="${capeUrl}" alt="Capa de ${username}" style="margin-top:10px; background:#222; border-radius:8px; box-shadow:0 2px 8px #0006; width:64px; height:32px;">
+                            <p style="color:#fff; font-size:0.9rem;">Si no ves nada, el usuario no tiene capa oficial.</p>
+                        `;
+                    };
+                    return;
+                }
+            }
+            // Si no hay skin personalizada, muestra la de Mojang
+            throw new Error();
+        } catch {
+            // Fallback a Crafatar (skin de Mojang)
+            const skinUrl = `https://crafatar.com/renders/body/${username}?overlay&scale=7`;
+            resultDiv.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; gap:1rem;">
+                    <img src="${skinUrl}" alt="Skin de ${username}" style="background:#222; border-radius:12px; box-shadow:0 4px 16px #0008; width:140px; height:220px;">
+                    <p style="color:var(--accent-color); font-weight:bold;">${username}</p>
+                    <span style="color:#ff0;">No se encontró skin personalizada en el servidor, mostrando la de Mojang.</span>
+                    <a href="https://namemc.com/search?q=${username}" target="_blank" style="color:var(--primary-color); text-decoration:underline;">Buscar en NameMC</a>
+                    <button id="show-cape" style="margin-top:10px; padding:0.5rem 1rem; border-radius:8px; border:none; background:var(--accent-color); color:white; font-weight:bold; cursor:pointer;">Ver capa (si tiene)</button>
+                    <div id="cape-result"></div>
+                </div>
+            `;
+            document.getElementById('show-cape').onclick = function() {
+                const capeUrl = `https://crafatar.com/capes/${username}`;
+                document.getElementById('cape-result').innerHTML = `
+                    <img src="${capeUrl}" alt="Capa de ${username}" style="margin-top:10px; background:#222; border-radius:8px; box-shadow:0 2px 8px #0006; width:64px; height:32px;">
+                    <p style="color:#fff; font-size:0.9rem;">Si no ves nada, el usuario no tiene capa oficial.</p>
+                `;
+            };
+        }
+    });
+    </script>
 
     <!-- Sección de características -->
     <section class="features" id="features">
@@ -890,18 +1043,18 @@
                 <h3 class="staff-name">SoyMr</h3>
                 <p class="staff-role">Desarrollador y creador del Servidor</p>
                 <div class="badges">
-                    <img src="https://i.imgur.com/1Xjzj6q.png" alt="Developer Badge" class="badge" title="Developer">
-                    <img src="https://i.imgur.com/3Xjzj6q.png" alt="Crown Badge" class="badge" title="Creador">
+                    <img src="https://cdn.glitch.global/8fe52000-83a6-41dd-b422-e2abd6d850d8/IMG_1513.png?v=1747382455429" alt="Developer Badge" class="badge" title="Developer">
+                    <img src="https://cdn.glitch.global/8fe52000-83a6-41dd-b422-e2abd6d850d8/1361752384887328790.png?v=1747382158995" alt="Crown Badge" class="badge" title="Creador">
                 </div>
             </div>
 
             <!-- Perfil de dai_hioscina -->
             <div class="staff-card">
-                <img src="https://cdn.glitch.global/8fe52000-83a6-41dd-b422-e2abd6d850d8/a7009704108f12355446feebb17f11aa.webp?v=1746464395731" alt="dai_hioscina" class="staff-avatar floating">
+                <img src="https://cdn.glitch.global/8fe52000-83a6-41dd-b422-e2abd6d850d8/106adc5d4652c87640234ea9807ef7e2.webp?v=1747377768983" alt="dai_hioscina" class="staff-avatar floating">
                 <h3 class="staff-name">dai_hioscina</h3>
                 <p class="staff-role">Administradora del servidor de Discord</p>
                 <div class="badges">
-                    <img src="https://i.imgur.com/2Xjzj6q.png" alt="Staff Badge" class="badge" title="Staff">
+                    <img src="https://cdn.glitch.global/8fe52000-83a6-41dd-b422-e2abd6d850d8/1361752366545637407.png?v=1747382153893" alt="Staff Badge" class="badge" title="Staff">
                 </div>
             </div>
 
@@ -911,17 +1064,27 @@
                 <h3 class="staff-name">tadeovlrd</h3>
                 <p class="staff-role">Administrador del servidor de Discord</p>
                 <div class="badges">
-                    <img src="https://i.imgur.com/2Xjzj6q.png" alt="Staff Badge" class="badge" title="Staff">
+                    <img src="https://cdn.glitch.global/8fe52000-83a6-41dd-b422-e2abd6d850d8/1361752366545637407.png?v=1747382153893" alt="Staff Badge" class="badge" title="Staff">
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="creator-links">
-            <a href="https://discord.gg/VFXbF7k5" class="creator-link" target="_blank">
+        <div class="creator-links" style="margin-bottom:1rem;">
+            <a href="https://discord.gg/VFXbF7k5" class="creator-link" target="_blank" style="margin-right:1rem;">
                 <i class="fab fa-discord"></i> Mi Discord
             </a>
+            <a href="https://github.com/Mroksz" class="creator-link" target="_blank" style="margin-right:1rem;">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://x.com/SoyMr20_" class="creator-link" target="_blank">
+                <i class="fab fa-twitter"></i> Twitter
+            </a>
+        </div>
+        <div style="margin-bottom:1rem;">
+            <span>Desarrollado por <strong>SoyMr</strong> y el equipo de CrossCraft.</span><br>
+            <span>Agradecimientos especiales a la comunidad y colaboradores.</span>
         </div>
         <p class="copyright">© 2025 CrossCraft. Todos los derechos reservados.</p>
     </footer>
