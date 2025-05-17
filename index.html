@@ -497,7 +497,7 @@
             text-align: center;
         }
 
-        /* Gallery Section */
+        
         .gallery {
             padding: 3rem 1rem;
             background-color: var(--card-bg);
@@ -529,7 +529,7 @@
             display: block;
         }
 
-        /* Support Section */
+        
         .support-section {
             padding: 3rem 1rem;
             text-align: center;
@@ -583,7 +583,7 @@
             font-size: 1.5rem;
         }
 
-        /* Staff Section */
+        
         .staff-section {
             padding: 3rem 1rem;
             background-color: var(--dark-bg);
@@ -649,14 +649,14 @@
         .badge {
             width: 30px;
             height: 30px;
-            border-radius: 50%; /* Vuelve a ser círculo */
+            border-radius: 50%; 
             object-fit: cover;
             transition: var(--transition);
             position: relative;
             z-index: 1;
         }
 
-        /* Efecto animado alrededor del badge */
+        
         .badge::before {
             content: '';
             position: absolute;
@@ -678,7 +678,7 @@
             100% { filter: blur(2px) brightness(1.2); transform: rotate(360deg);}
         }
 
-        /* Footer */
+        
         footer {
             background-color: var(--secondary-color);
             padding: 2rem 1rem;
@@ -691,7 +691,7 @@
             font-size: 0.9rem;
         }
 
-        /* Snow Effect */
+        
         .snowflake {
             position: fixed;
             top: -10px;
@@ -708,7 +708,7 @@
             }
         }
 
-        /* Responsive Design */
+        
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
@@ -798,7 +798,7 @@
     </style>
 </head>
 <body>
-    <!-- Header con logo y título -->
+    
     <header>
         <div class="logo-container">
             <img src="https://cdn.glitch.global/8fe52000-83a6-41dd-b422-e2abd6d850d8/Cartel%20Puerta%20Bienvenido%20Bebe%20Recien%20Nacido%20Clinica%20Pinguino%20Ilustracion%20Minimalista%20Verde%20(Logotipo.gif?v=1746464875442" alt="CrossCraft Logo" class="logo floating">
@@ -807,7 +807,7 @@
         </div>
     </header>
 
-    <!-- Barra de navegación -->
+    
     <nav class="navbar">
         <div class="nav-links">
             <a href="#home" class="nav-link">Inicio</a>
@@ -819,7 +819,7 @@
         </div>
     </nav>
 
-    <!-- Sección Hero con descripción -->
+    
     <section class="hero" id="home">
         <div class="hero-bg">
             <canvas id="particles-bg" style="width:100%;height:100%;display:block;"></canvas>
@@ -842,7 +842,7 @@
             setTimeout(()=>{msg.style.display='none';}, 2000);
         };
 
-        // Efecto de partículas simple
+        
         const canvas = document.getElementById('particles-bg');
         if(canvas){
             const ctx = canvas.getContext('2d');
@@ -881,7 +881,7 @@
         }
     </script>
 
-    <!-- Sección de IPs -->
+    
     <section class="ip-section" id="ip">
         <h2 class="ip-title">Conéctate Ahora</h2>
         <div class="ip-buttons">
@@ -905,7 +905,7 @@
         </div>
     </section>
 
-    <!-- Nueva sección: Buscar mi Skin -->
+    
 <section class="skin-section" id="buscar-skin" style="padding:3rem 1rem; background:var(--card-bg); text-align:center;">
         <h2 class="section-title">Busca tu Skin de Minecraft</h2>
         <form id="skin-form" style="margin-bottom:2rem; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
@@ -928,7 +928,7 @@
         resultDiv.innerHTML = '<span style="color:var(--accent-color);font-weight:bold;"><i class="fas fa-spinner fa-spin"></i> Buscando...</span>';
 
 
-        // Intenta obtener la skin personalizada desde tu API
+        
         let skinMostrada = false;
         try {
             const apiUrl = `https://na12.holy.gg:19100/skins/${username}`;
@@ -957,9 +957,9 @@
                 }
             }
         } catch (e) {
-            // No mostrar error aquí
+            
         }
-        // Si no se mostró la skin personalizada, muestra la de Mojang (Crafatar)
+        
         if (!skinMostrada) {
             const skinUrl = `https://crafatar.com/renders/body/${username}?overlay&scale=7`;
             resultDiv.innerHTML = `
