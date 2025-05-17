@@ -649,13 +649,33 @@
         .badge {
             width: 30px;
             height: 30px;
-            border-radius: 50%;
+            border-radius: 50%; /* Vuelve a ser círculo */
             object-fit: cover;
             transition: var(--transition);
+            position: relative;
+            z-index: 1;
         }
 
-        .badge:hover {
-            transform: scale(1.2);
+        /* Efecto animado alrededor del badge */
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-color), var(--primary-color), var(--accent-color));
+            opacity: 0.5;
+            z-index: 0;
+            animation: badgeGlow 2s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes badgeGlow {
+            0% { filter: blur(2px) brightness(1.2); transform: rotate(0deg);}
+            50% { filter: blur(4px) brightness(1.5);}
+            100% { filter: blur(2px) brightness(1.2); transform: rotate(360deg);}
         }
 
         /* Footer */
@@ -905,7 +925,8 @@
         }
         resultDiv.innerHTML = 'Buscando...';
 
-        // Intenta obtener la skin desde SkinsRestorer API
+        // Intenta obtener la skin personalizada desde tu API
+        let skinMostrada = false;
         try {
             const apiUrl = `https://na12.holy.gg:19100/skins/${username}`;
             const res = await fetch(apiUrl);
@@ -917,7 +938,7 @@
                             <img src="${data.skinUrl}" alt="Skin de ${username}" style="background:#222; border-radius:12px; box-shadow:0 4px 16px #0008; width:140px; height:220px;">
                             <p style="color:var(--accent-color); font-weight:bold;">${username}</p>
                             <span style="color:#0f0;">Esta es la skin que se ve en el servidor.</span>
-                            <a href="https://namemc.com/search?q=${username}" target="_blank" style="color:var(--primary-color); text-decoration:underline;">Ver perfil en NameMC</a>
+                            <a href="https://mc-heads.net/player/${username}" target="_blank" style="color:var(--primary-color); text-decoration:underline;">Ver skin</a>
                             <button id="show-cape" style="margin-top:10px; padding:0.5rem 1rem; border-radius:8px; border:none; background:var(--accent-color); color:white; font-weight:bold; cursor:pointer;">Ver capa (si tiene)</button>
                             <div id="cape-result"></div>
                         </div>
@@ -929,20 +950,20 @@
                             <p style="color:#fff; font-size:0.9rem;">Si no ves nada, el usuario no tiene capa oficial.</p>
                         `;
                     };
-                    return;
+                    skinMostrada = true;
                 }
             }
-            // Si no hay skin personalizada, muestra la de Mojang
-            throw new Error();
-        } catch {
-            // Fallback a Crafatar (skin de Mojang)
+        } catch (e) {
+            // No mostrar error aquí
+        }
+        // Si no se mostró la skin personalizada, muestra la de Mojang (Crafatar)
+        if (!skinMostrada) {
             const skinUrl = `https://crafatar.com/renders/body/${username}?overlay&scale=7`;
             resultDiv.innerHTML = `
                 <div style="display:flex; flex-direction:column; align-items:center; gap:1rem;">
                     <img src="${skinUrl}" alt="Skin de ${username}" style="background:#222; border-radius:12px; box-shadow:0 4px 16px #0008; width:140px; height:220px;">
                     <p style="color:var(--accent-color); font-weight:bold;">${username}</p>
-                    <span style="color:#ff0;">No se encontró skin personalizada en el servidor, mostrando la de Mojang.</span>
-                    <a href="https://namemc.com/search?q=${username}" target="_blank" style="color:var(--primary-color); text-decoration:underline;">Buscar en NameMC</a>
+                    <a href="https://mc-heads.net/player/${username}" target="_blank" style="color:var(--primary-color); text-decoration:underline;">Ver perfil en MCHeads</a>
                     <button id="show-cape" style="margin-top:10px; padding:0.5rem 1rem; border-radius:8px; border:none; background:var(--accent-color); color:white; font-weight:bold; cursor:pointer;">Ver capa (si tiene)</button>
                     <div id="cape-result"></div>
                 </div>
