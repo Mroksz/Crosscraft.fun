@@ -906,11 +906,13 @@
     </section>
 
     <!-- Nueva sección: Buscar mi Skin -->
-    <section class="skin-section" id="buscar-skin" style="padding:3rem 1rem; background:var(--card-bg); text-align:center;">
+<section class="skin-section" id="buscar-skin" style="padding:3rem 1rem; background:var(--card-bg); text-align:center;">
         <h2 class="section-title">Busca tu Skin de Minecraft</h2>
-        <form id="skin-form" style="margin-bottom:2rem;">
+        <form id="skin-form" style="margin-bottom:2rem; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
             <input type="text" id="skin-username" placeholder="Ingresa tu usuario de Minecraft" style="padding:0.7rem 1rem; border-radius:8px; border:none; font-size:1rem; width:250px; max-width:90%;">
-            <button type="submit" style="padding:0.7rem 1.5rem; border-radius:8px; border:none; background:var(--accent-color); color:white; font-weight:bold; margin-left:10px; cursor:pointer;">Buscar</button>
+            <button type="submit" class="ip-button bedrock" style="padding:0.7rem 1.5rem; border-radius:50px; border:none; font-size:1rem; font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:8px;">
+                <i class="fas fa-search"></i> Buscar Skin
+            </button>
         </form>
         <div id="skin-result"></div>
     </section>
@@ -923,7 +925,8 @@
             resultDiv.innerHTML = '<p style="color:#e74c3c;">Por favor ingresa un usuario válido.</p>';
             return;
         }
-        resultDiv.innerHTML = 'Buscando...';
+        resultDiv.innerHTML = '<span style="color:var(--accent-color);font-weight:bold;"><i class="fas fa-spinner fa-spin"></i> Buscando...</span>';
+
 
         // Intenta obtener la skin personalizada desde tu API
         let skinMostrada = false;
