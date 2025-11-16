@@ -1,2463 +1,767 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrossCraft — Hub de Minecraft: Skins, Servidor y Más</title>
-    <meta name="description" content="CrossCraft es tu hub definitivo para Minecraft: skins exclusivas, curiosidades, información de nuestro servidor 'NACIÓN DE FACTOS' y enlace a nuestra comunidad de Discord.">
-    <meta name="keywords" content="Minecraft, Skins, Servidor Minecraft, NACIÓN DE FACTOS, Curiosidades, Discord, CrossCraft, Hub">
-    <link rel="canonical" href="[URL_DEL_HOSTING_AQUI]">
-    <meta property="og:title" content="CrossCraft — Hub de Minecraft">
-    <meta property="og:description" content="Tu centro de skins, curiosidades y comunidad para Minecraft. Únete a NACIÓN DE FACTOS y a nuestro Discord.">
-    <meta property="og:image" content="[URL_DE_IMAGEN_HERO_OG_AQUI]">
-    <meta property="og:url" content="[URL_DEL_HOSTING_AQUI]">
-    <meta property="og:type" content="website">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Favicon and touch icon (usar recurso externo proporcionado por el usuario) -->
-    <link rel="icon" type="image/png" href="https://media.istockphoto.com/vectors/texture-for-platformers-pixel-art-vector-ground-mud-block-vector-id488848400?k=20&m=488848400&s=170667a&w=0&h=DYk6LVNGb2cuXWTAdsYMl6ByjqmP1uprGTZzA1SRsXw=">
-    <link rel="apple-touch-icon" href="https://media.istockphoto.com/vectors/texture-for-platformers-pixel-art-vector-ground-mud-block-vector-id488848400?k=20&m=488848400&s=170667a&w=0&h=DYk6LVNGb2cuXWTAdsYMl6ByjqmP1uprGTZzA1SRsXw=">
-    <meta name="theme-color" content="#0b1220">
-
-    <style>
-        /* ===== CSS COMPLETO ===== */
-
-        /* Variables y Reset Básico */
-        :root {
-            --color-black-main: #040406;
-            --color-black-card: #0f0f14;
-            --color-blue-accent: #3b82f6; /* azul */
-            --color-blue-light: #60a5fa;
-            --color-blue-shadow: rgba(59,130,246,0.18);
-            --color-purple: #6b21a8; /* morado */
-            --color-purple-light: #8b5cf6;
-            --color-text-light: #e0e0e0;
-            --color-text-muted: #a0a0a0;
-            --container-max-width: 1200px;
-            --transition-duration: 0.3s;
-            --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.4);
-            --shadow-blue-soft: 0 0 12px var(--color-blue-shadow), 0 0 6px var(--color-blue-shadow);
-            --border-radius: 12px;
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--color-black-main);
-            color: var(--color-text-light);
-            line-height: 1.6;
-        }
-
-        a {
-            color: var(--color-blue-accent);
-            text-decoration: none;
-            transition: color var(--transition-duration);
-            outline: none;
-        }
-
-        a:hover, a:focus-visible {
-            color: var(--color-blue-light);
-            outline: 2px solid var(--color-blue-accent);
-            outline-offset: 2px;
-        }
-
-        /* Utilidades y Contenedor */
-        .container {
-            max-width: var(--container-max-width);
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .section-heading {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            text-align: center;
-            margin-bottom: 2.5rem;
-            color: var(--color-blue-accent);
-            text-shadow: 0 0 5px var(--color-blue-shadow);
-        }
-
-        /* Botones Base */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-duration) ease-out;
-            box-shadow: var(--shadow-subtle);
-            text-align: center;
-            font-size: 1rem;
-            gap: 0.5rem;
-            outline: none;
-            white-space: nowrap;
-        }
-
-        .btn:focus-visible {
-            outline: 2px solid var(--color-blue-accent);
-            outline-offset: 2px;
-        }
-
-        .btn-primary {
-            background-color: var(--color-blue-accent);
-            color: white;
-            border: 2px solid var(--color-blue-accent);
-        }
-
-        .btn-primary:hover, .btn-primary:focus-visible {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px var(--color-blue-shadow);
-            background-color: var(--color-blue-light);
-        }
-
-        .btn-secondary {
-            background-color: var(--color-black-card);
-            color: var(--color-blue-accent);
-            border: 1px solid var(--color-blue-accent);
-        }
-
-        .btn-secondary:hover, .btn-secondary:focus-visible {
-            background-color: var(--color-blue-accent);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px var(--color-blue-shadow);
-        }
-        
-        .loading {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            animation: loading 1.5s infinite;
-        }
-        
-        @keyframes loading {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* ===== Fondo renovado (gradiente animado + partículas sutiles) ===== */
-        .animated-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-            background: linear-gradient(135deg, #020204 0%, var(--color-purple) 30%, var(--color-blue-accent) 70%, #001024 100%);
-            background-size: 300% 300%;
-            transition: background-position 1s ease;
-            will-change: background-position;
-            filter: saturate(1.02) contrast(1.02);
-        }
-
-        .animated-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                              radial-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);
-            background-size: 40px 40px, 80px 80px;
-            opacity: 0.6;
-            mix-blend-mode: screen;
-            filter: blur(2px) saturate(120%);
-            transform: translateZ(0);
-            pointer-events: none;
-        }
-
-        .animated-bg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 10% 10%, rgba(139,92,246,0.06), transparent 8%),
-                        radial-gradient(circle at 80% 80%, rgba(59,130,246,0.05), transparent 12%);
-            filter: blur(28px) contrast(110%);
-            opacity: 0.95;
-            pointer-events: none;
-        }
-
-        @keyframes bgShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* opcional: animación lenta del gradiente */
-        .animated-bg.animate {
-            animation: bgShift 20s ease-in-out infinite;
-        }
-
-        /* Mantener compatibilidad con elementos previamente añadidos (burbujas), no obligatorias */
-        .bg-bubble { display: none; }
-
-        /* ===== Efectos para Créditos ===== */
-        .credits-card {
-            overflow: visible;
-            isolation: isolate;
-            transition: transform 0.45s ease, box-shadow 0.45s ease;
-            background-image: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-        }
-
-        .credits-card::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: calc(var(--border-radius) + 2px);
-            padding: 2px;
-            background: linear-gradient(90deg, rgba(139,92,246,0.12), rgba(59,130,246,0.06), rgba(139,92,246,0.12));
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask-composite: exclude;
-            pointer-events: none;
-            filter: blur(8px);
-            z-index: -1;
-            animation: border-shift 6s linear infinite;
-        }
-
-        @keyframes border-shift {
-            0% { transform: translateX(-5%); }
-            50% { transform: translateX(5%); }
-            100% { transform: translateX(-5%); }
-        }
-
-        .credits-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 18px 40px rgba(43,108,176,0.12), 0 6px 18px rgba(0,0,0,0.6);
-        }
-
-        .credits-effects {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            border-radius: inherit;
-            overflow: hidden;
-        }
-
-        .credits-effects::after {
-            content: '';
-            position: absolute;
-            width: 140%;
-            height: 140%;
-            left: -20%;
-            top: -50%;
-            background: radial-gradient(circle at 30% 30%, rgba(66,153,225,0.06), transparent 20%), radial-gradient(circle at 70% 70%, rgba(66,153,225,0.04), transparent 25%);
-            filter: blur(28px) saturate(120%);
-            animation: slow-rotate 12s linear infinite;
-            opacity: 0.9;
-        }
-
-        @keyframes slow-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .credits-avatar {
-            position: relative;
-            z-index: 1;
-            transition: transform 0.45s ease, box-shadow 0.45s ease;
-        }
-
-        .credits-avatar:hover {
-            transform: scale(1.07) rotate(-4deg);
-            box-shadow: 0 8px 30px rgba(66,153,225,0.18), 0 4px 12px rgba(0,0,0,0.6);
-        }
-
-        .credits-name {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Destellos sutiles en nombre */
-        .credits-name::after {
-            content: '';
-            position: absolute;
-            left: -10px;
-            top: -8px;
-            width: 8px;
-            height: 8px;
-            background: radial-gradient(circle, rgba(255,255,255,0.9), rgba(66,153,225,0.4));
-            border-radius: 50%;
-            filter: blur(6px);
-            opacity: 0.8;
-            animation: twinkle 3s ease-in-out infinite;
-            transform-origin: center;
-            z-index: 1;
-        }
-
-        @keyframes twinkle {
-            0% { transform: scale(1); opacity: 0.2; }
-            50% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.2; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .bg-bubble, .credits-card::before, .credits-effects::after, .credits-name::after { animation: none !important; }
-        }
-
-        /* ===== Header / Navbar ===== */
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: rgba(7, 7, 7, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-blue-accent);
-            text-shadow: 0 0 5px var(--color-blue-shadow);
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-right: 0.6rem;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.6), 0 0 8px rgba(66,153,225,0.05) inset;
-            display: inline-block;
-        }
-
-        .logo-icon {
-            font-size: 1.8rem;
-            margin-right: 0.5rem;
-            display: none; /* ocultamos emoji cuando usamos imagen */
-        }
-
-        .logo-text {
-            display: inline-block;
-        }
-
-        /* Imagen del Discord en la card (fondo para mejor contraste) */
-        .discord-img {
-            width: 72px;
-            height: 72px;
-            object-fit: contain;
-            border-radius: 12px;
-            display: inline-block;
-            box-shadow: 0 10px 28px rgba(0,0,0,0.6);
-            background: linear-gradient(135deg, var(--color-purple) 0%, var(--color-blue-accent) 100%);
-            padding: 10px; /* espacio alrededor del SVG para contraste */
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .nav-menu {
-            display: none;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-menu a {
-            color: var(--color-text-light);
-            font-weight: 400;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--color-blue-accent);
-            transition: width var(--transition-duration) ease-in-out;
-        }
-
-        .nav-menu a:hover::after, .nav-menu a:focus-visible::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: block;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--color-blue-accent);
-            transition: transform var(--transition-duration);
-            background: none;
-            border: none;
-            padding: 0.25rem;
-        }
-
-        .hamburger:focus-visible {
-            outline: 2px solid var(--color-blue-accent);
-            outline-offset: 2px;
-        }
-
-        /* Menu Mobile */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--color-black-main);
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
-                padding: 1rem 1.5rem;
-                transform: translateY(-100vh);
-                opacity: 0;
-                pointer-events: none;
-                transition: transform var(--transition-duration) ease-in-out, opacity var(--transition-duration);
-                gap: 1rem;
-            }
-
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: all;
-            }
-
-            .nav-menu a {
-                padding: 0.75rem 0;
-                border-bottom: 1px solid var(--color-black-card);
-                font-size: 1.1rem;
-            }
-
-            .hamburger.active {
-                transform: rotate(90deg);
-            }
-            /* Ajustes para pantallas pequeñas: creditos apilados */
-            .credits-card {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                padding: 1rem;
-                gap: 0.75rem;
-            }
-
-            .credits-avatar {
-                width: 88px;
-                height: 88px;
-                border-radius: 16px;
-                margin-bottom: 0;
-            }
-
-            .credits-content { width: 100%; }
-
-            .logo-text { display: inline-block; font-size: 1rem; }
-        }
-
-        /* Desktop */
-        @media (min-width: 769px) {
-            .hamburger {
-                display: none;
-            }
-            .nav-menu {
-                display: flex;
-                flex-direction: row;
-                position: static;
-                transform: none;
-                opacity: 1;
-                pointer-events: all;
-                background: none;
-                box-shadow: none;
-                padding: 0;
-            }
-            .nav-menu a {
-                border-bottom: none;
-            }
-        }
-
-        /* Mobile-first adjustments */
-        @media (max-width: 600px) {
-            .hero { padding: 3rem 1rem; min-height: 60vh; }
-            .hero-title { font-size: 2rem; }
-            .hero-subtitle { font-size: 0.95rem; }
-
-            .logo-img { width: 30px; height: 30px; }
-            .logo-text { font-size: 1rem; }
-
-            .curiosity-grid { grid-template-columns: 1fr; }
-            .curiosity-card { min-height: auto; padding: 0.9rem; }
-
-            .skins-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; }
-
-            .modal-content { width: 95%; max-width: 420px; }
-            
-            /* Mejora del buscador en móviles: input más grande y botones apilados */
-            .skin-search-form {
-                flex-direction: column;
-                gap: 0.5rem;
-                align-items: stretch;
-            }
-
-            .skin-search-form input[type="text"] {
-                font-size: 1.05rem;
-                padding: 0.9rem 0.9rem;
-                flex: none;
-                width: 100%;
-            }
-
-            .skin-search-form .btn {
-                width: 100%;
-            }
-
-            /* En móviles, hacer las insignias y tooltips más fáciles de leer */
-            .credits-badges { justify-content: center; }
-            .badge { width: 44px; height: 44px; border-radius: 10px; font-size: 20px; }
-            .badge::after { font-size: 0.95rem; padding: 9px 12px; }
-            .badge::before { border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 7px solid var(--color-purple); }
-        }
-
-        @media (min-width: 1200px) {
-            .credits-card { max-width: 900px; }
-            .curiosity-grid { max-width: 1200px; }
-        }
-
-        /* ===== Buscador de Skins ===== */
-        .skin-search-form {
-            display: inline-flex;
-            gap: 0.5rem;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 720px;
-        }
-
-        .skin-search-form input[type="text"] {
-            padding: 0.6rem 0.75rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.06);
-            background: rgba(255,255,255,0.02);
-            color: var(--color-text-light);
-            min-width: 180px;
-            flex: 1 1 320px;
-            outline: none;
-        }
-
-        .skin-search-form input[type="text"]::placeholder {
-            color: var(--color-text-muted);
-        }
-
-        .skin-result-card img { max-width: 140px; border-radius: 8px; }
-
-
-        /* ===== Hero Section ===== */
-        .hero {
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 4rem 1.5rem;
-            background: linear-gradient(rgba(7, 7, 7, 0.9), rgba(7, 7, 7, 0.9)), 
-                        radial-gradient(circle at 50% 50%, var(--color-blue-shadow) 0%, transparent 40%);
-            background-size: cover;
-        }
-
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 700;
-            color: var(--color-blue-accent);
-            text-shadow: 0 0 10px var(--color-blue-shadow);
-            margin-bottom: 1rem;
-        }
-
-        /* Texto fancy-gradient para el título principal */
-        .fancy-gradient {
-            background: linear-gradient(90deg, var(--color-purple), var(--color-blue-accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradientShift 6s ease-in-out infinite;
-            background-size: 200% 200%;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--color-text-light);
-            margin-bottom: 2rem;
-        }
-
-        /* ===== Secciones Generales (Animación) ===== */
-        .section {
-            padding: 4rem 0;
-        }
-
-        .animated-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            will-change: opacity, transform;
-        }
-
-        .animated-section.in-view {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== Skins Section ===== */
-        .skins-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .skin-card {
-            background-color: var(--color-black-card);
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: var(--shadow-subtle);
-            transition: transform var(--transition-duration), box-shadow var(--transition-duration);
-            border: 1px solid transparent;
-        }
-
-        .skin-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), var(--shadow-blue-soft);
-            border-color: var(--color-blue-accent);
-        }
-
-        .skin-card img {
-            width: 100%;
-            max-width: 120px;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
-            filter: drop-shadow(0 0 5px rgba(43, 108, 176, 0.3));
-        }
-
-        .skin-meta {
-            font-size: 0.75rem;
-            color: var(--color-blue-accent);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .skin-card-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            width: 100%;
-        }
-
-        .skin-card-actions .btn {
-            flex-grow: 1;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.85rem;
-            width: 100%;
-        }
-        
-        .refresh-btn-container {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .refresh-btn {
-            background-color: var(--color-black-card);
-            border: 1px solid var(--color-blue-accent);
-            color: var(--color-blue-accent);
-            animation: pulse 2s infinite ease-in-out;
-        }
-        
-        .refresh-btn:hover {
-            animation: none;
-            background-color: var(--color-blue-accent);
-            color: white;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(43, 108, 176, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(43, 108, 176, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(43, 108, 176, 0); }
-        }
-
-        /* ===== Modal de Previsualización ===== */
-        .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            transition: opacity var(--transition-duration);
-        }
-
-        .modal-backdrop.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            background-color: var(--color-black-card);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            max-width: 90%;
-            width: 400px;
-            box-shadow: var(--shadow-blue-soft);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform var(--transition-duration) ease-out;
-            border: 2px solid var(--color-blue-accent);
-        }
-
-        .modal-backdrop.active .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-content img {
-            max-width: 320px;
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 0 10px rgba(43, 108, 176, 0.5));
-        }
-
-        /* Controles del visor 3D dentro de la modal */
-        .viewer-controls {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .viewer-controls select.btn {
-            padding: 0.55rem 0.65rem;
-            background: rgba(255,255,255,0.03);
-            color: var(--color-text-light);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.04);
-        }
-
-        .viewer-controls .btn {
-            padding: 0.45rem 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        /* Estilos para el Quiz */
-        .quiz-card {
-            background-color: var(--color-black-card);
-            border-radius: 12px;
-            padding: 1.25rem;
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid rgba(255,255,255,0.02);
-        }
-
-        .quiz-question { color: var(--color-text-light); }
-
-        .quiz-answers .answer-btn {
-            padding: 0.65rem 0.75rem;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.02);
-            color: var(--color-text-light);
-            border: 1px solid rgba(255,255,255,0.03);
-            cursor: pointer;
-            font-weight:600;
-        }
-
-        .quiz-answers .answer-btn.correct { background: linear-gradient(90deg, rgba(72,187,120,0.18), rgba(72,187,120,0.08)); border-color: rgba(72,187,120,0.25); }
-        .quiz-answers .answer-btn.wrong { background: linear-gradient(90deg, rgba(224,80,80,0.12), rgba(224,80,80,0.06)); border-color: rgba(224,80,80,0.18); }
-
-        .quiz-timer { font-weight:600; }
-
-        .badge-earned {
-            animation: glow-pulse 1.6s ease-in-out 2;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--color-blue-accent);
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 1rem;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .modal-actions .btn {
-            flex-grow: 1;
-            max-width: 150px;
-        }
-        
-        .skin-viewer-container {
-            width: 100%;
-            max-width: 320px;
-            height: 400px;
-            margin-bottom: 1.5rem;
-        }
-
-        /* ===== Datos Curiosos Section ===== */
-        .curiosity-panel {
-            background-color: var(--color-black-card);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            max-width: 700px;
-            margin: 2rem auto;
-            text-align: center;
-            box-shadow: var(--shadow-subtle);
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--color-black-card);
-        }
-
-        /* Nueva grid de curiosidades */
-        .curiosity-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .curiosity-card {
-            background-color: var(--color-black-card);
-            border-radius: 12px;
-            padding: 1.25rem;
-            text-align: left;
-            box-shadow: var(--shadow-subtle);
-            min-height: 110px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.02);
-        }
-
-        .curiosity-card .curiosity-text {
-            font-size: 1rem;
-            font-weight: 400;
-            margin: 0;
-            color: var(--color-text-light);
-        }
-
-        .curiosity-text {
-            font-size: 1.25rem;
-            font-weight: 300;
-            margin-bottom: 1.5rem;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-out;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .curiosity-text.fade-out {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        
-        .curiosity-text.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== Servidor Status Section ===== */
-        .server-status-card {
-            background-color: var(--color-black-card);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            max-width: 800px;
-            margin: 2rem auto;
-            box-shadow: var(--shadow-blue-soft);
-            border: 2px solid var(--color-blue-accent);
-        }
-
-        .server-title {
-            font-size: 1.8rem;
-            color: var(--color-blue-accent);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .server-data-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .server-data-item {
-            padding: 1rem;
-            background-color: #1a1a1a;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .server-data-label {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            font-weight: 300;
-        }
-
-        .server-data-value {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-top: 0.25rem;
-            color: var(--color-text-light);
-        }
-
-        .status-online { color: limegreen; }
-        .status-offline { color: red; }
-
-        .server-ip-info {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background-color: #1a1a1a;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .server-ip-info p {
-            margin: 0;
-        }
-        
-        .server-ip-info strong {
-            color: var(--color-blue-accent);
-            word-break: break-all;
-        }
-        
-        .server-motd {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-            white-space: pre-wrap;
-            min-height: 20px;
-            padding: 1rem;
-            background-color: #1a1a1a;
-            border-radius: 8px;
-        }
-
-        .server-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .server-actions .btn {
-            flex-grow: 1;
-        }
-        
-        .server-actions .btn-full {
-            flex-grow: 1;
-            max-width: 100%;
-        }
-
-        @media (min-width: 768px) {
-            .server-actions .btn {
-                flex-grow: 0;
-            }
-            
-            .server-ip-info {
-                flex-direction: row;
-                justify-content: space-around;
-            }
-        }
-
-        /* ===== Discord Section ===== */
-        .discord-card {
-            background-color: var(--color-black-card);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            max-width: 600px;
-            margin: 2rem auto;
-            text-align: center;
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--color-black-card);
-        }
-        
-        .discord-title {
-            font-size: 1.5rem;
-            color: var(--color-blue-accent);
-            margin-bottom: 1rem;
-        }
-
-        .discord-icon {
-            font-size: 4rem;
-            color: #5865F2;
-            margin-bottom: 1rem;
-        }
-
-        .discord-stats {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            color: var(--color-text-light);
-        }
-
-        .discord-stats strong {
-            color: var(--color-blue-accent);
-            font-weight: 600;
-        }
-        
-        /* ===== Créditos Section ===== */
-        .credits-card {
-            background: linear-gradient(180deg, rgba(19,19,19,0.95), rgba(15,15,15,0.9));
-            border-radius: calc(var(--border-radius) + 8px);
-            padding: 1.25rem;
-            max-width: 760px;
-            margin: 2rem auto;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-            border: 1px solid rgba(66,153,225,0.12);
-            position: relative;
-            overflow: visible;
-        }
-
-        .credits-avatar {
-            width: 96px;
-            height: 96px;
-            border-radius: 22px; /* Estilo tipo app (esquinas redondeadas) */
-            object-fit: cover;
-            flex: 0 0 96px;
-            border: 3px solid rgba(255,255,255,0.04);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6), 0 0 18px rgba(66,153,225,0.06) inset;
-            background-color: #0e0e0e;
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-        }
-
-        .credits-avatar:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 14px 36px rgba(0,0,0,0.7), 0 0 28px rgba(66,153,225,0.08) inset;
-        }
-
-        .credits-content {
-            flex: 1;
-            z-index: 1;
-        }
-
-        .credits-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--color-text-light);
-            margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .credits-role {
-            font-size: 0.95rem;
-            color: var(--color-blue-accent);
-            font-weight: 600;
-        }
-
-        .credits-text {
-            color: var(--color-text-muted);
-            margin-top: 0.4rem;
-            font-size: 0.95rem;
-        }
-
-        /* Badges / Insignias en Créditos */
-        .credits-badges {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.35rem;
-            align-items: center;
-            z-index: 1;
-        }
-
-        .badge {
-            display: inline-grid;
-            place-items: center;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.06);
-            color: white;
-            font-size: 18px;
-            cursor: default;
-            position: relative;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.6);
-            transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
-            border: 1px solid rgba(255,255,255,0.02);
-        }
-
-        /* Hover / focus: más contraste y sombra para que la insignia destaque */
-        .badge:focus, .badge:hover {
-            transform: translateY(-4px) scale(1.06);
-            background: linear-gradient(180deg, rgba(66,153,225,0.26), rgba(66,153,225,0.12));
-            outline: none;
-            box-shadow: 0 10px 28px rgba(66,153,225,0.14), 0 6px 18px rgba(0,0,0,0.6);
-            color: #ffffff;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-        /* Tooltip CSS usando data-badge: más visible (morado-azul elegante) */
-        .badge::after {
-            content: attr(data-badge);
-            position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            background: linear-gradient(180deg, var(--color-purple), var(--color-blue-accent));
-            color: #ffffff;
-            padding: 8px 10px;
-            border-radius: 6px;
-            font-size: 0.86rem;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.15s ease, transform 0.15s ease;
-            box-shadow: 0 10px 26px rgba(75,0,130,0.32);
-            z-index: 40;
-        }
-
-        /* Arrow for the tooltip */
-        .badge::before {
-            content: '';
-            position: absolute;
-            bottom: calc(100% + 4px);
-            left: 50%;
-            transform: translateX(-50%) translateY(8px);
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 6px solid var(--color-blue-accent);
-            opacity: 0;
-            transition: opacity 0.15s ease, transform 0.15s ease;
-            z-index: 39;
-        }
-
-        .badge:focus::after, .badge:hover::after, .badge.show-tooltip::after {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .badge:focus::before, .badge:hover::before, .badge.show-tooltip::before {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Destellos / sparkles sutiles dentro de la tarjeta */
-        .sparkles {
-            position: absolute;
-            right: 8%;
-            top: 10%;
-            width: 160px;
-            height: 160px;
-            pointer-events: none;
-            z-index: 0;
-            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0 6px, transparent 7px),
-                              radial-gradient(circle at 70% 70%, rgba(66,153,225,0.03) 0 8px, transparent 9px);
-            filter: blur(8px) saturate(120%);
-            transform: translateZ(0);
-            animation: spark-move 8s linear infinite;
-            opacity: 0.95;
-        }
-
-        @keyframes spark-move {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.95; }
-            50% { transform: translateY(-6px) rotate(8deg); opacity: 0.6; }
-            100% { transform: translateY(0) rotate(0deg); opacity: 0.95; }
-        }
-
-        @keyframes glow-pulse {
-            0%, 100% { text-shadow: 0 0 5px var(--color-blue-accent); }
-            50% { text-shadow: 0 0 10px var(--color-blue-accent), 0 0 15px var(--color-blue-shadow); }
-        }
-
-        /* ===== Toast Notification ===== */
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3000;
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .toast {
-            background-color: var(--color-black-card);
-            color: var(--color-text-light);
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            border-left: 5px solid var(--color-blue-accent);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== Footer ===== */
-        .footer {
-            text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 3rem;
-            border-top: 1px solid #1a1a1a;
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            
-            html {
-                scroll-behavior: auto;
-            }
-        }
-
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CrossCraft — Arte, Skins y Nación de Factos</title>
+
+  <!-- Creative, evocative SEO description -->
+  <meta name="description" content="CrossCraft — el refugio morado donde las skins respiran. Previsualiza, prueba y descarga skins únicas; descubre curiosidades escondidas y conéctate a la comunidad de Nación de Factos. Diseño liquid-glass, animaciones suaves y soporte 3D opcional." />
+  <meta name="keywords" content="CrossCraft, skins minecraft, servidor minecraft, nación de factos, skins descargables, discord minecraft, liquid glass, morado neon" />
+  <link rel="canonical" href="https://crosscraft.example.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CrossCraft — Arte, Skins y Nación de Factos" />
+  <meta property="og:description" content="El refugio morado de las skins: explora, previsualiza y descarga. Conéctate a Nación de Factos y únete a nuestra comunidad." />
+  <meta property="og:image" content="https://static.vecteezy.com/system/resources/previews/002/948/785/original/pixel-minecraft-style-land-background-vector.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon (user provided) -->
+  <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/002/948/785/original/pixel-minecraft-style-land-background-vector.jpg" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!--
+    CrossCraft — single file index.html
+    - Liquid glass + morado neon aesthetic
+    - Skins search via Mojang API + Crafatar (fallbacks)
+    - Server status via mcsrvstat.us (with timeouts & fallbacks)
+    - Discord invite counts via Discord invite API (with CORS fallback)
+    - 3D viewer (skinview3d) loaded dynamically if available
+    - Client caching via sessionStorage (60s)
+    - Notes about SFTP: browsers cannot talk SFTP. The provided SFTP (sftp://node-va5.holy.gg:2022) is useful to upload assets to your host. See comments below for usage.
+  -->
+
+  <style>
+    /* ===== Reset & Theme ===== */
+    :root{
+      --bg:#06060b;
+      --glass-1: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --muted:#b9c0c9;
+      --purple-1:#9b4dff;
+      --purple-2:#b267ff;
+      --accent: linear-gradient(135deg,var(--purple-1),var(--purple-2));
+      --radius:18px;
+      --soft-shadow: 0 12px 40px rgba(142,86,255,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:
+        radial-gradient(800px 320px at 10% 8%, rgba(155,77,255,0.06), transparent 6%),
+        radial-gradient(600px 260px at 92% 82%, rgba(178,103,255,0.04), transparent 6%),
+        var(--bg);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      padding-bottom:60px;
+    }
+
+    /* ===== Utilities ===== */
+    .container{max-width:1200px;margin:0 auto;padding:20px}
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:18px;
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:var(--soft-shadow);
+      backdrop-filter: blur(10px) saturate(140%);
+    }
+    .section-title{display:flex;justify-content:space-between;align-items:center}
+    .title {color:var(--purple-2);font-weight:800;font-size:20px}
+    .subtitle{color:var(--muted);font-size:13px}
+
+    /* ===== Header (glass, sticky) ===== */
+    header.nav{
+      position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(6,6,10,0.6), rgba(6,6,10,0.35));
+      padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(8px)
+    }
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand .logo{width:52px;height:52px;border-radius:12px;overflow:hidden;border:2px solid rgba(255,255,255,0.04)}
+    .brand .logo img{width:100%;height:100%;object-fit:cover}
+    .brand .name{font-weight:800;color:var(--purple-2);letter-spacing:0.6px}
+    nav.links{display:flex;gap:14px}
+    nav.links a{color:rgba(255,255,255,0.92);text-decoration:none;padding:8px 10px;border-radius:10px;font-weight:600}
+    nav.links a:hover{background:linear-gradient(90deg, rgba(155,77,255,0.06), rgba(178,103,255,0.04));color:var(--purple-2)}
+
+    /* ===== Hero ===== */
+    .hero{padding:72px 20px 40px;text-align:center}
+    .hero h1{font-size:44px;margin:0;line-height:1.05;font-weight:800;color:transparent;background:var(--accent);-webkit-background-clip:text}
+    .hero p{color:var(--muted);margin-top:12px;font-size:16px;max-width:900px;margin-left:auto;margin-right:auto}
+
+    /* ===== Controls ===== */
+    .controls{display:flex;gap:12px;align-items:center}
+    .btn{
+      border:0;padding:10px 16px;border-radius:999px;font-weight:800;cursor:pointer;
+      background:linear-gradient(90deg,var(--purple-1),var(--purple-2));color:white;box-shadow:0 8px 30px rgba(178,103,255,0.14);
+      transition:transform .18s ease, box-shadow .18s;
+    }
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--purple-2)}
+    .btn:active{transform:translateY(1px)}
+    .btn:hover{transform:translateY(-4px)}
+
+    /* ===== Skins grid ===== */
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:14px}
+    .search{
+      display:flex;gap:10px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
+      min-width:280px;
+    }
+    .search input{background:transparent;border:0;color:#fff;padding:8px;outline:none;width:100%}
+    .skins-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:18px}
+    .skin-card{padding:14px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;transition:transform .22s, box-shadow .22s}
+    .skin-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(155,77,255,0.08);border-color:rgba(155,77,255,0.08)}
+    .skin-thumb{width:160px;height:160px;border-radius:12px;background:#0b0620;object-fit:cover}
+    .skin-name{margin-top:10px;font-weight:700}
+    .skin-meta{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .card-actions{display:flex;gap:8px;width:100%;margin-top:12px}
+    .card-actions button{flex:1;padding:9px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
+    .card-actions .primary{background:var(--purple-2);color:white}
+    .card-actions .muted{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--purple-2)}
+
+    /* ===== Modal (preview & 3D) ===== */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(1,1,1,0.6), rgba(1,1,1,0.8));z-index:200}
+    .modal.open{display:flex}
+    .modal-panel{width:min(980px,94%);display:flex;gap:18px;padding:20px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+    .modal img{width:360px;height:360px;border-radius:12px;object-fit:cover}
+    .modal .info h3{color:var(--purple-2);margin-top:0}
+
+    /* server & discord column */
+    .sidebar{display:flex;flex-direction:column;gap:16px}
+    .server-box{padding:14px;border-radius:12px;background:linear-gradient(180deg,#0d0d10,#08080a);border:1px solid rgba(255,255,255,0.03)}
+    .server-row{display:flex;justify-content:space-between;padding:10px 0;border-top:1px dashed rgba(255,255,255,0.02)}
+    .server-row:first-child{border-top:0}
+    .discord-box{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(180deg,#111216,#0a0a0c);border:1px solid rgba(255,255,255,0.03)}
+
+    /* toast */
+    .toast{position:fixed;right:18px;bottom:18px;background:linear-gradient(180deg,#22102b,#17051a);padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);display:none;z-index:999}
+
+    /* credits */
+    footer{padding:30px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.02);margin-top:40px}
+    .credits{display:flex;gap:14px;align-items:center;justify-content:center}
+    .credits img{width:110px;height:110px;border-radius:18px;border:3px solid rgba(155,77,255,0.18)}
+    .badges{display:flex;gap:10px;margin-top:8px}
+    .badge{padding:6px 10px;border-radius:999px;background:linear-gradient(90deg, rgba(155,77,255,0.12), rgba(178,103,255,0.08));color:var(--muted);font-weight:700;font-size:13px}
+
+    /* responsive tweaks */
+    @media(max-width:960px){
+      .modal img{width:260px;height:260px}
+      .skins-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+      .hero h1{font-size:32px}
+      .nav-inner{padding:0 8px}
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Fondo animado con burbujas (solo CSS) -->
-    <div class="animated-bg" aria-hidden="true">
-        <span class="bg-bubble" style="--i:12;"></span>
-        <span class="bg-bubble" style="--i:16;"></span>
-        <span class="bg-bubble" style="--i:10;"></span>
-        <span class="bg-bubble" style="--i:20;"></span>
-        <span class="bg-bubble" style="--i:14;"></span>
-        <span class="bg-bubble" style="--i:18;"></span>
-        <span class="bg-bubble" style="--i:22;"></span>
-        <span class="bg-bubble" style="--i:9;"></span>
+  <!-- NAV -->
+  <header class="nav" role="banner" aria-label="Main navigation">
+    <div class="nav-inner container">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" title="CrossCraft">
+          <!-- USER LOGO (pixel art) -->
+          <img src="https://static.vecteezy.com/system/resources/previews/002/948/785/original/pixel-minecraft-style-land-background-vector.jpg" alt="CrossCraft logo">
+        </div>
+        <div>
+          <div class="name">CROSSCRAFT</div>
+          <div style="color:var(--muted);font-size:12px">Skins · Curiosidades · Nación de Factos</div>
+        </div>
+      </div>
+
+      <nav class="links" aria-label="Main links">
+        <a href="#skins">Skins</a>
+        <a href="#curiosidades">Curiosidades</a>
+        <a href="#server">Servidor</a>
+        <a href="#discord">Discord</a>
+        <a href="#credits">Créditos</a>
+      </nav>
     </div>
+  </header>
 
-    <header class="header" role="banner">
-        <div class="navbar container">
-            <a href="#hero" class="logo" aria-label="CrossCraft - Inicio">
-                <img src="https://media.istockphoto.com/vectors/texture-for-platformers-pixel-art-vector-ground-mud-block-vector-id488848400?k=20&m=488848400&s=170667a&w=0&h=DYk6LVNGb2cuXWTAdsYMl6ByjqmP1uprGTZzA1SRsXw=" alt="CrossCraft logo" class="logo-img" loading="lazy" width="36" height="36">
-                <span class="logo-text">CrossCraft</span>
-            </a>
-            <nav aria-label="Navegación principal">
-                <ul class="nav-menu" id="navMenu" role="menubar">
-                    <li role="none"><a href="#skins" role="menuitem">Skins</a></li>
-                    <li role="none"><a href="#curiosidades" role="menuitem">Curiosidades</a></li>
-                    <li role="none"><a href="#servidor" role="menuitem">Servidor</a></li>
-                    <li role="none"><a href="#discord" role="menuitem">Discord</a></li>
-                    <li role="none"><a href="#creditos" role="menuitem">Créditos</a></li>
-                </ul>
-            </nav>
-            <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="navMenu">&#9776;</button>
-        </div>
-    </header>
-
-    <main>
-        <section id="hero" class="hero section" aria-labelledby="hero-title">
-            <div class="hero-content">
-                <h1 id="hero-title" class="hero-title fancy-gradient">CrossCraft Minecraft Hub</h1>
-                <p class="hero-subtitle">Tu centro de información premium para la comunidad de Minecraft. ¡Explora las mejores skins, datos curiosos y únete a nuestro servidor!</p>
-            </div>
-        </section>
-
-  
-
-        <!-- ===== Quiz de Minecraft ===== -->
-        <section id="quiz" class="section animated-section" data-animation-offset="100" aria-labelledby="quiz-heading">
-            <div class="container">
-                <h2 id="quiz-heading" class="section-heading">Quiz de Minecraft 🎓</h2>
-
-                <div class="quiz-card" id="quizCard" style="max-width:720px; margin:0 auto;">
-                    <p id="quizIntro" class="curiosity-text" style="text-align:center;">Pon a prueba tus conocimientos de Minecraft. Completa 5 preguntas y gana una insignia si aciertas al menos 4.</p>
-
-                    <div id="quizPlayArea" style="display:flex; flex-direction:column; gap:0.75rem;">
-                        <div id="quizQuestion" class="quiz-question" style="font-weight:600; font-size:1.05rem;">Preparado?</div>
-                        <div id="quizAnswers" class="quiz-answers" style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;"></div>
-
-                        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.75rem;">
-                            <div id="quizTimer" class="quiz-timer" style="color:var(--color-text-muted);">Tiempo: --</div>
-                            <div id="quizProgress" class="quiz-progress" style="color:var(--color-text-muted);">Pregunta 0/0</div>
-                        </div>
-
-                        <div style="display:flex; gap:0.5rem; justify-content:center; margin-top:0.5rem;">
-                            <button id="quizStartBtn" class="btn btn-primary">Empezar Quiz</button>
-                            <button id="quizNextBtn" class="btn btn-secondary" style="display:none;">Siguiente</button>
-                        </div>
-
-                        <div id="quizResult" style="display:none; text-align:center; margin-top:0.75rem;"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skins" class="section animated-section" data-animation-offset="100" aria-labelledby="skins-heading">
-            <div class="container">
-                <h2 id="skins-heading" class="section-heading">Skins Exclusivas 🎨</h2>
-                <div class="refresh-btn-container" style="text-align:center; margin-bottom:1.25rem;">
-                    <button id="refreshSkinsBtn" class="btn btn-secondary refresh-btn" aria-label="Refrescar lista de skins">
-                        <span class="icon" aria-hidden="true">🔄</span> Refrescar Skins
-                    </button>
-                </div>
-                <div class="skin-search" style="text-align:center; margin-bottom:1rem;">
-                    <form id="skinSearchForm" class="skin-search-form" onsubmit="return false;">
-                        <input id="skinSearchInput" type="text" placeholder="Buscar skin por nombre (ej. Notch)" aria-label="Buscar skin">
-                        <button id="skinSearchBtn" class="btn btn-primary" aria-label="Buscar skin">Buscar</button>
-                        <button id="skinClearBtn" class="btn btn-secondary" type="button" aria-label="Limpiar búsqueda">Limpiar</button>
-                    </form>
-                </div>
-
-                <div class="skins-grid" id="skinsGrid">
-                    <div class="skin-card loading" aria-live="polite">
-                        <p style="color:var(--color-text-muted);">Cargando skins...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="curiosidades" class="section animated-section" data-animation-offset="100" aria-labelledby="curiosidades-heading">
-            <div class="container">
-                <h2 id="curiosidades-heading" class="section-heading">Datos Curiosos de Minecraft 💡</h2>
-
-                <div class="curiosity-controls" style="text-align:center; margin-bottom:1rem;">
-                    <button id="showMoreCuriosityBtn" class="btn btn-secondary" aria-label="Refrescar datos curiosos">
-                        <span class="icon" aria-hidden="true">✨</span> Mostrar nuevos
-                    </button>
-                </div>
-
-                <div class="curiosity-grid" id="curiosityGrid">
-                    <div class="curiosity-card curiosity-loading">
-                        <p class="curiosity-text">Cargando...</p>
-                    </div>
-                    <div class="curiosity-card curiosity-loading">
-                        <p class="curiosity-text">Cargando...</p>
-                    </div>
-                    <div class="curiosity-card curiosity-loading">
-                        <p class="curiosity-text">Cargando...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="servidor" class="section animated-section" data-animation-offset="100" aria-labelledby="servidor-heading">
-            <div class="container">
-                <h2 id="servidor-heading" class="section-heading">Servidor — NACIÓN DE FACTOS 🛡️</h2>
-
-                <div class="server-status-card">
-                    <h3 class="server-title">NACIÓN DE FACTOS — ¡Únete Ahora!</h3>
-                    
-                    <div class="server-ip-info">
-                        <p><strong>IP Java:</strong> <span id="javaIp">51.81.49.204:26347</span></p>
-                        <p><strong>Host Bedrock:</strong> <span id="bedrockHost">va5.holy.gg:26347</span></p>
-                    </div>
-                    
-                    <div class="server-data-grid">
-                        <div class="server-data-item">
-                            <p class="server-data-label">Estado</p>
-                            <p class="server-data-value" id="serverStatus"><span class="status-offline">Cargando...</span></p>
-                        </div>
-                        <div class="server-data-item">
-                            <p class="server-data-label">Jugadores</p>
-                            <p class="server-data-value" id="serverPlayers">--/--</p>
-                        </div>
-                        <div class="server-data-item">
-                            <p class="server-data-label">Ping</p>
-                            <p class="server-data-value" id="serverPing">-- ms</p>
-                        </div>
-                        <div class="server-data-item">
-                            <p class="server-data-label">Versión</p>
-                            <p class="server-data-value" id="serverVersion">Cargando...</p>
-                        </div>
-                    </div>
-
-                    <p class="server-motd" id="serverMotd">MOTD: Cargando mensaje del día...</p>
-
-                    <div class="server-actions">
-                        <button id="copyJavaBtn" class="btn btn-secondary" data-copy="51.81.49.204:26347" aria-label="Copiar IP Java al portapapeles">Copiar IP Java</button>
-                        <button id="copyBedrockBtn" class="btn btn-secondary" data-copy="va5.holy.gg:26347" aria-label="Copiar Host Bedrock al portapapeles">Copiar Host Bedrock</button>
-                        <button id="joinServerBtn" class="btn btn-primary btn-full" aria-label="Unirse al servidor de Minecraft">Unirse Ahora</button>
-                        <button id="refreshServerBtn" class="btn btn-secondary" aria-label="Actualizar estado del servidor">Refrescar Estado</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="discord" class="section animated-section" data-animation-offset="100" aria-labelledby="discord-heading">
-            <div class="container">
-                <h2 id="discord-heading" class="section-heading">Discord — Fuck se viene la decadencia 💬</h2>
-
-                <div class="discord-card">
-                    <h3 class="discord-title">Únete a nuestra Comunidad</h3>
-                    <div class="discord-icon">
-                        <img src="https://cdn.worldvectorlogo.com/logos/discord.svg" alt="Discord logo" class="discord-img" loading="lazy" width="72" height="72">
-                    </div>
-                    
-                    <p class="discord-stats" id="discordStats">
-                        Cargando estadísticas del servidor...
-                    </p>
-
-                    <a id="discordInviteLink" href="https://discord.gg/4qU4DsVCsF" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg" style="margin-top: 1rem;" aria-label="Unirse al servidor de Discord">
-                        <span class="icon" aria-hidden="true">🚀</span> Unirse al Discord
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== Galería Comunitaria (moved) ===== -->
-        <section id="galeria" class="section animated-section" data-animation-offset="100" aria-labelledby="galeria-heading">
-            <div class="container">
-                <h2 id="galeria-heading" class="section-heading">Galería de la Comunidad 🎒</h2>
-
-                <div class="quiz-card" style="max-width:880px; margin:0 auto 1rem;">
-                    <p style="margin-bottom:0.75rem; color:var(--color-text-muted);">Sube tus capturas relacionadas con Minecraft. Las imágenes se almacenan en el servidor y pueden ser moderadas por administradores.</p>
-
-                    <form id="uploadForm" style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;" enctype="multipart/form-data">
-                        <input id="uploadAuthor" type="text" placeholder="Tu nombre (opcional)" style="flex:1 1 180px; padding:0.5rem; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--color-text-light);">
-                        <input id="uploadCaption" type="text" placeholder="Descripción / caption" style="flex:2 1 320px; padding:0.5rem; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--color-text-light);">
-                        <input id="uploadFile" type="file" accept="image/*" aria-label="Subir imagen" style="flex:0 0 220px;">
-                        <button id="uploadBtn" class="btn btn-primary" type="button">Subir Imagen</button>
-                        <button id="adminToggleBtn" class="btn btn-secondary" type="button" style="margin-left:auto;">Abrir Panel Admin</button>
-                    </form>
-                </div>
-
-                <div id="galleryGrid" class="curiosity-grid" aria-live="polite">
-                    <!-- imágenes cargadas desde el servidor -->
-                </div>
-            </div>
-        </section>
-
-        <section id="creditos" class="section animated-section" data-animation-offset="100" aria-labelledby="creditos-heading">
-            <div class="container">
-                <h2 id="creditos-heading" class="section-heading">Créditos 🌟</h2>
-
-                <div class="credits-card" role="group" aria-label="Créditos del creador">
-                    <img src="https://cdn.discordapp.com/avatars/957101336976060467/60b4c474aa77b2cb07167984d3fc9425.webp?size=2048" alt="Logotipo - SoyMr mroks" class="credits-avatar" loading="lazy" width="96" height="96">
-                    <div class="credits-content">
-                        <div class="credits-name">
-                            <span>SoyMr mroks</span>
-                        </div>
-
-                        <div class="credits-badges" aria-label="Insignias" role="list">
-                            <span class="badge" role="listitem" tabindex="0" aria-label="Fundador" data-badge="Fundador">🏆</span>
-                            <span class="badge" role="listitem" tabindex="0" aria-label="Administrador" data-badge="Administrador">🛡️</span>
-                            <span class="badge" role="listitem" tabindex="0" aria-label="Creador de contenido" data-badge="Creador">✨</span>
-                        </div>
-
-                        <p class="credits-text">Creador de CrossCraft, administrador de NACIÓN DE FACTOS y del Discord. Apoyando la comunidad y gestionando contenido.</p>
-                    </div>
-                    <span class="sparkles" aria-hidden="true"></span>
-                </div>
-            </div>
-        </section>
-        
-    </main>
-    
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <p>&copy; 2025 CrossCraft. Todos los derechos reservados.</p>
-            <p style="margin-top:0.5rem; color:var(--color-text-muted);">Esta página está hecha por el amor a la comunidad de Minecraft.</p>
-        </div>
-    </footer>
-
-    <div id="skinModalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="modal-content" id="skinModalContent" role="document" tabindex="-1">
-            <h3 id="modalTitle" class="modal-title">Previsualizar Skin</h3>
-            
-            <div id="skinViewerContainer" class="skin-viewer-container" style="display:none;"></div>
-            
-            <div id="viewerControls" class="viewer-controls" style="display:none; margin-bottom:0.75rem;">
-                <button id="modalRotateToggle" class="btn btn-secondary" aria-pressed="false">Pausar rotación</button>
-                <button id="modalZoomIn" class="btn btn-secondary" aria-label="Acercar">+</button>
-                <button id="modalZoomOut" class="btn btn-secondary" aria-label="Alejar">−</button>
-                <select id="modalPresetSelect" class="btn" aria-label="Ángulo predefinido">
-                    <option value="front">Frontal</option>
-                    <option value="threequarter">3/4</option>
-                    <option value="close">Cercano</option>
-                </select>
-                <button id="modalCaptureBtn" class="btn btn-primary">Descargar render</button>
-            </div>
-
-            <img id="modalSkinImg" src="" alt="Skin en previsualización" loading="lazy" style="display: block;">
-            
-            <div class="modal-actions">
-                <button id="modalDownloadBtn" class="btn btn-primary" aria-label="Descargar skin">Descargar</button>
-                <button id="modalCloseBtn" class="btn btn-secondary" aria-label="Cerrar ventana modal">Cerrar (Esc)</button>
-            </div>
-        </div>
+  <!-- HERO -->
+  <section class="hero" role="region" aria-labelledby="hero-title">
+    <div class="container">
+      <h1 id="hero-title">CrossCraft — el refugio morado donde las skins respiran</h1>
+      <p style="margin-top:12px" class="subtitle">Previsualiza, prueba y descarga skins; descubre curiosidades y conéctate a Nación de Factos. Diseño liquid-glass, animaciones suaves y opción 3D para rotar las skins.</p>
     </div>
-    
-    <div id="toastContainer" class="toast-container"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Constantes y Variables ---
-            const SKINS_API_BASE = 'https://minotar.net/armor/body/';
-            const SKINS_DOWNLOAD_BASE = 'https://mc-heads.net/download/';
-            const SERVER_API_URL = 'https://api.mcsrvstat.us/2/51.81.49.204:26347';
-            const DISCORD_INVITE_CODE = '4qU4DsVCsF';
-            const DISCORD_API_URL = `https://discord.com/api/v9/invites/${DISCORD_INVITE_CODE}?with_counts=true`;
-            
-            const skinsGrid = document.getElementById('skinsGrid');
-            const refreshSkinsBtn = document.getElementById('refreshSkinsBtn');
-            const skinSearchForm = document.getElementById('skinSearchForm');
-            const skinSearchInput = document.getElementById('skinSearchInput');
-            const skinSearchBtn = document.getElementById('skinSearchBtn');
-            const skinClearBtn = document.getElementById('skinClearBtn');
-            const curiosityText = document.getElementById('curiosityText');
-            const showMoreCuriosityBtn = document.getElementById('showMoreCuriosityBtn');
-            const refreshServerBtn = document.getElementById('refreshServerBtn');
-            const toastContainer = document.getElementById('toastContainer');
-            
-            let displayedCuriosities = new Set();
-            let currentSkinUsername = '';
-            
-            // Lista local de nombres de usuario para skins
-            const SKIN_USERNAMES = [
-                'Notch', 'jeb_', 'Herobrine', 'Dinnerbone', 'Technoblade', 'Dream', 'Grian', 
-                'MumboJumbo', 'Skeppy', 'GoodTimesWithScar', 'Falsesymmetry', 'xisumavoid', 
-                'iJevin', 'Etho', 'TangoTek', 'VintageBeef', 'Docm77', 'Keralis', 
-                'BdoubleO100', 'Stressmonster101', 'JoeHills', 'Rendog', 'Welsknight',
-                'Cubfan135', 'ImpulseSV', 'Zedaph', 'CaptainSparklez', 'StampyLongnose',
-                'ibxtoycat', 'PewDiePie'
-            ];
-
-            // Lista local de datos curiosos
-            const CURIOSITY_DATA = [
-                'El enderman puede teletransportarse y recoger bloques.',
-                'Los creepers tienen miedo a los ocelotes y gatos, y huirán de ellos.',
-                'El bloque de Arena de Almas (Soul Sand) ralentiza el movimiento del jugador.',
-                'Un bloque de agua puede ser recogido con un cubo, pero un bloque de lava no puede ser recogido en el Nether.',
-                'La flor Wither Rose puede aparecer en el suelo donde una criatura muere a manos de un Wither o un Wither Skeleton.',
-                'El Golem de Nieve (Snow Golem) se derretirá si está en un bioma cálido o en el Nether/End.',
-                'En un día de Minecraft, el sol sale por el este y se pone por el oeste, pero un día solo dura 20 minutos de la vida real.',
-                'El efecto de poción de Hambre (Hunger) es infligido por el Pez Globo, que se puede pescar.',
-                'Si un rayo impacta en un aldeano, este se convierte en una bruja.',
-                'Los caballos y burros pueden ser equipados con armadura y cofres respectivamente.',
-                'El pico de diamante es la única herramienta capaz de minar obsidiana de forma eficiente.',
-                'En modo Hardcore, al morir, el mundo se borra o se te obliga a entrar en modo espectador.',
-                'La poción de Leche (Milk) quita todos los efectos de estado, tanto positivos como negativos.',
-                'Los ajolotes pueden ser domesticados y ayudan a los jugadores en combate subacuático.',
-                'Los piglins son neutrales a menos que el jugador abra un cofre o no lleve ninguna pieza de armadura de oro.',
-                'La probabilidad de que un zombie suelte una zanahoria o una patata es muy baja, menos del 2.5%.',
-                'El dragón del End tiene 200 puntos de salud (400 si se cuenta la barra de vida).'
-            ];
-            
-            // --- Helper Functions ---
-            
-            function showToast(message, type = 'info') {
-                const toast = document.createElement('div');
-                toast.classList.add('toast', type);
-                toast.textContent = message;
-                toastContainer.appendChild(toast);
-                
-                setTimeout(() => toast.classList.add('show'), 10);
-                
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => toast.remove(), 300);
-                }, 4000);
-                
-                if (toastContainer.style.display === 'none' || toastContainer.style.display === '') {
-                    toastContainer.style.display = 'flex';
-                }
-            }
-            
-            function copyToClipboard(text) {
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        showToast('¡Copiado al portapapeles!', 'success');
-                    }).catch(err => {
-                        console.error('Error al copiar:', err);
-                        showToast('Error al copiar. Copia manualmente: ' + text, 'error');
-                    });
-                } else {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    try {
-                        document.execCommand('copy');
-                        showToast('¡Copiado al portapapeles!', 'success');
-                    } catch (err) {
-                        showToast('Error al copiar (fallback). Copia manualmente: ' + text, 'error');
-                    }
-                    document.body.removeChild(textarea);
-                }
-            }
-            
-            async function fetchWithTimeout(url, options = {}, timeout = 8000) {
-                const controller = new AbortController();
-                const id = setTimeout(() => controller.abort(), timeout);
-                try {
-                    const response = await fetch(url, {
-                        ...options,
-                        signal: controller.signal
-                    });
-                    clearTimeout(id);
-                    return response;
-                } catch (error) {
-                    clearTimeout(id);
-                    if (error.name === 'AbortError') {
-                        throw new Error('Timeout: La solicitud tardó demasiado.');
-                    }
-                    throw error;
-                }
-            }
-            
-            // --- Navbar y Menú Móvil ---
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('navMenu');
-
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                hamburger.classList.toggle('active');
-                hamburger.setAttribute('aria-expanded', navMenu.classList.contains('active'));
-            });
-            
-            document.querySelectorAll('.nav-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (navMenu.classList.contains('active')) {
-                        navMenu.classList.remove('active');
-                        hamburger.classList.remove('active');
-                        hamburger.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            });
-
-            // --- Skins: Generación de Cards ---
-            
-            function getRandomSubset(array, count) {
-                const shuffled = [...array].sort(() => 0.5 - Math.random());
-                return shuffled.slice(0, Math.min(count, shuffled.length));
-            }
-
-            function generateSkinCards() {
-                skinsGrid.innerHTML = '';
-                const selectedUsernames = getRandomSubset(SKIN_USERNAMES, 12);
-
-                selectedUsernames.forEach((username, index) => {
-                    const card = document.createElement('div');
-                    card.classList.add('skin-card');
-                    
-                    const metaText = index < 3 ? 'Skin Popular' : 'Skin Aleatoria';
-                    const skinBodyUrl = `${SKINS_API_BASE}${username}/150.png`;
-
-                    card.innerHTML = `
-                        <img src="${skinBodyUrl}" alt="Render 2D de la skin de ${username}" loading="lazy" data-username="${username}">
-                        <strong>${username}</strong>
-                        <p class="skin-meta">${metaText}</p>
-                        <div class="skin-card-actions">
-                            <button class="btn btn-secondary btn-preview" data-username="${username}" aria-controls="skinModalBackdrop" aria-expanded="false">Previsualizar</button>
-                            <button class="btn btn-primary btn-download-card" data-username="${username}">Descargar</button>
-                        </div>
-                    `;
-                    skinsGrid.appendChild(card);
-                });
-            }
-
-            function showSkinResult(username) {
-                if (!username) return showToast('Introduce un nombre de usuario para buscar.', 'warning');
-                const u = username.trim();
-                if (!u) return showToast('Introduce un nombre válido.', 'warning');
-
-                skinsGrid.innerHTML = '';
-
-                const card = document.createElement('div');
-                card.className = 'skin-card skin-result-card';
-
-                const skinImgUrl = `${SKINS_API_BASE}${u}/320.png`;
-
-                card.innerHTML = `
-                    <img src="${skinImgUrl}" alt="Skin de ${u}" loading="lazy" data-username="${u}">
-                    <strong>${u}</strong>
-                    <p class="skin-meta">Resultado de búsqueda</p>
-                    <div class="skin-card-actions">
-                        <button class="btn btn-secondary btn-preview" data-username="${u}" aria-controls="skinModalBackdrop" aria-expanded="false">Previsualizar</button>
-                        <button class="btn btn-primary btn-download-card" data-username="${u}">Descargar</button>
-                    </div>
-                `;
-
-                skinsGrid.appendChild(card);
-            }
-
-            // Buscar skin: desde formulario o botón
-            function handleSkinSearch() {
-                const val = skinSearchInput.value || '';
-                if (!val.trim()) {
-                    showToast('Escribe un nombre para buscar la skin.', 'warning');
-                    return;
-                }
-                showSkinResult(val.trim());
-            }
-
-            skinSearchBtn.addEventListener('click', (e) => { e.preventDefault(); handleSkinSearch(); });
-            skinSearchForm.addEventListener('submit', (e) => { e.preventDefault(); handleSkinSearch(); });
-            skinClearBtn.addEventListener('click', (e) => { e.preventDefault(); skinSearchInput.value = ''; generateSkinCards(); });
-            
-            async function handleDownload(username) {
-                const downloadUrl = `https://minotar.net/download/${username}`;
-                
-                try {
-                    const response = await fetch(downloadUrl, { method: 'GET', mode: 'cors' });
-                    
-                    if (!response.ok) throw new Error('Respuesta de red no OK, usando fallback.');
-                    
-                    const blob = await response.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = `${username}_skin.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    a.remove();
-                    
-                    showToast(`Descarga de ${username} iniciada.`, 'success');
-                    
-                } catch (error) {
-                    console.error('Error en descarga fetch/blob, usando fallback:', error);
-                    window.open(`${SKINS_DOWNLOAD_BASE}${username}`, '_blank');
-                    showToast(`Descarga de ${username} falló. Abriendo página de descarga.`, 'warning');
-                }
-            }
-            
-            // Delegación de eventos para botones de skins
-            skinsGrid.addEventListener('click', (e) => {
-                const username = e.target.dataset.username;
-                if (!username) return;
-
-                if (e.target.classList.contains('btn-download-card')) {
-                    handleDownload(username);
-                } else if (e.target.classList.contains('btn-preview')) {
-                    currentSkinUsername = username;
-                    openSkinModal(username, e.target);
-                }
-            });
-
-            // Botón Refrescar Skins
-            refreshSkinsBtn.addEventListener('click', generateSkinCards);
-            
-            // --- Modal: Lógica ---
-            const modalBackdrop = document.getElementById('skinModalBackdrop');
-            const modalContent = document.getElementById('skinModalContent');
-            const modalSkinImg = document.getElementById('modalSkinImg');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalCloseBtn = document.getElementById('modalCloseBtn');
-            const modalDownloadBtn = document.getElementById('modalDownloadBtn');
-            const skinViewerContainer = document.getElementById('skinViewerContainer');
-            let focusedElementBeforeModal;
-            
-            function loadSkinViewer(username) {
-                if (window.skinview) {
-                    initializeSkinViewer(username);
-                    return;
-                }
-                
-                const script = document.createElement('script');
-                script.src = 'https://unpkg.com/skinview3d@2.0.7/dist/skinview3d.min.js';
-                script.onload = () => initializeSkinViewer(username);
-                script.onerror = () => {
-                    console.error('Error al cargar skinview3d. Usando imagen 2D.');
-                    skinViewerContainer.style.display = 'none';
-                    modalSkinImg.style.display = 'block';
-                };
-                document.head.appendChild(script);
-            }
-            
-            let currentViewer = null;
-            let viewerAutoRotate = true;
-
-            function initializeSkinViewer(username) {
-                modalSkinImg.style.display = 'none';
-                skinViewerContainer.style.display = 'block';
-
-                try {
-                    // limpiar contenedor
-                    skinViewerContainer.innerHTML = '';
-
-                    const canvas = document.createElement('canvas');
-                    let viewer = new window.skinview.SkinViewer({
-                        canvas: canvas,
-                        width: 320,
-                        height: 400,
-                        skin: `https://minotar.net/skin/${username}`
-                    });
-
-                    viewer.renderer.domElement.style.width = '100%';
-                    viewer.renderer.domElement.style.height = '100%';
-                    skinViewerContainer.appendChild(viewer.renderer.domElement);
-
-                    viewer.camera.position.set(0, 0, 45);
-                    viewer.loadCape(null);
-
-                    // Intentar usar el helper Rotating si está disponible
-                    try {
-                        if (window.skinview && window.skinview.Rotating) {
-                            viewer.animation = new window.skinview.Rotating(viewer, { speed: 0.05 });
-                            if (typeof viewer.animation.start === 'function') viewer.animation.start();
-                            viewerAutoRotate = true;
-                        }
-                    } catch (rotErr) {
-                        console.warn('Rotating helper no disponible o falló:', rotErr);
-                    }
-
-                    currentViewer = viewer;
-
-                    // mostrar controles
-                    const vc = document.getElementById('viewerControls');
-                    if (vc) vc.style.display = 'flex';
-
-                } catch (e) {
-                    console.error('Fallo en la inicialización de skinview3d:', e);
-                    skinViewerContainer.style.display = 'none';
-                    modalSkinImg.style.display = 'block';
-                }
-            }
-
-            function openSkinModal(username, triggerElement) {
-                focusedElementBeforeModal = triggerElement;
-                
-                const skinPreviewUrl = `${SKINS_API_BASE}${username}/320.png`;
-                modalSkinImg.src = skinPreviewUrl;
-                modalSkinImg.alt = `Skin grande de ${username}`;
-                modalTitle.textContent = `Previsualizar Skin: ${username}`;
-                
-                loadSkinViewer(username);
-
-                modalBackdrop.classList.add('active');
-                modalContent.focus();
-                triggerElement.setAttribute('aria-expanded', 'true');
-            }
-
-            function closeModal(triggerElement = focusedElementBeforeModal) {
-                modalBackdrop.classList.remove('active');
-                
-                // detener animación si existe
-                try {
-                    if (currentViewer && currentViewer.animation && typeof currentViewer.animation.stop === 'function') {
-                        currentViewer.animation.stop();
-                    }
-                } catch (e) { console.warn(e); }
-
-                currentViewer = null;
-                skinViewerContainer.innerHTML = '';
-                skinViewerContainer.style.display = 'none';
-                const vc = document.getElementById('viewerControls'); if (vc) vc.style.display = 'none';
-                modalSkinImg.style.display = 'block';
-                
-                if (triggerElement) {
-                    triggerElement.focus();
-                    triggerElement.setAttribute('aria-expanded', 'false');
-                }
-            }
-            
-            modalCloseBtn.addEventListener('click', () => closeModal());
-            modalDownloadBtn.addEventListener('click', () => {
-                handleDownload(currentSkinUsername);
-            });
-
-            // Controles adicionales del viewer
-            const modalRotateToggle = document.getElementById('modalRotateToggle');
-            const modalZoomIn = document.getElementById('modalZoomIn');
-            const modalZoomOut = document.getElementById('modalZoomOut');
-            const modalPresetSelect = document.getElementById('modalPresetSelect');
-            const modalCaptureBtn = document.getElementById('modalCaptureBtn');
-
-            if (modalRotateToggle) {
-                modalRotateToggle.addEventListener('click', () => {
-                    if (!currentViewer) return showToast('Viewer no inicializado.', 'warning');
-                    try {
-                        if (currentViewer.animation && typeof currentViewer.animation.stop === 'function') {
-                            if (modalRotateToggle.getAttribute('aria-pressed') === 'true') {
-                                currentViewer.animation.start && currentViewer.animation.start();
-                                modalRotateToggle.setAttribute('aria-pressed', 'false');
-                                modalRotateToggle.textContent = 'Pausar rotación';
-                            } else {
-                                currentViewer.animation.stop && currentViewer.animation.stop();
-                                modalRotateToggle.setAttribute('aria-pressed', 'true');
-                                modalRotateToggle.textContent = 'Reanudar rotación';
-                            }
-                        } else {
-                            showToast('Rotación no disponible.', 'info');
-                        }
-                    } catch (e) { console.error(e); showToast('No se pudo cambiar rotación.', 'error'); }
-                });
-            }
-
-            if (modalZoomIn) modalZoomIn.addEventListener('click', () => {
-                if (!currentViewer) return showToast('Viewer no inicializado.', 'warning');
-                try { currentViewer.camera.position.z = Math.max(20, currentViewer.camera.position.z - 6); } catch(e){console.warn(e)}
-            });
-
-            if (modalZoomOut) modalZoomOut.addEventListener('click', () => {
-                if (!currentViewer) return showToast('Viewer no inicializado.', 'warning');
-                try { currentViewer.camera.position.z = Math.min(120, currentViewer.camera.position.z + 6); } catch(e){console.warn(e)}
-            });
-
-            if (modalPresetSelect) modalPresetSelect.addEventListener('change', (e) => {
-                if (!currentViewer) return showToast('Viewer no inicializado.', 'warning');
-                const v = e.target.value;
-                try {
-                    if (v === 'front') currentViewer.camera.position.set(0, 0, 45);
-                    else if (v === 'threequarter') currentViewer.camera.position.set(20, 8, 50);
-                    else if (v === 'close') currentViewer.camera.position.set(0, 0, 30);
-                } catch (err) { console.warn(err); }
-            });
-
-            if (modalCaptureBtn) modalCaptureBtn.addEventListener('click', () => {
-                if (!currentViewer) return showToast('Viewer no inicializado.', 'warning');
-                try {
-                    const canvas = currentViewer.renderer.domElement;
-                    const data = canvas.toDataURL('image/png');
-                    const a = document.createElement('a');
-                    a.href = data;
-                    a.download = `${currentSkinUsername || 'skin'}_render.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                    showToast('Render descargado.', 'success');
-                } catch (err) { console.error(err); showToast('Error al capturar render.', 'error'); }
-            });
-            
-            modalBackdrop.addEventListener('click', (e) => {
-                if (e.target === modalBackdrop) {
-                    closeModal();
-                }
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
-                    closeModal();
-                }
-            });
-            
-            modalContent.addEventListener('keydown', (e) => {
-                if (e.key === 'Tab') {
-                    const focusableElements = modalContent.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                    const first = focusableElements[0];
-                    const last = focusableElements[focusableElements.length - 1];
-
-                    if (e.shiftKey) {
-                        if (document.activeElement === first) {
-                            last.focus();
-                            e.preventDefault();
-                        }
-                    } else {
-                        if (document.activeElement === last) {
-                            first.focus();
-                            e.preventDefault();
-                        }
-                    }
-                }
-            });
-
-            // --- Curiosidades: Lógica ---
-            function getUniqueRandoms(sourceArray, count) {
-                const pool = [...sourceArray];
-                const result = [];
-                while (result.length < count && pool.length) {
-                    const idx = Math.floor(Math.random() * pool.length);
-                    result.push(pool.splice(idx,1)[0]);
-                }
-                return result;
-            }
-
-            function fillCuriosityGrid(count = 3) {
-                const grid = document.getElementById('curiosityGrid');
-                const cards = Array.from(grid.querySelectorAll('.curiosity-card'));
-                const items = getUniqueRandoms(CURIOSITY_DATA, cards.length);
-
-                items.forEach((text, i) => {
-                    const card = cards[i];
-                    card.classList.remove('curiosity-loading');
-                    const p = card.querySelector('.curiosity-text');
-                    if (p) p.textContent = text;
-                    else card.innerHTML = `<p class="curiosity-text">${text}</p>`;
-                });
-            }
-
-            document.getElementById('showMoreCuriosityBtn').addEventListener('click', () => {
-                fillCuriosityGrid();
-                showToast('Nuevos datos curiosos cargados.', 'info');
-            });
-
-            // inicializa las 3 curiosidades
-            // (se llamará más abajo en la inicialización)
-            
-            // ===== Quiz: Lógica =====
-            const QUIZ_QUESTIONS = [
-                {q: '¿Cuál es el material necesario para fabricar un pico de diamante?', a: ['Madera','Piedra','Diamante','Hierro'], correct: 2},
-                {q: '¿Qué mob huye de los gatos u ocelotes?', a: ['Creeper','Esqueleto','Zombi','Enderman'], correct: 0},
-                {q: '¿Cómo se llama la dimensión donde vive el dragón final?', a: ['El Nether','El End','La Profundidad','La Cueva'], correct: 1},
-                {q: '¿Qué se obtiene al fundir mineral de hierro en un horno?', a: ['Lingote de hierro','Carbón','Oro','Piedra'], correct: 0},
-                {q: '¿Qué objeto evita que los Creepers exploten cerca de él?', a: ['Lava','Aire','Gato','Hongo'], correct: 2},
-                {q: '¿Cuál es el nombre del creador original de Minecraft?', a: ['Notch','Jeb','Kurt','Dinnerbone'], correct: 0},
-                {q: '¿Qué herramienta se usa para recolectar lana de una oveja sin matarla?', a: ['Tijeras','Espada','Hacha','Pico'], correct: 0},
-                {q: '¿Qué ocurre si un aldeano es golpeado por un rayo?', a: ['Se convierte en bruja','Muere al instante','Se teletransporta','Se vuelve zombi'], correct: 0},
-                {q: '¿Cuál es la velocidad aproximada del sprint en bloques por segundo?', a: ['4.3','5.6','3.1','6.8'], correct: 0},
-                {q: '¿Qué objeto necesitas para encender un portal al Nether?', a: ['Fuego/Yesca','Pico de diamante','Bloque de obsidiana','Polvo de blaze'], correct: 0},
-                {q: '¿Qué mob deja caer perlas al ser derrotado?', a: ['Enderman','Creeper','Blaze','Ghast'], correct: 0},
-                {q: '¿Cuál de estos bloques no se encuentra naturalmente en el Nether?', a: ['Netherrack','Red Nether Brick','Prismarine','Soul Sand'], correct: 2},
-                {q: '¿Qué necesita el jugador para domesticar un lobo?', a: ['Huesos','Carne','Manzanas','Trigo'], correct: 0},
-                {q: '¿Qué sucede al colocar un cubo de agua en el Nether?', a: ['Se evapora','Permanece','Se convierte en hielo','Se transforma en vapor dañino'], correct: 0},
-                {q: '¿Cuál es la principal fuente de experiencia al derrotar a los Blaze?', a: ['Perlas','Barras de blaze','Orbes de experiencia','Carbón'], correct: 2}
-            ];
-
-            const quizStartBtn = document.getElementById('quizStartBtn');
-            const quizNextBtn = document.getElementById('quizNextBtn');
-            const quizQuestionEl = document.getElementById('quizQuestion');
-            const quizAnswersEl = document.getElementById('quizAnswers');
-            const quizTimerEl = document.getElementById('quizTimer');
-            const quizProgressEl = document.getElementById('quizProgress');
-            const quizResultEl = document.getElementById('quizResult');
-
-            let quizState = { index: 0, score: 0, timeLeft: 20, running: false, selected: null, questions: [] };
-            let quizTimerInterval = null;
-
-            const QUIZ_PER_ROUND = 5; // número de preguntas por partida (configurable)
-
-            function startQuiz() {
-                // seleccionar aleatoriamente un subconjunto de preguntas para la partida
-                quizState.questions = getRandomSubset(QUIZ_QUESTIONS, QUIZ_PER_ROUND);
-                quizState.index = 0; quizState.score = 0; quizState.timeLeft = 20; quizState.running = true; quizState.selected = null;
-                quizStartBtn.style.display = 'none'; quizNextBtn.style.display = 'none'; quizResultEl.style.display = 'none';
-                renderQuizQuestion();
-                startTimer();
-            }
-
-            function startTimer() {
-                clearInterval(quizTimerInterval);
-                quizTimerInterval = setInterval(() => {
-                    if (!quizState.running) return;
-                    quizState.timeLeft -= 1;
-                    quizTimerEl.textContent = `Tiempo: ${quizState.timeLeft}s`;
-                    if (quizState.timeLeft <= 0) {
-                        clearInterval(quizTimerInterval);
-                        handleAnswer(null);
-                    }
-                }, 1000);
-            }
-
-            function renderQuizQuestion() {
-                const q = quizState.questions[quizState.index];
-                quizQuestionEl.textContent = q.q;
-                quizAnswersEl.innerHTML = '';
-                q.a.forEach((opt, i) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'answer-btn';
-                    btn.textContent = opt;
-                    btn.dataset.index = i;
-                    btn.addEventListener('click', () => handleAnswer(i));
-                    quizAnswersEl.appendChild(btn);
-                });
-                quizProgressEl.textContent = `Pregunta ${quizState.index+1}/${quizState.questions.length}`;
-                quizState.timeLeft = 20;
-                quizTimerEl.textContent = `Tiempo: ${quizState.timeLeft}s`;
-            }
-
-            function handleAnswer(selectedIdx) {
-                quizState.running = false;
-                clearInterval(quizTimerInterval);
-                const q = quizState.questions[quizState.index];
-
-                // marcar botones correcto/incorrect
-                Array.from(quizAnswersEl.children).forEach(btn => {
-                    const idx = Number(btn.dataset.index);
-                    if (idx === q.correct) btn.classList.add('correct');
-                    if (selectedIdx !== null && idx === selectedIdx && idx !== q.correct) btn.classList.add('wrong');
-                    btn.disabled = true;
-                });
-
-                if (selectedIdx === q.correct) {
-                    quizState.score += 1;
-                    showToast('Respuesta correcta ✅', 'success');
-                } else {
-                    showToast('Respuesta incorrecta ❌', 'warning');
-                }
-
-                quizNextBtn.style.display = (quizState.index < quizState.questions.length - 1) ? 'inline-flex' : 'none';
-                if (quizState.index >= quizState.questions.length - 1) finalizeQuiz();
-            }
-
-            quizNextBtn.addEventListener('click', () => {
-                quizState.index += 1;
-                quizState.running = true;
-                renderQuizQuestion();
-                startTimer();
-                quizNextBtn.style.display = 'none';
-            });
-
-            quizStartBtn.addEventListener('click', startQuiz);
-
-            function finalizeQuiz() {
-                quizResultEl.style.display = 'block';
-                const total = quizState.questions.length;
-                const percent = Math.round((quizState.score / total) * 100);
-                let feedback = 'Inténtalo de nuevo.';
-                if (percent >= 80) feedback = 'Excelente — ¡Eres un experto!';
-                else if (percent >= 60) feedback = 'Bien hecho — Buen trabajo!';
-                else if (percent >= 40) feedback = 'No está mal — Sigue practicando.';
-
-                quizResultEl.innerHTML = `<strong>Puntuación:</strong> ${quizState.score}/${total} — <strong>${percent}%</strong><p>${feedback}</p>`;
-
-                // otorgar insignia si cumple condición (>=80%)
-                if (percent >= 80) {
-                    grantLocalBadge('Quiz Master');
-                    quizResultEl.innerHTML += `<p class="badge-earned">¡Has ganado la insignia "Quiz Master"!</p>`;
-                }
-
-                quizStartBtn.style.display = 'inline-flex';
-                quizNextBtn.style.display = 'none';
-            }
-
-            // ===== Sistema simple de insignias local (localStorage) =====
-            function grantLocalBadge(name) {
-                const key = 'crosscraft_badges_v1';
-                const stored = JSON.parse(localStorage.getItem(key) || '[]');
-                if (!stored.includes(name)) {
-                    stored.push(name);
-                    localStorage.setItem(key, JSON.stringify(stored));
-                    showToast(`Insignia obtenida: ${name}`, 'success');
-                    addBadgeToCredits(name);
-                }
-            }
-
-            function addBadgeToCredits(name) {
-                // crear una insignia visual en #creditos
-                const badges = document.querySelector('.credits-badges');
-                if (!badges) return;
-                const span = document.createElement('span');
-                span.className = 'badge';
-                span.setAttribute('tabindex','0');
-                span.setAttribute('role','listitem');
-                span.setAttribute('data-badge', name);
-                span.textContent = '🏅';
-                badges.appendChild(span);
-            }
-
-            // al cargar la página, restaurar insignias locales
-            (function restoreBadges() {
-                const key = 'crosscraft_badges_v1';
-                const stored = JSON.parse(localStorage.getItem(key) || '[]');
-                stored.forEach(b => addBadgeToCredits(b));
-            })();
-
-            // Manejo táctil para insignias: al tocar en móvil mostrar tooltip (toggle)
-            document.addEventListener('click', (e) => {
-                const target = e.target.closest('.badge');
-                if (!target) {
-                    // ocultar tooltips visibles si clic fuera
-                    document.querySelectorAll('.badge.show-tooltip').forEach(b => b.classList.remove('show-tooltip'));
-                    return;
-                }
-
-                // Toggle clase que muestra el tooltip (además del hover/focus)
-                if (target.classList.contains('show-tooltip')) {
-                    target.classList.remove('show-tooltip');
-                } else {
-                    // cerrar otros
-                    document.querySelectorAll('.badge.show-tooltip').forEach(b => b.classList.remove('show-tooltip'));
-                    target.classList.add('show-tooltip');
-                    // auto-hide después de 4s
-                    setTimeout(() => target.classList.remove('show-tooltip'), 4000);
-                }
-            });
-
-            // Asegurarse que focus también muestre tooltip para accesibilidad
-            document.addEventListener('focusin', (e) => {
-                const b = e.target.closest('.badge');
-                if (b) b.classList.add('show-tooltip');
-            });
-            document.addEventListener('focusout', (e) => {
-                const b = e.target.closest('.badge');
-                if (b) b.classList.remove('show-tooltip');
-            });
-            
-            // --- API: Servidor Minecraft Status ---
-
-            function cleanMotd(motd) {
-                if (Array.isArray(motd)) {
-                    motd = motd.join('\n');
-                }
-                if (!motd) return 'Sin mensaje del día (MOTD).';
-                return motd.replace(/(&|§)[0-9a-fk-or]/gi, '').trim();
-            }
-
-            async function fetchServerStatus() {
-                const statusElement = document.getElementById('serverStatus');
-                const playersElement = document.getElementById('serverPlayers');
-                const pingElement = document.getElementById('serverPing');
-                const versionElement = document.getElementById('serverVersion');
-                const motdElement = document.getElementById('serverMotd');
-                
-                statusElement.innerHTML = `<span class="status-offline">Cargando...</span>`;
-                
-                try {
-                    const response = await fetchWithTimeout(SERVER_API_URL);
-                    if (!response.ok) throw new Error('Error de red o API no disponible.');
-                    
-                    const data = await response.json();
-                    
-                    if (data.online) {
-                        statusElement.innerHTML = `<span class="status-online">Online</span>`;
-                        playersElement.textContent = `${data.players.online}/${data.players.max}`;
-                        pingElement.textContent = `${data.ping || 'N/A'} ms`;
-                        versionElement.textContent = data.version || 'Desconocida';
-                        motdElement.textContent = cleanMotd(data.motd.clean) || 'Servidor Online.';
-                        showToast('Estado del servidor actualizado.', 'success');
-                    } else {
-                        throw new Error('Servidor reportado como Offline por la API.');
-                    }
-
-                } catch (error) {
-                    console.error('Fallo al obtener estado del servidor:', error);
-                    statusElement.innerHTML = `<span class="status-offline">Offline</span>`;
-                    playersElement.textContent = '0/0';
-                    pingElement.textContent = '-- ms';
-                    versionElement.textContent = 'API Falló';
-                    motdElement.textContent = '¡Fallo al consultar el estado del servidor! Es posible que CORS esté bloqueando la solicitud o el servidor esté caído. Intenta refrescar.';
-                    showToast('Error al obtener el estado del servidor.', 'error');
-                }
-            }
-            
-            // Botones de Servidor
-            document.getElementById('copyJavaBtn').addEventListener('click', (e) => copyToClipboard(e.target.dataset.copy));
-            document.getElementById('copyBedrockBtn').addEventListener('click', (e) => copyToClipboard(e.target.dataset.copy));
-            document.getElementById('refreshServerBtn').addEventListener('click', fetchServerStatus);
-            document.getElementById('joinServerBtn').addEventListener('click', () => {
-                window.open('minecraft://?join=51.81.49.204:26347', '_self');
-                showToast('Intentando unirse al servidor...', 'info');
-            });
-            
-            // --- API: Discord Status ---
-
-            async function fetchDiscordStatus() {
-                const discordStats = document.getElementById('discordStats');
-                
-                try {
-                    const response = await fetchWithTimeout(DISCORD_API_URL);
-                    if (!response.ok) throw new Error('Error de red o API de Discord no disponible.');
-                    
-                    const data = await response.json();
-                    
-                    if (data.approximate_member_count && data.approximate_presence_count) {
-                        discordStats.innerHTML = `${data.approximate_member_count.toLocaleString()} Miembros Totales<br>${data.approximate_presence_count.toLocaleString()} Miembros Online`;
-                    } else {
-                        throw new Error('Datos incompletos de la API de Discord.');
-                    }
-
-                } catch (error) {
-                    console.error('Fallo al obtener estado del Discord (CORS/Error de red):', error);
-                    discordStats.innerHTML = 'Estadísticas no disponibles (posible bloqueo CORS o error de API). ¡Únete y compruébalo tú mismo!';
-                    document.getElementById('discordInviteLink').textContent = 'Ir al Discord';
-                }
-            }
-            
-            // --- Animación: Intersection Observer (Fade-in + Slide-up) ---
-
-            const sections = document.querySelectorAll('.animated-section');
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                    }
-                });
-            }, observerOptions);
-
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // --- Inicialización de la página ---
-            generateSkinCards();
-            fillCuriosityGrid();
-            fetchServerStatus();
-            fetchDiscordStatus();
-
-            // ===== Galería: integración con backend =====
-            const galleryGrid = document.getElementById('galleryGrid');
-            const uploadBtn = document.getElementById('uploadBtn');
-            const uploadFile = document.getElementById('uploadFile');
-            const uploadAuthor = document.getElementById('uploadAuthor');
-            const uploadCaption = document.getElementById('uploadCaption');
-            const adminToggleBtn = document.getElementById('adminToggleBtn');
-
-            let adminAuthHeader = null; // 'Basic ...' si admin autenticado en la sesión
-
-            async function loadGallery() {
-                try {
-                    const res = await fetch('/api/gallery');
-                    const items = await res.json();
-                    galleryGrid.innerHTML = '';
-                    items.forEach(it => {
-                        const card = document.createElement('div');
-                        card.className = 'curiosity-card';
-
-                        // Mostrar metadatos si el admin está autenticado en esta sesión
-                        const metaHtml = adminAuthHeader ? `<div style="margin-top:6px; color:var(--color-text-muted); font-size:0.82rem;">ID: ${it.id} · file: ${escapeHtml(it.url.split('/').pop())} · subido: ${escapeHtml(it.uploaded_at || '')}</div>` : '';
-
-                        card.innerHTML = `
-                            <div style="width:100%; display:flex; flex-direction:column; gap:0.5rem;">
-                                <img src="${it.url}" alt="${escapeHtml(it.caption || it.originalname)}" style="width:100%; border-radius:8px; max-height:360px; object-fit:cover;">
-                                <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem;">
-                                    <div style="flex:1">
-                                        <strong style="display:block; color:var(--color-text-light);">${escapeHtml(it.author || 'Anónimo')}</strong>
-                                        <small style="color:var(--color-text-muted);">${escapeHtml(it.caption || '')}</small>
-                                        ${metaHtml}
-                                    </div>
-                                    <div class="gallery-actions" data-id="${it.id}"></div>
-                                </div>
-                            </div>`;
-                        galleryGrid.appendChild(card);
-                    });
-                } catch (e) {
-                    console.error('Error cargando galería', e);
-                }
-            }
-
-            function escapeHtml(s) {
-                if (!s) return '';
-                return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            }
-
-            uploadBtn.addEventListener('click', async () => {
-                const file = uploadFile.files[0];
-                if (!file) return showToast('Selecciona una imagen para subir.', 'warning');
-                const form = new FormData();
-                form.append('image', file);
-                form.append('caption', uploadCaption.value || '');
-                form.append('author', uploadAuthor.value || '');
-
-                try {
-                    const res = await fetch('/api/upload', { method: 'POST', body: form });
-                    let data = null;
-                    try { data = await res.json(); } catch(e) { data = null; }
-                    if (res.ok && data && data.success) {
-                        showToast('Imagen subida correctamente.', 'success');
-                        uploadFile.value = '';
-                        uploadCaption.value = '';
-                        uploadAuthor.value = '';
-                        loadGallery();
-                    } else {
-                        const errMsg = data && data.error ? data.error : `Status ${res.status}`;
-                        showToast('Error al subir: ' + errMsg, 'error');
-                        console.error('Upload response:', res.status, data);
-                    }
-                } catch (err) {
-                    console.error('Upload failed', err);
-                    showToast('Fallo al conectar con el servidor de la galería.', 'error');
-                }
-            });
-
-            // Panel admin simple: solicita usuario/clave y añade botones de borrar
-            adminToggleBtn.addEventListener('click', async () => {
-                const user = prompt('Admin user:');
-                if (user === null) return;
-                const pass = prompt('Admin password:');
-                if (pass === null) return;
-                adminAuthHeader = 'Basic ' + btoa(`${user}:${pass}`);
-                // intentar listar y habilitar botones
-                try {
-                    await loadGallery();
-                    enableAdminControls();
-                    showToast('Panel admin habilitado en esta sesión.', 'info');
-                } catch (e) {
-                    showToast('No se pudo activar el panel admin.', 'error');
-                }
-            });
-
-            function enableAdminControls() {
-                document.querySelectorAll('.gallery-actions').forEach(container => {
-                    container.innerHTML = '';
-                    const id = container.getAttribute('data-id');
-                    const del = document.createElement('button');
-                    del.className = 'btn btn-secondary';
-                    del.textContent = 'Eliminar';
-                    del.addEventListener('click', async () => {
-                        if (!adminAuthHeader) return alert('No autenticado.');
-                        if (!confirm('¿Eliminar imagen permanentemente?')) return;
-                        try {
-                            const res = await fetch(`/api/image/${id}`, { method: 'DELETE', headers: { 'Authorization': adminAuthHeader } });
-                            const data = await res.json();
-                            if (res.ok && data.success) {
-                                showToast('Imagen eliminada.', 'success');
-                                loadGallery();
-                            } else {
-                                showToast('Error borrando: ' + (data.error || 'error'), 'error');
-                            }
-                        } catch (err) {
-                            console.error(err);
-                            showToast('Fallo al conectar con backend.', 'error');
-                        }
-                    });
-                    container.appendChild(del);
-                });
-            }
-
-            // cargar galería al inicio
-            loadGallery();
-        });
-    </script>
-
+  </section>
+
+  <!-- MAIN -->
+  <main class="container" role="main">
+
+    <!-- SKINS SECTION -->
+    <section id="skins" class="glass" aria-labelledby="skins-title">
+      <div class="section-title">
+        <div>
+          <div class="title" id="skins-title">Skins Populares</div>
+          <div class="subtitle">Busca por nombre o refresca para ver nuevas selecciones.</div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="search" role="search" aria-label="Buscar skins">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:0.9;margin-left:6px"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <input id="skinQuery" placeholder="Buscar skin (ej: Dream) — Enter para validar con Mojang" aria-label="Buscar skin por nombre">
+          </div>
+          <button id="btnRefresh" class="btn" title="Refrescar skins">Refrescar</button>
+          <button id="btnSeed" class="btn ghost" title="Mostrar sugerencias">Sugerencias</button>
+        </div>
+      </div>
+
+      <div id="skinsGrid" class="skins-grid" aria-live="polite" aria-busy="false">
+        <!-- Cards populated by JS -->
+      </div>
+    </section>
+
+    <!-- CURIOSITIES + SERVER/DISCORD -->
+    <section style="margin-top:22px;display:grid;grid-template-columns:1fr 360px;gap:18px">
+      <div class="glass" id="curiosities" aria-labelledby="curio-title">
+        <div class="section-title">
+          <div>
+            <div class="title" id="curio-title">Datos Curiosos</div>
+            <div class="subtitle">Pequeñas maravillas y secretos del mundo Minecraft.</div>
+          </div>
+          <div><button id="btnMoreFact" class="btn ghost">Mostrar otro</button></div>
+        </div>
+
+        <div id="factBox" style="margin-top:12px;font-size:18px;color:#eaeef6"></div>
+      </div>
+
+      <aside>
+        <div class="server-box glass" id="serverBox" role="region" aria-labelledby="server-title">
+          <div class="server-title" id="server-title">NACIÓN DE FACTOS — Status</div>
+          <div style="margin-top:8px;font-size:14px;color:var(--muted)">Java: <strong>51.81.49.204:26347</strong></div>
+          <div style="margin-top:12px">
+            <div class="server-row"><div class="k">Estado</div><div class="v" id="sv_status">—</div></div>
+            <div class="server-row"><div class="k">Jugadores</div><div class="v" id="sv_players">—</div></div>
+            <div class="server-row"><div class="k">Ping</div><div class="v" id="sv_ping">—</div></div>
+            <div class="server-row"><div class="k">Versión</div><div class="v" id="sv_version">—</div></div>
+            <div class="server-row"><div class="k">MOTD</div><div class="v" id="sv_motd" style="font-weight:600;color:var(--muted)">—</div></div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn" onclick="copyToClipboard('51.81.49.204:26347')">Copiar Java</button>
+            <button class="btn ghost" onclick="copyToClipboard('va5.holy.gg:26347')">Copiar Bedrock</button>
+          </div>
+          <div style="margin-top:10px"><button class="btn ghost" id="refreshServer">Refrescar</button></div>
+          <div style="margin-top:10px;color:var(--muted);font-size:12px">Nota: algunos endpoints públicos pueden bloquearse por CORS cuando se prueba localmente. Si ves "No disponible", inténtalo desde un hosting real.</div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="discord-box glass" id="discordBox" role="region" aria-label="Discord widget">
+          <img src="https://cdn.discordapp.com/attachments/1374967908538519635/1439676343179677880/a_e72faee3796738ef6facb1c45b3bc1ba.png?ex=691b6294&is=691a1114&hm=dc3459f6fa9ffd2c996c89d08cc903046d07aa308bac11f5d3232f988fe08086" alt="Discord logo">
+          <div>
+            <div style="font-weight:800">Fuck se viene la decadencia</div>
+            <div class="subtitle" id="discordCounts">Cargando miembros...</div>
+            <div style="margin-top:10px"><a class="btn" target="_blank" rel="noreferrer" href="https://discord.gg/4qU4DsVCsF">Unirse</a></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+  </main>
+
+  <!-- MODAL PREVIEW (2D + Optional 3D viewer) -->
+  <div id="previewModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-panel">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+        <img id="previewImg" src="" alt="Preview skin">
+        <div style="display:flex;gap:8px">
+          <button id="downloadNow" class="btn">Descargar</button>
+          <button id="toggle3D" class="btn ghost">Activar 3D</button>
+          <button id="closeModal" class="btn ghost">Cerrar</button>
+        </div>
+      </div>
+      <div class="info" style="flex:1">
+        <h3 id="previewName" style="margin:0;color:var(--purple-2)"></h3>
+        <p id="previewNote" style="color:var(--muted);margin-top:8px">Puedes descargar o activar la vista 3D (si el navegador lo permite).</p>
+        <div id="viewerContainer" style="margin-top:12px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Credits -->
+  <footer id="credits">
+    <div class="credits">
+      <img src="https://cdn.discordapp.com/avatars/957101336976060467/60b4c474aa77b2cb07167984d3fc9425.webp?size=2048" alt="SoyMr mroks">
+      <div style="text-align:left">
+        <div style="font-size:20px;color:var(--purple-2);font-weight:800">SoyMr mroks</div>
+        <div style="color:var(--muted);margin-top:6px">Creador y alma detrás de CrossCraft, NACIÓN DE FACTOS y la comunidad de Discord.</div>
+        <div class="badges" aria-hidden="false">
+          <div class="badge">Propietario</div>
+          <div class="badge">Admin</div>
+          <div class="badge">Developer</div>
+        </div>
+      </div>
+    </div>
+    <p style="color:var(--muted);margin-top:14px">© <span id="year"></span> CrossCraft — Diseño liquid glass morado.</p>
+  </footer>
+
+<script>
+/* =================== CONFIG & UTILITIES ===================
+   Notes:
+   - Mojang API: https://api.mojang.com/users/profiles/minecraft/{username}
+     -> returns 204/empty if not found. If found returns {id, name}
+   - Crafatar: https://crafatar.com/renders/body/{uuid}?overlay
+     - skin: https://crafatar.com/skins/{uuid}
+   - mc-heads / minotar can be used as fallback images
+   - Server status: https://api.mcsrvstat.us/2/{host:port}
+   - Discord invite counts: https://discord.com/api/v9/invites/{code}?with_counts=true
+   - skinview3d loaded dynamically from unpkg if user enables 3D
+   - sessionStorage caching used (TTL 60s)
+   - SFTP note: browsers can't access sftp URLs; use sftp://node-va5.holy.gg:2022 to upload assets to your server from your client/FTP tool.
+   ========================================================== */
+
+const CONFIG = {
+  SERVER_JAVA: '51.81.49.204:26347',
+  SERVER_BEDROCK: 'va5.holy.gg:26347',
+  DISCORD_INVITE: '4qU4DsVCsF',
+  MOJANG_PROFILE: 'https://api.mojang.com/users/profiles/minecraft/',
+  CRAFATAR_BODY: (uuid) => `https://crafatar.com/renders/body/${uuid}?size=512&overlay`,
+  CRAFATAR_SKIN: (uuid) => `https://crafatar.com/skins/${uuid}`,
+  MCSRVSTAT: (host) => `https://api.mcsrvstat.us/2/${host}`,
+  DISCORD_INVITE_API: (code) => `https://discord.com/api/v9/invites/${code}?with_counts=true`,
+  SKIN_VIEWER_SRC: 'https://unpkg.com/skinview3d@1.1.7/dist/skinview3d.min.js',
+  CACHE_TTL_MS: 60 * 1000
+};
+
+/* --- Helper: toast --- */
+const toastEl = document.getElementById('toast');
+function showToast(msg, t=2200){
+  toastEl.textContent = msg;
+  toastEl.style.display = 'block';
+  toastEl.style.opacity = '1';
+  setTimeout(()=> { toastEl.style.opacity='0'; setTimeout(()=> toastEl.style.display='none', 300); }, t);
+}
+
+/* --- Helper: fetch with timeout & error handling --- */
+async function fetchWithTimeout(url, opts = {}, timeout = 9000){
+  const ctrl = new AbortController();
+  const id = setTimeout(()=> ctrl.abort(), timeout);
+  try{
+    const res = await fetch(url, {...opts, signal: ctrl.signal});
+    clearTimeout(id);
+    return res;
+  }catch(e){
+    clearTimeout(id);
+    throw e;
+  }
+}
+
+/* ===================== Skins logic ===================== */
+
+/* Local fallback list (60 names) */
+const LOCAL_SKINS = [
+  'Steve','Alex','Dream','Technoblade','TommyInnit','Notch','BadBoyHalo','GeorgeNotFound','Skeppy','Quackity',
+  'Ranboo','PewDiePie','CaptainSparklez','AntVenom','Grian','LDShadowLady','JeromeASF','BajanCanadian','IBxtoycat','Aphmau',
+  'W4RM','Purpled','Tubbo','Etho','Aureylian','Logdotzip','CaptainPuffy','Keralis','SamDream','Fallen',
+  'Moon','Shadow','Nova','Ruby','Pixel','Knight','DarkSoul','Frost','Viper','Zero',
+  'Drako','Lux','Spectre','Ghost','Ender','Miner','Builder','Wizard','Paladin','Skye',
+  'Nox','Rift','Shiro','Luna','Echo','Volt','Sora','Zephyr','Nyx','Rune'
+];
+
+/* Build initial grid (30 items) */
+const skinsGrid = document.getElementById('skinsGrid');
+const skinsQueryInput = document.getElementById('skinQuery');
+
+function shuffle(arr){ return arr.slice().sort(()=>Math.random()-0.5); }
+
+function clearGrid(){ skinsGrid.innerHTML = ''; }
+
+function createSkinCard({displayName, imgSrc, uuid}) {
+  const card = document.createElement('div');
+  card.className = 'skin-card';
+  card.innerHTML = `
+    <img class="skin-thumb" src="${imgSrc}" alt="Skin ${displayName}" loading="lazy"/>
+    <div class="skin-name">${displayName}</div>
+    <div class="skin-meta">Skin popular</div>
+    <div class="card-actions">
+      <button class="primary" data-action="preview" data-name="${displayName}" data-uuid="${uuid ?? ''}">Previsualizar</button>
+      <button class="muted" data-action="download" data-name="${displayName}" data-uuid="${uuid ?? ''}">Descargar</button>
+    </div>
+  `;
+  return card;
+}
+
+/* Use Mojang API to resolve username -> uuid */
+async function resolveUsernameToUUID(username){
+  // sessionStorage caching
+  const key = `mc_uuid_${username.toLowerCase()}`;
+  try{
+    const cached = sessionStorage.getItem(key);
+    if(cached){
+      const parsed = JSON.parse(cached);
+      if(Date.now() - parsed.ts < CONFIG.CACHE_TTL_MS) return parsed.value;
+    }
+  }catch(e){}
+  try{
+    const res = await fetchWithTimeout(CONFIG.MOJANG_PROFILE + encodeURIComponent(username), {}, 7000);
+    if(res.status === 204 || res.status === 204 || res.status === 204) return null; // not found
+    if(!res.ok) return null;
+    const json = await res.json();
+    const uuid = json && (json.id || json.uuid || null);
+    if(uuid){
+      try{ sessionStorage.setItem(key, JSON.stringify({ts:Date.now(), value:uuid})); }catch(e){}
+      return uuid;
+    }
+    return null;
+  }catch(err){
+    return null;
+  }
+}
+
+/* Build grid function: select 30 from LOCAL_SKINS shuffled or filtered by query */
+async function populateSkins(query=''){
+  skinsGrid.setAttribute('aria-busy','true');
+  clearGrid();
+  let list = shuffle(LOCAL_SKINS);
+  // if user provided a query and pressed Enter, we try to resolve via Mojang
+  if(query && query.trim().length >= 2){
+    const q = query.trim();
+    // First, try Mojang to get UUID
+    showToast('Buscando usuario en Mojang...');
+    const uuid = await resolveUsernameToUUID(q);
+    if(uuid){
+      // If found, show that skin first and include others
+      const img = CONFIG.CRAFATAR_BODY(uuid);
+      skinsGrid.appendChild(createSkinCard({displayName:q, imgSrc: img, uuid}));
+      // fill remainder with shuffled local
+      list = list.filter(n => n.toLowerCase() !== q.toLowerCase());
+    } else {
+      // Not found — we'll use mc-heads/minotar images by name fallback (no uuid)
+      // We'll still include the query name as an attempted card (image may be approximate)
+      const img = `https://mc-heads.net/body/${encodeURIComponent(q)}`;
+      skinsGrid.appendChild(createSkinCard({displayName:q, imgSrc: img, uuid: null}));
+      list = list.filter(n => n.toLowerCase() !== q.toLowerCase());
+    }
+  }
+
+  // Fill to 30 cards
+  const needed = 30 - skinsGrid.children.length;
+  for(let i=0; i<needed && i<list.length; i++){
+    const name = list[i];
+    // We can attempt to use session cached UUID quickly else use mc-heads render by name
+    const uuidKey = `mc_uuid_${name.toLowerCase()}`;
+    let uuid = null;
+    try{
+      const cached = JSON.parse(sessionStorage.getItem(uuidKey) || 'null');
+      if(cached && Date.now() - cached.ts < CONFIG.CACHE_TTL_MS) uuid = cached.value;
+    }catch(e){}
+    const img = uuid ? CONFIG.CRAFATAR_BODY(uuid) : `https://mc-heads.net/body/${encodeURIComponent(name)}`;
+    skinsGrid.appendChild(createSkinCard({displayName:name, imgSrc: img, uuid: uuid ?? null}));
+  }
+
+  skinsGrid.setAttribute('aria-busy','false');
+}
+
+/* Event delegation for preview & download */
+skinsGrid.addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button');
+  if(!btn) return;
+  const action = btn.dataset.action;
+  const name = btn.dataset.name;
+  const uuid = btn.dataset.uuid || null;
+  if(action === 'preview') return openPreview(name, uuid);
+  if(action === 'download') return downloadSkin(name, uuid);
+});
+
+/* Preview modal & 3D viewer logic */
+const modal = document.getElementById('previewModal');
+const previewImg = document.getElementById('previewImg');
+const previewName = document.getElementById('previewName');
+const downloadNowBtn = document.getElementById('downloadNow');
+const toggle3DBtn = document.getElementById('toggle3D');
+const viewerContainer = document.getElementById('viewerContainer');
+let currentSkin = {name:null, uuid:null, image:null};
+let skinViewerInstance = null;
+let skinviewLoaded = false;
+
+async function openPreview(name, uuid){
+  currentSkin.name = name;
+  currentSkin.uuid = uuid;
+  // determine image
+  let imageUrl = uuid ? CONFIG.CRAFATAR_BODY(uuid) : `https://mc-heads.net/body/${encodeURIComponent(name)}`;
+  previewImg.src = imageUrl;
+  previewName.textContent = name;
+  downloadNowBtn.onclick = ()=> downloadSkin(name, uuid);
+  // reset viewer
+  if(skinViewerInstance){
+    try{ skinViewerInstance.destroy(); }catch(e){}
+    skinViewerInstance = null;
+  }
+  viewerContainer.innerHTML = ''; // cleaned if had previous viewer
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+  document.addEventListener('keydown', escClose);
+  // preload 3D lib lazy on first open if user toggles, otherwise we keep it off
+  // note: skinview3d may be blocked by CSP/CORS on some hosts
+}
+
+function closePreview(){
+  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+  document.removeEventListener('keydown', escClose);
+  if(skinViewerInstance){ try{ skinViewerInstance.destroy(); }catch(e){} skinViewerInstance = null; viewerContainer.innerHTML = ''; }
+}
+function escClose(e){ if(e.key === 'Escape') closePreview(); }
+document.getElementById('closeModal').addEventListener('click', closePreview);
+modal.addEventListener('click', (e)=> { if(e.target === modal) closePreview(); });
+
+toggle3DBtn.addEventListener('click', async () => {
+  // load skinview3d dynamically if not loaded
+  if(!currentSkin.name) return showToast('No hay skin seleccionada');
+  if(!skinviewLoaded){
+    showToast('Cargando viewer 3D (puede tardar)...');
+    try{
+      await loadScript(CONFIG.SKIN_VIEWER_SRC);
+      skinviewLoaded = true;
+    }catch(e){
+      skinviewLoaded = false;
+      showToast('No se pudo cargar el viewer 3D (bloqueado o no disponible).');
+      return;
+    }
+  }
+  // initialize viewer
+  try{
+    const {SkinViewer} = window;
+    if(!SkinViewer) throw new Error('no viewer lib');
+    // destroy previous if exists
+    if(skinViewerInstance){ try{ skinViewerInstance.destroy(); }catch(e){} skinViewerInstance = null; viewerContainer.innerHTML = ''; }
+    const viewerEl = document.createElement('div');
+    viewerEl.style.width = '320px';
+    viewerEl.style.height = '360px';
+    viewerContainer.appendChild(viewerEl);
+    const viewer = new SkinViewer({
+      width: 320,
+      height: 360,
+      canvas: viewerEl
+    });
+    const texture = currentSkin.uuid ? CONFIG.CRAFATAR_SKIN(currentSkin.uuid) : `https://mc-heads.net/body/${encodeURIComponent(currentSkin.name)}`;
+    try { viewer.loadSkin(texture); } catch(err){ /* ignore */ }
+    skinViewerInstance = viewer;
+  }catch(err){
+    showToast('Viewer 3D no disponible en este navegador.');
+  }
+});
+
+/* Helper to dynamically load script */
+function loadScript(src){
+  return new Promise((resolve, reject) => {
+    if(document.querySelector(`script[src="${src}"]`)) return resolve();
+    const s = document.createElement('script');
+    s.src = src;
+    s.async = true;
+    s.onload = () => resolve();
+    s.onerror = (e) => reject(e);
+    document.body.appendChild(s);
+  });
+}
+
+/* Download implementation: fetch -> blob -> save, fallback to external page */
+async function downloadSkin(name, uuid){
+  showToast('Preparando descarga...');
+  // prefer skin file URL if uuid present (Crafatar)
+  const url = uuid ? CONFIG.CRAFATAR_SKIN(uuid) : `https://mc-heads.net/body/${encodeURIComponent(name)}`;
+  try{
+    const res = await fetchWithTimeout(url, {}, 10000);
+    if(!res.ok) throw new Error('bad-res');
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    const obj = URL.createObjectURL(blob);
+    a.href = obj;
+    a.download = `${name}_skin.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(obj);
+    showToast('Descarga iniciada');
+  }catch(err){
+    // fallback: open external download page
+    showToast('Descarga directa falló, abriendo página externa...');
+    const fallback = uuid ? CONFIG.CRAFATAR_SKIN(uuid) : `https://mc-heads.net/download/${encodeURIComponent(name)}`;
+    window.open(fallback, '_blank');
+  }
+}
+
+/* Search handler: if Enter pressed, attempt Mojang API resolution and rebuild grid */
+skinsQueryInput.addEventListener('keydown', async (e) => {
+  if(e.key === 'Enter'){
+    const q = skinsQueryInput.value.trim();
+    if(!q) return;
+    // Try to resolve and then populate grid with that query prioritized
+    await populateSkins(q);
+  }
+});
+
+/* Refresh & seed buttons */
+document.getElementById('btnRefresh').addEventListener('click', ()=> populateSkins(skinsQueryInput.value.trim()));
+document.getElementById('btnSeed').addEventListener('click', ()=> {
+  // quick shuffle and show
+  skinsQueryInput.value = '';
+  populateSkins('');
+  showToast('Mostrando sugerencias');
+});
+
+/* Initialize on load */
+populateSkins('');
+/* Optionally build some quick caching of a few UUIDs for common names */
+(async function preCacheCommon(){
+  const common = ['Dream','Technoblade','TommyInnit','Notch','Steve','Alex'];
+  for(const n of common){
+    const uuid = await resolveUsernameToUUID(n).catch(()=>null);
+    if(uuid) {
+      try{ sessionStorage.setItem(`mc_uuid_${n.toLowerCase()}`, JSON.stringify({ts:Date.now(), value:uuid})); }catch(e){}
+    }
+  }
+})();
+
+/* ===================== Facts (25+) ===================== */
+const FACTS = [
+  "El Creeper nació por accidente al modelar un cerdo con proporciones incorrectas.",
+  "El 'Far Lands' era un bug que producía paisajes fractales en mundos antiguos.",
+  "Ciertos sonidos de mobs están basados en voces humanas distorsionadas para crear atmósfera.",
+  "Las abejas añadieron polinización en 1.15 y cambiaron la agricultura en el juego.",
+  "Los pandas muestran distintas personalidades que influyen en su comportamiento.",
+  "El Wither fue diseñado para destruir terreno con su explosión masiva.",
+  "La música de Minecraft compuesta por C418 es clave para su nostalgia.",
+  "Redstone permite crear mecánicas y computadoras dentro del juego.",
+  "Los aldeanos usan camas y estaciones de trabajo para cambiar profesiones.",
+  "El Nether actúa como ‘atajo’ por su escalado de coordenadas.",
+  "En 1.18 la generación de cuevas se renovó para ser más extensa y variada.",
+  "Los pistones posibilitaron la construcción de mecanismos y fábricas automáticas.",
+  "Herobrine es una leyenda urbana creada por la comunidad y mods.",
+  "Las capas de Notch y otras son elementos raros y estéticos.",
+  "Los mobs pasivos tienen IA que responde al entorno y ciclos día/noche.",
+  "Las estructuras (templos, aldeas, fortalezas) ofrecen desafíos y loot únicos.",
+  "Las pociones añaden estrategias con combinaciones de efectos.",
+  "Los resource packs permiten cambiar por completo la apariencia del juego.",
+  "Las tiendas de intercambio entre aldeanos permiten economías basadas en emeralds.",
+  "Los bloques de comandos permiten automatización y minijuegos avanzados.",
+  "Los electores de pigmentos y las paletas de biomas afectan la estética del mundo.",
+  "En Bedrock algunas físicas (como explosiones) difieren respecto a Java.",
+  "Los mapas antiguos tenían biomas y distribución de recursos distinta.",
+  "Las semillas legendarias generan mundos con fenómenos únicos y memorables.",
+  "Los datapacks permiten modificar reglas sin instalar mods."
+];
+let lastFact = -1;
+function showFact(){
+  let idx = Math.floor(Math.random()*FACTS.length);
+  if(idx === lastFact) idx = (idx+1) % FACTS.length;
+  lastFact = idx;
+  const el = document.getElementById('factBox');
+  el.animate([{opacity:0.6, transform:'translateY(8px)'},{opacity:1, transform:'translateY(0)'}],{duration:300});
+  el.textContent = FACTS[idx];
+}
+document.getElementById('btnMoreFact').addEventListener('click', showFact);
+showFact();
+
+/* ===================== Server status ===================== */
+async function loadServerStatus(){
+  const svStatus = document.getElementById('sv_status');
+  const svPlayers = document.getElementById('sv_players');
+  const svPing = document.getElementById('sv_ping');
+  const svVersion = document.getElementById('sv_version');
+  const svMotd = document.getElementById('sv_motd');
+
+  svStatus.textContent = 'Comprobando...';
+  try{
+    const url = CONFIG.MCSRVSTAT(CONFIG.SERVER_JAVA);
+    // check cache
+    const cacheKey = `svstatus_${CONFIG.SERVER_JAVA}`;
+    const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
+    if(cached && Date.now() - cached.ts < CONFIG.CACHE_TTL_MS){
+      applyServerData(cached.data); return;
+    }
+
+    const res = await fetchWithTimeout(url, {}, 9000);
+    if(!res.ok) throw new Error('no-ok');
+    const j = await res.json();
+    sessionStorage.setItem(cacheKey, JSON.stringify({ts:Date.now(), data:j}));
+    applyServerData(j);
+  }catch(err){
+    svStatus.textContent = 'No disponible (CORS/Offline)';
+    svPlayers.textContent = '-';
+    svPing.textContent = '-';
+    svVersion.textContent = '-';
+    svMotd.textContent = 'No disponible';
+  }
+
+  function applyServerData(j){
+    svStatus.textContent = j.online ? 'En línea' : 'Desconectado';
+    svPlayers.textContent = j.players ? `${j.players.online || 0} / ${j.players.max || '?'}` : '-';
+    svPing.textContent = j.ping ? `${j.ping} ms` : (j.online ? '—' : '-');
+    svVersion.textContent = j.version || '-';
+    const motd = j.motd && (j.motd.clean ? j.motd.clean.join(' ') : j.motd.raw) || '-';
+    svMotd.textContent = motd;
+  }
+}
+document.getElementById('refreshServer').addEventListener('click', loadServerStatus);
+loadServerStatus();
+setInterval(loadServerStatus, 30000);
+
+/* ===================== Discord invite counts ===================== */
+async function loadDiscordInvite(){
+  const target = document.getElementById('discordCounts');
+  try{
+    const url = CONFIG.DISCORD_INVITE_API(CONFIG.DISCORD_INVITE);
+    const cacheKey = `discord_inv_${CONFIG.DISCORD_INVITE}`;
+    const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
+    if(cached && Date.now() - cached.ts < CONFIG.CACHE_TTL_MS){
+      target.innerHTML = formatDiscordCounts(cached.data); return;
+    }
+
+    const res = await fetchWithTimeout(url, {}, 9000);
+    if(!res.ok) throw new Error('no-ok');
+    const j = await res.json();
+    sessionStorage.setItem(cacheKey, JSON.stringify({ts:Date.now(), data:j}));
+    target.innerHTML = formatDiscordCounts(j);
+  }catch(err){
+    target.innerHTML = `Miembros: <strong>—</strong><br>En línea: <strong>—</strong><br><small style="color:var(--muted)">API bloqueada por CORS o no disponible.</small>`;
+  }
+}
+function formatDiscordCounts(j){
+  const total = j.approximate_member_count ?? '—';
+  const online = j.approximate_presence_count ?? '—';
+  return `Miembros: <strong>${total}</strong><br>En línea: <strong>${online}</strong>`;
+}
+loadDiscordInvite();
+setInterval(loadDiscordInvite, 60000);
+
+/* ===================== Small utilities ===================== */
+function copyToClipboard(text){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=> showToast('Copiado: ' + text), ()=> { prompt('Copiar manualmente:', text); });
+  } else { prompt('Copiar manualmente:', text); }
+}
+
+/* intersection reveal (simple) */
+const io = new IntersectionObserver((entries)=> {
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.style.opacity = 1;
+  });
+},{threshold:0.08});
+document.querySelectorAll('.skin-card, .server-box, .discord-box, .glass').forEach(el=> { el.style.opacity = 0; io.observe(el); });
+
+/* add year */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ========= SFTP NOTE =========
+   You provided: sftp://node-va5.holy.gg:2022
+   - Browsers cannot use SFTP directly.
+   - Use this SFTP URL (with username/password or SSH key) in your SFTP client (FileZilla, WinSCP, scp, rsync).
+   - Upload images, additional assets or enable CORS on your hosting if you want APIs to be accessible server-side.
+   - Example (terminal): `sftp -P 2022 user@node-va5.holy.gg` then `put your_asset.png`
+   - Once assets are uploaded to the server, reference them with HTTPS URLs in this page.
+   ============================ */
+
+</script>
 </body>
 </html>
