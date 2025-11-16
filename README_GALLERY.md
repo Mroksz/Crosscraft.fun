@@ -18,7 +18,7 @@ npm install
 ```bash
 # usuario por defecto: mroks
 export ADMIN_USER=mroks
-export ADMIN_PASS=supersecret
+export ADMIN_PASS=Mroks@20J
 ```
 
 3. Arranca el servidor:
