@@ -1,767 +1,961 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CrossCraft — Arte, Skins y Nación de Factos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrossCraft - Minecraft Community</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='20' y='20' width='60' height='60' fill='%23966F33'/><rect x='20' y='20' width='60' height='20' fill='%2379552A'/><rect x='20' y='40' width='20' height='40' fill='%2379552A'/><rect x='60' y='40' width='20' height='40' fill='%2379552A'/></svg>">
+    <style>
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --primary-light: #A78BFA;
+            --bg-dark: #0F0F0F;
+            --bg-card-dark: rgba(30, 30, 30, 0.7);
+            --text-dark: #F5F5F5;
+            --bg-light: #F5F5F5;
+            --bg-card-light: rgba(255, 255, 255, 0.7);
+            --text-light: #1F1F1F;
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --glow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
 
-  <!-- Creative, evocative SEO description -->
-  <meta name="description" content="CrossCraft — el refugio morado donde las skins respiran. Previsualiza, prueba y descarga skins únicas; descubre curiosidades escondidas y conéctate a la comunidad de Nación de Factos. Diseño liquid-glass, animaciones suaves y soporte 3D opcional." />
-  <meta name="keywords" content="CrossCraft, skins minecraft, servidor minecraft, nación de factos, skins descargables, discord minecraft, liquid glass, morado neon" />
-  <link rel="canonical" href="https://crosscraft.example.com/" />
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="CrossCraft — Arte, Skins y Nación de Factos" />
-  <meta property="og:description" content="El refugio morado de las skins: explora, previsualiza y descarga. Conéctate a Nación de Factos y únete a nuestra comunidad." />
-  <meta property="og:image" content="https://static.vecteezy.com/system/resources/previews/002/948/785/original/pixel-minecraft-style-land-background-vector.jpg" />
-  <meta property="og:type" content="website" />
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 20%);
+            position: relative;
+            min-height: 100vh;
+        }
 
-  <!-- Favicon (user provided) -->
-  <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/002/948/785/original/pixel-minecraft-style-land-background-vector.jpg" />
+        body.light-mode {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
 
-  <!--
-    CrossCraft — single file index.html
-    - Liquid glass + morado neon aesthetic
-    - Skins search via Mojang API + Crafatar (fallbacks)
-    - Server status via mcsrvstat.us (with timeouts & fallbacks)
-    - Discord invite counts via Discord invite API (with CORS fallback)
-    - 3D viewer (skinview3d) loaded dynamically if available
-    - Client caching via sessionStorage (60s)
-    - Notes about SFTP: browsers cannot talk SFTP. The provided SFTP (sftp://node-va5.holy.gg:2022) is useful to upload assets to your host. See comments below for usage.
-  -->
+        .particle {
+            position: absolute;
+            background-color: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
 
-  <style>
-    /* ===== Reset & Theme ===== */
-    :root{
-      --bg:#06060b;
-      --glass-1: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
-      --muted:#b9c0c9;
-      --purple-1:#9b4dff;
-      --purple-2:#b267ff;
-      --accent: linear-gradient(135deg,var(--purple-1),var(--purple-2));
-      --radius:18px;
-      --soft-shadow: 0 12px 40px rgba(142,86,255,0.08);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background:
-        radial-gradient(800px 320px at 10% 8%, rgba(155,77,255,0.06), transparent 6%),
-        radial-gradient(600px 260px at 92% 82%, rgba(178,103,255,0.04), transparent 6%),
-        var(--bg);
-      color:#fff;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.4;
-      padding-bottom:60px;
-    }
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    /* ===== Utilities ===== */
-    .container{max-width:1200px;margin:0 auto;padding:20px}
-    .glass{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:var(--radius);
-      padding:18px;
-      border:1px solid rgba(255,255,255,0.04);
-      box-shadow:var(--soft-shadow);
-      backdrop-filter: blur(10px) saturate(140%);
-    }
-    .section-title{display:flex;justify-content:space-between;align-items:center}
-    .title {color:var(--purple-2);font-weight:800;font-size:20px}
-    .subtitle{color:var(--muted);font-size:13px}
+        body.light-mode header {
+            background-color: rgba(245, 245, 245, 0.8);
+        }
 
-    /* ===== Header (glass, sticky) ===== */
-    header.nav{
-      position:sticky;top:0;z-index:120;background:linear-gradient(180deg, rgba(6,6,10,0.6), rgba(6,6,10,0.35));
-      padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(8px)
-    }
-    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .brand .logo{width:52px;height:52px;border-radius:12px;overflow:hidden;border:2px solid rgba(255,255,255,0.04)}
-    .brand .logo img{width:100%;height:100%;object-fit:cover}
-    .brand .name{font-weight:800;color:var(--purple-2);letter-spacing:0.6px}
-    nav.links{display:flex;gap:14px}
-    nav.links a{color:rgba(255,255,255,0.92);text-decoration:none;padding:8px 10px;border-radius:10px;font-weight:600}
-    nav.links a:hover{background:linear-gradient(90deg, rgba(155,77,255,0.06), rgba(178,103,255,0.04));color:var(--purple-2)}
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-    /* ===== Hero ===== */
-    .hero{padding:72px 20px 40px;text-align:center}
-    .hero h1{font-size:44px;margin:0;line-height:1.05;font-weight:800;color:transparent;background:var(--accent);-webkit-background-clip:text}
-    .hero p{color:var(--muted);margin-top:12px;font-size:16px;max-width:900px;margin-left:auto;margin-right:auto}
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: #966F33;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(150, 111, 51, 0.5);
+        }
 
-    /* ===== Controls ===== */
-    .controls{display:flex;gap:12px;align-items:center}
-    .btn{
-      border:0;padding:10px 16px;border-radius:999px;font-weight:800;cursor:pointer;
-      background:linear-gradient(90deg,var(--purple-1),var(--purple-2));color:white;box-shadow:0 8px 30px rgba(178,103,255,0.14);
-      transition:transform .18s ease, box-shadow .18s;
-    }
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--purple-2)}
-    .btn:active{transform:translateY(1px)}
-    .btn:hover{transform:translateY(-4px)}
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 33%;
+            background-color: #79552A;
+        }
 
-    /* ===== Skins grid ===== */
-    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:14px}
-    .search{
-      display:flex;gap:10px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
-      min-width:280px;
-    }
-    .search input{background:transparent;border:0;color:#fff;padding:8px;outline:none;width:100%}
-    .skins-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:18px}
-    .skin-card{padding:14px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;align-items:center;transition:transform .22s, box-shadow .22s}
-    .skin-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(155,77,255,0.08);border-color:rgba(155,77,255,0.08)}
-    .skin-thumb{width:160px;height:160px;border-radius:12px;background:#0b0620;object-fit:cover}
-    .skin-name{margin-top:10px;font-weight:700}
-    .skin-meta{font-size:13px;color:var(--muted);margin-top:6px}
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 33%;
+            left: 0;
+            width: 33%;
+            height: 67%;
+            background-color: #79552A;
+        }
 
-    .card-actions{display:flex;gap:8px;width:100%;margin-top:12px}
-    .card-actions button{flex:1;padding:9px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
-    .card-actions .primary{background:var(--purple-2);color:white}
-    .card-actions .muted{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--purple-2)}
+        .logo .corner {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 33%;
+            height: 67%;
+            background-color: #79552A;
+        }
 
-    /* ===== Modal (preview & 3D) ===== */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(1,1,1,0.6), rgba(1,1,1,0.8));z-index:200}
-    .modal.open{display:flex}
-    .modal-panel{width:min(980px,94%);display:flex;gap:18px;padding:20px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
-    .modal img{width:360px;height:360px;border-radius:12px;object-fit:cover}
-    .modal .info h3{color:var(--purple-2);margin-top:0}
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
-    /* server & discord column */
-    .sidebar{display:flex;flex-direction:column;gap:16px}
-    .server-box{padding:14px;border-radius:12px;background:linear-gradient(180deg,#0d0d10,#08080a);border:1px solid rgba(255,255,255,0.03)}
-    .server-row{display:flex;justify-content:space-between;padding:10px 0;border-top:1px dashed rgba(255,255,255,0.02)}
-    .server-row:first-child{border-top:0}
-    .discord-box{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:linear-gradient(180deg,#111216,#0a0a0c);border:1px solid rgba(255,255,255,0.03)}
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
 
-    /* toast */
-    .toast{position:fixed;right:18px;bottom:18px;background:linear-gradient(180deg,#22102b,#17051a);padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);display:none;z-index:999}
+        .theme-toggle:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: var(--glow);
+        }
 
-    /* credits */
-    footer{padding:30px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.02);margin-top:40px}
-    .credits{display:flex;gap:14px;align-items:center;justify-content:center}
-    .credits img{width:110px;height:110px;border-radius:18px;border:3px solid rgba(155,77,255,0.18)}
-    .badges{display:flex;gap:10px;margin-top:8px}
-    .badge{padding:6px 10px;border-radius:999px;background:linear-gradient(90deg, rgba(155,77,255,0.12), rgba(178,103,255,0.08));color:var(--muted);font-weight:700;font-size:13px}
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
 
-    /* responsive tweaks */
-    @media(max-width:960px){
-      .modal img{width:260px;height:260px}
-      .skins-grid{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-      .hero h1{font-size:32px}
-      .nav-inner{padding:0 8px}
-    }
-  </style>
+        section {
+            margin-bottom: 3rem;
+            background-color: var(--bg-card-dark);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode section {
+            background-color: var(--bg-card-light);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            flex-grow: 1;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            margin-left: 1rem;
+        }
+
+        /* Skins Section */
+        .skin-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skin-input {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
+
+        body.light-mode .skin-input {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.5);
+            color: var(--text-light);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+            box-shadow: var(--glow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: var(--glow);
+        }
+
+        .skin-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .skin-container {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+        }
+
+        body.light-mode .skin-container {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .skin-image {
+            max-width: 100%;
+            max-height: 100%;
+            transition: opacity 0.5s ease;
+        }
+
+        .skin-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(139, 92, 246, 0.3);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .skin-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Tips Section */
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tip-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        body.light-mode .tip-card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .tip-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .refresh-tips {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Server Section */
+        .server-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .server-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        body.light-mode .server-card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .server-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .server-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .server-ip {
+            font-family: monospace;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            display: inline-block;
+        }
+
+        body.light-mode .server-ip {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .server-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .server-btn {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .join-btn {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .join-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Events Section */
+        .events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .event-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        body.light-mode .event-card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .event-date {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Discord Section */
+        .discord-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .discord-btn {
+            background-color: #5865F2;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .discord-btn:hover {
+            background-color: #4752C4;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem 5%;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        body.light-mode footer {
+            background-color: rgba(245, 245, 245, 0.8);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 5%;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .skin-controls {
+                flex-direction: column;
+            }
+
+            .skin-input {
+                width: 100%;
+            }
+
+            .tips-container {
+                grid-template-columns: 1fr;
+            }
+
+            .server-info {
+                grid-template-columns: 1fr;
+            }
+
+            .events-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
 
-  <!-- NAV -->
-  <header class="nav" role="banner" aria-label="Main navigation">
-    <div class="nav-inner container">
-      <div class="brand" aria-hidden="false">
-        <div class="logo" title="CrossCraft">
-          <!-- USER LOGO (pixel art) -->
-          <img src="https://static.vecteezy.com/system/resources/previews/002/948/785/original/pixel-minecraft-style-land-background-vector.jpg" alt="CrossCraft logo">
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <div class="corner"></div>
+            </div>
+            <h1 class="logo-text">CROSSCRAFT</h1>
         </div>
-        <div>
-          <div class="name">CROSSCRAFT</div>
-          <div style="color:var(--muted);font-size:12px">Skins · Curiosidades · Nación de Factos</div>
+        <button class="theme-toggle" id="themeToggle">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Modo Oscuro</span>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Skins Section -->
+        <section id="skins">
+            <h2>🧱 Skins de Minecraft</h2>
+            <div class="skin-controls">
+                <input type="text" class="skin-input" id="skinInput" placeholder="Ingresa el nombre de un jugador...">
+                <button class="btn btn-primary" id="searchSkin">
+                    <span>🔍</span> Buscar
+                </button>
+                <button class="btn btn-secondary" id="refreshSkin">
+                    <span>🔄</span> Aleatorio
+                </button>
+            </div>
+            <div class="skin-display">
+                <div class="skin-container">
+                    <div class="skin-loading"></div>
+                    <img class="skin-image" id="skinImage" src="" alt="Skin de Minecraft" style="display: none;">
+                </div>
+                <div class="skin-actions">
+                    <button class="btn btn-primary" id="toggleView">
+                        <span>👁️</span> <span id="viewText">Ver 3D</span>
+                    </button>
+                    <button class="btn btn-secondary" id="downloadSkin">
+                        <span>⬇️</span> Descargar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section id="tips">
+            <h2>📚 Tips y Datos Curiosos</h2>
+            <div class="tips-container" id="tipsContainer">
+                <!-- Tips will be generated here -->
+            </div>
+            <div class="refresh-tips">
+                <button class="btn btn-secondary" id="refreshTips">
+                    <span>🔄</span> Nuevos Tips
+                </button>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events">
+            <h2>📅 Eventos del Servidor</h2>
+            <div class="events-container">
+                <div class="event-card">
+                    <span class="event-date">Todos los Sábados</span>
+                    <h3>🏆 Torneo PvP</h3>
+                    <p>Participa en nuestro torneo semanal de PvP con premios exclusivos para los ganadores.</p>
+                </div>
+                <div class="event-card">
+                    <span class="event-date">Cada 2 semanas</span>
+                    <h3>🏗️ Construcción en Equipo</h3>
+                    <p>Únete a otros jugadores para construir proyectos épicos en nuestro mundo creativo.</p>
+                </div>
+                <div class="event-card">
+                    <span class="event-date">Próximamente</span>
+                    <h3>🎉 Evento Especial</h3>
+                    <p>Estamos preparando un evento sorpresa con muchas recompensas y actividades.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Server Section -->
+        <section id="server">
+            <h2>🌍 Servidor de Minecraft - Nación de Factos</h2>
+            <div class="server-info">
+                <div class="server-card">
+                    <h3>JAVA EDITION</h3>
+                    <p>Conéctate con la versión Java de Minecraft</p>
+                    <div class="server-ip" id="javaIp">va5.holy.gg:26347</div>
+                    <div class="server-actions">
+                        <button class="server-btn copy-btn" data-ip="va5.holy.gg:26347">
+                            <span>📋</span> Copiar IP
+                        </button>
+                        <button class="server-btn join-btn">
+                            <span>➡️</span> Unirse
+                        </button>
+                    </div>
+                </div>
+                <div class="server-card">
+                    <h3>BEDROCK EDITION</h3>
+                    <p>Conéctate con la versión Bedrock de Minecraft</p>
+                    <div class="server-ip" id="bedrockIp">51.81.49.204:26347</div>
+                    <div class="server-actions">
+                        <button class="server-btn copy-btn" data-ip="51.81.49.204:26347">
+                            <span>📋</span> Copiar IP
+                        </button>
+                        <button class="server-btn join-btn">
+                            <span>➡️</span> Unirse
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discord Section -->
+        <section id="discord">
+            <h2>💬 Discord</h2>
+            <div class="discord-container">
+                <p>Únete a nuestra comunidad de Discord para estar al tanto de novedades, eventos y conocer a otros jugadores.</p>
+                <a href="https://discord.gg/ndfFxfsVe2" target="_blank" class="discord-btn">
+                    <span>🎮</span> Unirse al Discord
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>CrossCraft &copy; 2023 - Comunidad de Minecraft</p>
+            <p>No afiliado con Mojang o Microsoft</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                Conéctate a nuestro servidor: Java - va5.holy.gg:26347 | Bedrock - 51.81.49.204:26347
+            </p>
         </div>
-      </div>
+    </footer>
 
-      <nav class="links" aria-label="Main links">
-        <a href="#skins">Skins</a>
-        <a href="#curiosidades">Curiosidades</a>
-        <a href="#server">Servidor</a>
-        <a href="#discord">Discord</a>
-        <a href="#credits">Créditos</a>
-      </nav>
-    </div>
-  </header>
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const body = document.body;
 
-  <!-- HERO -->
-  <section class="hero" role="region" aria-labelledby="hero-title">
-    <div class="container">
-      <h1 id="hero-title">CrossCraft — el refugio morado donde las skins respiran</h1>
-      <p style="margin-top:12px" class="subtitle">Previsualiza, prueba y descarga skins; descubre curiosidades y conéctate a Nación de Factos. Diseño liquid-glass, animaciones suaves y opción 3D para rotar las skins.</p>
-    </div>
-  </section>
+        // Check for saved theme preference or default to dark
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'Modo Claro';
+        }
 
-  <!-- MAIN -->
-  <main class="container" role="main">
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Modo Claro';
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Modo Oscuro';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
 
-    <!-- SKINS SECTION -->
-    <section id="skins" class="glass" aria-labelledby="skins-title">
-      <div class="section-title">
-        <div>
-          <div class="title" id="skins-title">Skins Populares</div>
-          <div class="subtitle">Busca por nombre o refresca para ver nuevas selecciones.</div>
-        </div>
+        // Particles Background
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
 
-        <div style="display:flex;gap:10px;align-items:center">
-          <div class="search" role="search" aria-label="Buscar skins">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:0.9;margin-left:6px"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <input id="skinQuery" placeholder="Buscar skin (ej: Dream) — Enter para validar con Mojang" aria-label="Buscar skin por nombre">
-          </div>
-          <button id="btnRefresh" class="btn" title="Refrescar skins">Refrescar</button>
-          <button id="btnSeed" class="btn ghost" title="Mostrar sugerencias">Sugerencias</button>
-        </div>
-      </div>
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
 
-      <div id="skinsGrid" class="skins-grid" aria-live="polite" aria-busy="false">
-        <!-- Cards populated by JS -->
-      </div>
-    </section>
+                // Random size and position
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
 
-    <!-- CURIOSITIES + SERVER/DISCORD -->
-    <section style="margin-top:22px;display:grid;grid-template-columns:1fr 360px;gap:18px">
-      <div class="glass" id="curiosities" aria-labelledby="curio-title">
-        <div class="section-title">
-          <div>
-            <div class="title" id="curio-title">Datos Curiosos</div>
-            <div class="subtitle">Pequeñas maravillas y secretos del mundo Minecraft.</div>
-          </div>
-          <div><button id="btnMoreFact" class="btn ghost">Mostrar otro</button></div>
-        </div>
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
 
-        <div id="factBox" style="margin-top:12px;font-size:18px;color:#eaeef6"></div>
-      </div>
+                // Random animation
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
 
-      <aside>
-        <div class="server-box glass" id="serverBox" role="region" aria-labelledby="server-title">
-          <div class="server-title" id="server-title">NACIÓN DE FACTOS — Status</div>
-          <div style="margin-top:8px;font-size:14px;color:var(--muted)">Java: <strong>51.81.49.204:26347</strong></div>
-          <div style="margin-top:12px">
-            <div class="server-row"><div class="k">Estado</div><div class="v" id="sv_status">—</div></div>
-            <div class="server-row"><div class="k">Jugadores</div><div class="v" id="sv_players">—</div></div>
-            <div class="server-row"><div class="k">Ping</div><div class="v" id="sv_ping">—</div></div>
-            <div class="server-row"><div class="k">Versión</div><div class="v" id="sv_version">—</div></div>
-            <div class="server-row"><div class="k">MOTD</div><div class="v" id="sv_motd" style="font-weight:600;color:var(--muted)">—</div></div>
-          </div>
+                particle.style.animation = `float ${duration}s ${delay}s infinite ease-in-out`;
 
-          <div style="display:flex;gap:8px;margin-top:12px">
-            <button class="btn" onclick="copyToClipboard('51.81.49.204:26347')">Copiar Java</button>
-            <button class="btn ghost" onclick="copyToClipboard('va5.holy.gg:26347')">Copiar Bedrock</button>
-          </div>
-          <div style="margin-top:10px"><button class="btn ghost" id="refreshServer">Refrescar</button></div>
-          <div style="margin-top:10px;color:var(--muted);font-size:12px">Nota: algunos endpoints públicos pueden bloquearse por CORS cuando se prueba localmente. Si ves "No disponible", inténtalo desde un hosting real.</div>
-        </div>
+                particlesContainer.appendChild(particle);
+            }
+        }
 
-        <div style="height:14px"></div>
+        // Add keyframes for floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translate(0, 0); }
+                25% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px); }
+                50% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px); }
+                75% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px); }
+            }
+        `;
+        document.head.appendChild(style);
 
-        <div class="discord-box glass" id="discordBox" role="region" aria-label="Discord widget">
-          <img src="https://cdn.discordapp.com/attachments/1374967908538519635/1439676343179677880/a_e72faee3796738ef6facb1c45b3bc1ba.png?ex=691b6294&is=691a1114&hm=dc3459f6fa9ffd2c996c89d08cc903046d07aa308bac11f5d3232f988fe08086" alt="Discord logo">
-          <div>
-            <div style="font-weight:800">Fuck se viene la decadencia</div>
-            <div class="subtitle" id="discordCounts">Cargando miembros...</div>
-            <div style="margin-top:10px"><a class="btn" target="_blank" rel="noreferrer" href="https://discord.gg/4qU4DsVCsF">Unirse</a></div>
-          </div>
-        </div>
-      </aside>
-    </section>
+        // Skins Functionality
+        const skinInput = document.getElementById('skinInput');
+        const searchSkin = document.getElementById('searchSkin');
+        const refreshSkin = document.getElementById('refreshSkin');
+        const toggleView = document.getElementById('toggleView');
+        const viewText = document.getElementById('viewText');
+        const downloadSkin = document.getElementById('downloadSkin');
+        const skinImage = document.getElementById('skinImage');
+        const skinLoading = document.querySelector('.skin-loading');
 
-  </main>
+        let is3DView = false;
+        let currentSkinName = '';
 
-  <!-- MODAL PREVIEW (2D + Optional 3D viewer) -->
-  <div id="previewModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-panel">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-        <img id="previewImg" src="" alt="Preview skin">
-        <div style="display:flex;gap:8px">
-          <button id="downloadNow" class="btn">Descargar</button>
-          <button id="toggle3D" class="btn ghost">Activar 3D</button>
-          <button id="closeModal" class="btn ghost">Cerrar</button>
-        </div>
-      </div>
-      <div class="info" style="flex:1">
-        <h3 id="previewName" style="margin:0;color:var(--purple-2)"></h3>
-        <p id="previewNote" style="color:var(--muted);margin-top:8px">Puedes descargar o activar la vista 3D (si el navegador lo permite).</p>
-        <div id="viewerContainer" style="margin-top:12px"></div>
-      </div>
-    </div>
-  </div>
+        // Popular Minecraft usernames for random selection
+        const popularSkins = [
+            'Notch', 'Dinnerbone', 'jeb_', 'MHF_Steve', 'MHF_Alex',
+            'Technoblade', 'Dream', 'TommyInnit', 'WilburSoot',
+            'Ph1LzA', 'CaptainSparklez', 'StampyCat', 'iHasCupquake'
+        ];
 
-  <!-- Toast -->
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+        // Load a random skin on page load
+        function loadRandomSkin() {
+            const randomName = popularSkins[Math.floor(Math.random() * popularSkins.length)];
+            currentSkinName = randomName;
+            loadSkin(randomName);
+        }
 
-  <!-- Credits -->
-  <footer id="credits">
-    <div class="credits">
-      <img src="https://cdn.discordapp.com/avatars/957101336976060467/60b4c474aa77b2cb07167984d3fc9425.webp?size=2048" alt="SoyMr mroks">
-      <div style="text-align:left">
-        <div style="font-size:20px;color:var(--purple-2);font-weight:800">SoyMr mroks</div>
-        <div style="color:var(--muted);margin-top:6px">Creador y alma detrás de CrossCraft, NACIÓN DE FACTOS y la comunidad de Discord.</div>
-        <div class="badges" aria-hidden="false">
-          <div class="badge">Propietario</div>
-          <div class="badge">Admin</div>
-          <div class="badge">Developer</div>
-        </div>
-      </div>
-    </div>
-    <p style="color:var(--muted);margin-top:14px">© <span id="year"></span> CrossCraft — Diseño liquid glass morado.</p>
-  </footer>
+        // Load skin based on username
+        function loadSkin(username) {
+            skinLoading.style.display = 'block';
+            skinImage.style.display = 'none';
 
-<script>
-/* =================== CONFIG & UTILITIES ===================
-   Notes:
-   - Mojang API: https://api.mojang.com/users/profiles/minecraft/{username}
-     -> returns 204/empty if not found. If found returns {id, name}
-   - Crafatar: https://crafatar.com/renders/body/{uuid}?overlay
-     - skin: https://crafatar.com/skins/{uuid}
-   - mc-heads / minotar can be used as fallback images
-   - Server status: https://api.mcsrvstat.us/2/{host:port}
-   - Discord invite counts: https://discord.com/api/v9/invites/{code}?with_counts=true
-   - skinview3d loaded dynamically from unpkg if user enables 3D
-   - sessionStorage caching used (TTL 60s)
-   - SFTP note: browsers can't access sftp URLs; use sftp://node-va5.holy.gg:2022 to upload assets to your server from your client/FTP tool.
-   ========================================================== */
+            const viewType = is3DView ? 'body' : 'avatar';
+            const skinUrl = `https://mc-heads.net/${viewType}/${username}`;
 
-const CONFIG = {
-  SERVER_JAVA: '51.81.49.204:26347',
-  SERVER_BEDROCK: 'va5.holy.gg:26347',
-  DISCORD_INVITE: '4qU4DsVCsF',
-  MOJANG_PROFILE: 'https://api.mojang.com/users/profiles/minecraft/',
-  CRAFATAR_BODY: (uuid) => `https://crafatar.com/renders/body/${uuid}?size=512&overlay`,
-  CRAFATAR_SKIN: (uuid) => `https://crafatar.com/skins/${uuid}`,
-  MCSRVSTAT: (host) => `https://api.mcsrvstat.us/2/${host}`,
-  DISCORD_INVITE_API: (code) => `https://discord.com/api/v9/invites/${code}?with_counts=true`,
-  SKIN_VIEWER_SRC: 'https://unpkg.com/skinview3d@1.1.7/dist/skinview3d.min.js',
-  CACHE_TTL_MS: 60 * 1000
-};
+            skinImage.onload = function() {
+                skinLoading.style.display = 'none';
+                skinImage.style.display = 'block';
+                skinImage.style.opacity = '0';
+                setTimeout(() => {
+                    skinImage.style.opacity = '1';
+                }, 50);
+            };
 
-/* --- Helper: toast --- */
-const toastEl = document.getElementById('toast');
-function showToast(msg, t=2200){
-  toastEl.textContent = msg;
-  toastEl.style.display = 'block';
-  toastEl.style.opacity = '1';
-  setTimeout(()=> { toastEl.style.opacity='0'; setTimeout(()=> toastEl.style.display='none', 300); }, t);
-}
+            skinImage.onerror = function() {
+                skinLoading.style.display = 'none';
+                skinImage.style.display = 'block';
+                skinImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMzMzMzMzIi8+CjxwYXRoIGQ9Ik04MCA2MEgxMjBWMTQwSDgwVjYwWiIgZmlsbD0iIzU1NTU1NSIvPgo8dGV4dCB4PSIxMDAiIHk9IjEwMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+RXJyb3I8L3RleHQ+Cjwvc3ZnPgo=';
+            };
 
-/* --- Helper: fetch with timeout & error handling --- */
-async function fetchWithTimeout(url, opts = {}, timeout = 9000){
-  const ctrl = new AbortController();
-  const id = setTimeout(()=> ctrl.abort(), timeout);
-  try{
-    const res = await fetch(url, {...opts, signal: ctrl.signal});
-    clearTimeout(id);
-    return res;
-  }catch(e){
-    clearTimeout(id);
-    throw e;
-  }
-}
+            skinImage.src = skinUrl;
+        }
 
-/* ===================== Skins logic ===================== */
+        // Search for a skin
+        searchSkin.addEventListener('click', () => {
+            const username = skinInput.value.trim();
+            if (username) {
+                currentSkinName = username;
+                loadSkin(username);
+            }
+        });
 
-/* Local fallback list (60 names) */
-const LOCAL_SKINS = [
-  'Steve','Alex','Dream','Technoblade','TommyInnit','Notch','BadBoyHalo','GeorgeNotFound','Skeppy','Quackity',
-  'Ranboo','PewDiePie','CaptainSparklez','AntVenom','Grian','LDShadowLady','JeromeASF','BajanCanadian','IBxtoycat','Aphmau',
-  'W4RM','Purpled','Tubbo','Etho','Aureylian','Logdotzip','CaptainPuffy','Keralis','SamDream','Fallen',
-  'Moon','Shadow','Nova','Ruby','Pixel','Knight','DarkSoul','Frost','Viper','Zero',
-  'Drako','Lux','Spectre','Ghost','Ender','Miner','Builder','Wizard','Paladin','Skye',
-  'Nox','Rift','Shiro','Luna','Echo','Volt','Sora','Zephyr','Nyx','Rune'
-];
+        // Refresh with random skin
+        refreshSkin.addEventListener('click', () => {
+            loadRandomSkin();
+        });
 
-/* Build initial grid (30 items) */
-const skinsGrid = document.getElementById('skinsGrid');
-const skinsQueryInput = document.getElementById('skinQuery');
+        // Toggle between 2D and 3D view
+        toggleView.addEventListener('click', () => {
+            is3DView = !is3DView;
+            viewText.textContent = is3DView ? 'Ver 2D' : 'Ver 3D';
+            if (currentSkinName) {
+                loadSkin(currentSkinName);
+            }
+        });
 
-function shuffle(arr){ return arr.slice().sort(()=>Math.random()-0.5); }
+        // Download skin
+        downloadSkin.addEventListener('click', () => {
+            if (currentSkinName) {
+                const downloadUrl = `https://mc-heads.net/skin/${currentSkinName}`;
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = `${currentSkinName}_skin.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        });
 
-function clearGrid(){ skinsGrid.innerHTML = ''; }
+        // Load random skin on page load
+        loadRandomSkin();
 
-function createSkinCard({displayName, imgSrc, uuid}) {
-  const card = document.createElement('div');
-  card.className = 'skin-card';
-  card.innerHTML = `
-    <img class="skin-thumb" src="${imgSrc}" alt="Skin ${displayName}" loading="lazy"/>
-    <div class="skin-name">${displayName}</div>
-    <div class="skin-meta">Skin popular</div>
-    <div class="card-actions">
-      <button class="primary" data-action="preview" data-name="${displayName}" data-uuid="${uuid ?? ''}">Previsualizar</button>
-      <button class="muted" data-action="download" data-name="${displayName}" data-uuid="${uuid ?? ''}">Descargar</button>
-    </div>
-  `;
-  return card;
-}
+        // Tips and Curiosities
+        const tipsContainer = document.getElementById('tipsContainer');
+        const refreshTips = document.getElementById('refreshTips');
 
-/* Use Mojang API to resolve username -> uuid */
-async function resolveUsernameToUUID(username){
-  // sessionStorage caching
-  const key = `mc_uuid_${username.toLowerCase()}`;
-  try{
-    const cached = sessionStorage.getItem(key);
-    if(cached){
-      const parsed = JSON.parse(cached);
-      if(Date.now() - parsed.ts < CONFIG.CACHE_TTL_MS) return parsed.value;
-    }
-  }catch(e){}
-  try{
-    const res = await fetchWithTimeout(CONFIG.MOJANG_PROFILE + encodeURIComponent(username), {}, 7000);
-    if(res.status === 204 || res.status === 204 || res.status === 204) return null; // not found
-    if(!res.ok) return null;
-    const json = await res.json();
-    const uuid = json && (json.id || json.uuid || null);
-    if(uuid){
-      try{ sessionStorage.setItem(key, JSON.stringify({ts:Date.now(), value:uuid})); }catch(e){}
-      return uuid;
-    }
-    return null;
-  }catch(err){
-    return null;
-  }
-}
+        const tips = [
+            "Usa antorchas para evitar que los mobs aparezcan en áreas oscuras.",
+            "Coloca bloques de calabaza en las cabezas de las cabezas de hierro para evitar que los endermen se enojen.",
+            "Crea una granja de hierro usando aldeanos y zombis.",
+            "Usa camas para explotar y minar netherite en el Nether.",
+            "Crea un portal de nether para viajar largas distancias rápidamente.",
+            "Usa un tridente con lealtad para que siempre regrese a ti.",
+            "Crea un canal de hielo y bote para viajar rápidamente.",
+            "Usa un compuesto para crear fuegos artificiales con efectos.",
+            "Crea una granja de caña de azúcar para papel y libros.",
+            "Usa un canalizador para atraer rayos durante tormentas.",
+            "Combina una perla de ender con polvo de fuego para crear ojos de ender.",
+            "Usa un yunque para reparar herramientas y armas combinándolas.",
+            "Crea una granja de exp usando una spawner y un sistema de caída.",
+            "Usa un escudo para bloquear ataques de esqueletos y creepers.",
+            "Combina una brújula con 8 papeles para crear un mapa."
+        ];
 
-/* Build grid function: select 30 from LOCAL_SKINS shuffled or filtered by query */
-async function populateSkins(query=''){
-  skinsGrid.setAttribute('aria-busy','true');
-  clearGrid();
-  let list = shuffle(LOCAL_SKINS);
-  // if user provided a query and pressed Enter, we try to resolve via Mojang
-  if(query && query.trim().length >= 2){
-    const q = query.trim();
-    // First, try Mojang to get UUID
-    showToast('Buscando usuario en Mojang...');
-    const uuid = await resolveUsernameToUUID(q);
-    if(uuid){
-      // If found, show that skin first and include others
-      const img = CONFIG.CRAFATAR_BODY(uuid);
-      skinsGrid.appendChild(createSkinCard({displayName:q, imgSrc: img, uuid}));
-      // fill remainder with shuffled local
-      list = list.filter(n => n.toLowerCase() !== q.toLowerCase());
-    } else {
-      // Not found — we'll use mc-heads/minotar images by name fallback (no uuid)
-      // We'll still include the query name as an attempted card (image may be approximate)
-      const img = `https://mc-heads.net/body/${encodeURIComponent(q)}`;
-      skinsGrid.appendChild(createSkinCard({displayName:q, imgSrc: img, uuid: null}));
-      list = list.filter(n => n.toLowerCase() !== q.toLowerCase());
-    }
-  }
+        const curiosities = [
+            "Minecraft fue creado por Markus 'Notch' Persson en 2009.",
+            "El nombre original de Minecraft era 'Cave Game'.",
+            "El mundo de Minecraft es más grande que la Tierra real.",
+            "Los creepers fueron creados por error al intentar hacer un cerdo.",
+            "El Ender Dragon fue añadido en la versión 1.0 de Minecraft.",
+            "El bioma de mesa de hongos es el más raro de encontrar.",
+            "Minecraft ha vendido más de 200 millones de copias en todo el mundo.",
+            "El juego tiene su propia convención llamada 'MineCon'.",
+            "Hay más de 700 bloques diferentes en Minecraft.",
+            "El Nether fue añadido en la actualización 'Halloween' de 2010.",
+            "El Wither fue añadido en la versión 1.4.2 de Minecraft.",
+            "Los aldeanos pueden reproducirse si tienen suficientes camas y comida.",
+            "El sonido de los endermen son voces humanas reproducidas al revés.",
+            "Minecraft tiene su propia película en desarrollo.",
+            "El bioma de las badlands está inspirado en el Gran Cañón de Arizona."
+        ];
 
-  // Fill to 30 cards
-  const needed = 30 - skinsGrid.children.length;
-  for(let i=0; i<needed && i<list.length; i++){
-    const name = list[i];
-    // We can attempt to use session cached UUID quickly else use mc-heads render by name
-    const uuidKey = `mc_uuid_${name.toLowerCase()}`;
-    let uuid = null;
-    try{
-      const cached = JSON.parse(sessionStorage.getItem(uuidKey) || 'null');
-      if(cached && Date.now() - cached.ts < CONFIG.CACHE_TTL_MS) uuid = cached.value;
-    }catch(e){}
-    const img = uuid ? CONFIG.CRAFATAR_BODY(uuid) : `https://mc-heads.net/body/${encodeURIComponent(name)}`;
-    skinsGrid.appendChild(createSkinCard({displayName:name, imgSrc: img, uuid: uuid ?? null}));
-  }
+        function generateTips() {
+            tipsContainer.innerHTML = '';
+            
+            // Shuffle arrays
+            const shuffledTips = [...tips].sort(() => 0.5 - Math.random());
+            const shuffledCuriosities = [...curiosities].sort(() => 0.5 - Math.random());
+            
+            // Add tips
+            for (let i = 0; i < 3; i++) {
+                const tipCard = document.createElement('div');
+                tipCard.classList.add('tip-card');
+                tipCard.innerHTML = `
+                    <h3>💡 Tip #${i+1}</h3>
+                    <p>${shuffledTips[i]}</p>
+                `;
+                tipsContainer.appendChild(tipCard);
+            }
+            
+            // Add curiosities
+            for (let i = 0; i < 3; i++) {
+                const tipCard = document.createElement('div');
+                tipCard.classList.add('tip-card');
+                tipCard.innerHTML = `
+                    <h3>❓ Dato Curioso #${i+1}</h3>
+                    <p>${shuffledCuriosities[i]}</p>
+                `;
+                tipsContainer.appendChild(tipCard);
+            }
+        }
 
-  skinsGrid.setAttribute('aria-busy','false');
-}
+        refreshTips.addEventListener('click', () => {
+            tipsContainer.style.opacity = '0';
+            setTimeout(() => {
+                generateTips();
+                tipsContainer.style.opacity = '1';
+            }, 300);
+        });
 
-/* Event delegation for preview & download */
-skinsGrid.addEventListener('click', async (ev) => {
-  const btn = ev.target.closest('button');
-  if(!btn) return;
-  const action = btn.dataset.action;
-  const name = btn.dataset.name;
-  const uuid = btn.dataset.uuid || null;
-  if(action === 'preview') return openPreview(name, uuid);
-  if(action === 'download') return downloadSkin(name, uuid);
-});
+        // Generate tips on page load
+        generateTips();
 
-/* Preview modal & 3D viewer logic */
-const modal = document.getElementById('previewModal');
-const previewImg = document.getElementById('previewImg');
-const previewName = document.getElementById('previewName');
-const downloadNowBtn = document.getElementById('downloadNow');
-const toggle3DBtn = document.getElementById('toggle3D');
-const viewerContainer = document.getElementById('viewerContainer');
-let currentSkin = {name:null, uuid:null, image:null};
-let skinViewerInstance = null;
-let skinviewLoaded = false;
+        // Server IP Copy Functionality
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const ip = button.getAttribute('data-ip');
+                navigator.clipboard.writeText(ip).then(() => {
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<span>✅</span> Copiado!';
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
+        });
 
-async function openPreview(name, uuid){
-  currentSkin.name = name;
-  currentSkin.uuid = uuid;
-  // determine image
-  let imageUrl = uuid ? CONFIG.CRAFATAR_BODY(uuid) : `https://mc-heads.net/body/${encodeURIComponent(name)}`;
-  previewImg.src = imageUrl;
-  previewName.textContent = name;
-  downloadNowBtn.onclick = ()=> downloadSkin(name, uuid);
-  // reset viewer
-  if(skinViewerInstance){
-    try{ skinViewerInstance.destroy(); }catch(e){}
-    skinViewerInstance = null;
-  }
-  viewerContainer.innerHTML = ''; // cleaned if had previous viewer
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden','false');
-  document.addEventListener('keydown', escClose);
-  // preload 3D lib lazy on first open if user toggles, otherwise we keep it off
-  // note: skinview3d may be blocked by CSP/CORS on some hosts
-}
+        // Join Server Buttons
+        const joinButtons = document.querySelectorAll('.join-btn');
+        
+        joinButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.innerHTML = '<span>⏳</span> Conectando...';
+                setTimeout(() => {
+                    button.innerHTML = '<span>❌</span> No disponible';
+                    setTimeout(() => {
+                        button.innerHTML = '<span>➡️</span> Unirse';
+                    }, 2000);
+                }, 1500);
+            });
+        });
 
-function closePreview(){
-  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
-  document.removeEventListener('keydown', escClose);
-  if(skinViewerInstance){ try{ skinViewerInstance.destroy(); }catch(e){} skinViewerInstance = null; viewerContainer.innerHTML = ''; }
-}
-function escClose(e){ if(e.key === 'Escape') closePreview(); }
-document.getElementById('closeModal').addEventListener('click', closePreview);
-modal.addEventListener('click', (e)=> { if(e.target === modal) closePreview(); });
-
-toggle3DBtn.addEventListener('click', async () => {
-  // load skinview3d dynamically if not loaded
-  if(!currentSkin.name) return showToast('No hay skin seleccionada');
-  if(!skinviewLoaded){
-    showToast('Cargando viewer 3D (puede tardar)...');
-    try{
-      await loadScript(CONFIG.SKIN_VIEWER_SRC);
-      skinviewLoaded = true;
-    }catch(e){
-      skinviewLoaded = false;
-      showToast('No se pudo cargar el viewer 3D (bloqueado o no disponible).');
-      return;
-    }
-  }
-  // initialize viewer
-  try{
-    const {SkinViewer} = window;
-    if(!SkinViewer) throw new Error('no viewer lib');
-    // destroy previous if exists
-    if(skinViewerInstance){ try{ skinViewerInstance.destroy(); }catch(e){} skinViewerInstance = null; viewerContainer.innerHTML = ''; }
-    const viewerEl = document.createElement('div');
-    viewerEl.style.width = '320px';
-    viewerEl.style.height = '360px';
-    viewerContainer.appendChild(viewerEl);
-    const viewer = new SkinViewer({
-      width: 320,
-      height: 360,
-      canvas: viewerEl
-    });
-    const texture = currentSkin.uuid ? CONFIG.CRAFATAR_SKIN(currentSkin.uuid) : `https://mc-heads.net/body/${encodeURIComponent(currentSkin.name)}`;
-    try { viewer.loadSkin(texture); } catch(err){ /* ignore */ }
-    skinViewerInstance = viewer;
-  }catch(err){
-    showToast('Viewer 3D no disponible en este navegador.');
-  }
-});
-
-/* Helper to dynamically load script */
-function loadScript(src){
-  return new Promise((resolve, reject) => {
-    if(document.querySelector(`script[src="${src}"]`)) return resolve();
-    const s = document.createElement('script');
-    s.src = src;
-    s.async = true;
-    s.onload = () => resolve();
-    s.onerror = (e) => reject(e);
-    document.body.appendChild(s);
-  });
-}
-
-/* Download implementation: fetch -> blob -> save, fallback to external page */
-async function downloadSkin(name, uuid){
-  showToast('Preparando descarga...');
-  // prefer skin file URL if uuid present (Crafatar)
-  const url = uuid ? CONFIG.CRAFATAR_SKIN(uuid) : `https://mc-heads.net/body/${encodeURIComponent(name)}`;
-  try{
-    const res = await fetchWithTimeout(url, {}, 10000);
-    if(!res.ok) throw new Error('bad-res');
-    const blob = await res.blob();
-    const a = document.createElement('a');
-    const obj = URL.createObjectURL(blob);
-    a.href = obj;
-    a.download = `${name}_skin.png`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(obj);
-    showToast('Descarga iniciada');
-  }catch(err){
-    // fallback: open external download page
-    showToast('Descarga directa falló, abriendo página externa...');
-    const fallback = uuid ? CONFIG.CRAFATAR_SKIN(uuid) : `https://mc-heads.net/download/${encodeURIComponent(name)}`;
-    window.open(fallback, '_blank');
-  }
-}
-
-/* Search handler: if Enter pressed, attempt Mojang API resolution and rebuild grid */
-skinsQueryInput.addEventListener('keydown', async (e) => {
-  if(e.key === 'Enter'){
-    const q = skinsQueryInput.value.trim();
-    if(!q) return;
-    // Try to resolve and then populate grid with that query prioritized
-    await populateSkins(q);
-  }
-});
-
-/* Refresh & seed buttons */
-document.getElementById('btnRefresh').addEventListener('click', ()=> populateSkins(skinsQueryInput.value.trim()));
-document.getElementById('btnSeed').addEventListener('click', ()=> {
-  // quick shuffle and show
-  skinsQueryInput.value = '';
-  populateSkins('');
-  showToast('Mostrando sugerencias');
-});
-
-/* Initialize on load */
-populateSkins('');
-/* Optionally build some quick caching of a few UUIDs for common names */
-(async function preCacheCommon(){
-  const common = ['Dream','Technoblade','TommyInnit','Notch','Steve','Alex'];
-  for(const n of common){
-    const uuid = await resolveUsernameToUUID(n).catch(()=>null);
-    if(uuid) {
-      try{ sessionStorage.setItem(`mc_uuid_${n.toLowerCase()}`, JSON.stringify({ts:Date.now(), value:uuid})); }catch(e){}
-    }
-  }
-})();
-
-/* ===================== Facts (25+) ===================== */
-const FACTS = [
-  "El Creeper nació por accidente al modelar un cerdo con proporciones incorrectas.",
-  "El 'Far Lands' era un bug que producía paisajes fractales en mundos antiguos.",
-  "Ciertos sonidos de mobs están basados en voces humanas distorsionadas para crear atmósfera.",
-  "Las abejas añadieron polinización en 1.15 y cambiaron la agricultura en el juego.",
-  "Los pandas muestran distintas personalidades que influyen en su comportamiento.",
-  "El Wither fue diseñado para destruir terreno con su explosión masiva.",
-  "La música de Minecraft compuesta por C418 es clave para su nostalgia.",
-  "Redstone permite crear mecánicas y computadoras dentro del juego.",
-  "Los aldeanos usan camas y estaciones de trabajo para cambiar profesiones.",
-  "El Nether actúa como ‘atajo’ por su escalado de coordenadas.",
-  "En 1.18 la generación de cuevas se renovó para ser más extensa y variada.",
-  "Los pistones posibilitaron la construcción de mecanismos y fábricas automáticas.",
-  "Herobrine es una leyenda urbana creada por la comunidad y mods.",
-  "Las capas de Notch y otras son elementos raros y estéticos.",
-  "Los mobs pasivos tienen IA que responde al entorno y ciclos día/noche.",
-  "Las estructuras (templos, aldeas, fortalezas) ofrecen desafíos y loot únicos.",
-  "Las pociones añaden estrategias con combinaciones de efectos.",
-  "Los resource packs permiten cambiar por completo la apariencia del juego.",
-  "Las tiendas de intercambio entre aldeanos permiten economías basadas en emeralds.",
-  "Los bloques de comandos permiten automatización y minijuegos avanzados.",
-  "Los electores de pigmentos y las paletas de biomas afectan la estética del mundo.",
-  "En Bedrock algunas físicas (como explosiones) difieren respecto a Java.",
-  "Los mapas antiguos tenían biomas y distribución de recursos distinta.",
-  "Las semillas legendarias generan mundos con fenómenos únicos y memorables.",
-  "Los datapacks permiten modificar reglas sin instalar mods."
-];
-let lastFact = -1;
-function showFact(){
-  let idx = Math.floor(Math.random()*FACTS.length);
-  if(idx === lastFact) idx = (idx+1) % FACTS.length;
-  lastFact = idx;
-  const el = document.getElementById('factBox');
-  el.animate([{opacity:0.6, transform:'translateY(8px)'},{opacity:1, transform:'translateY(0)'}],{duration:300});
-  el.textContent = FACTS[idx];
-}
-document.getElementById('btnMoreFact').addEventListener('click', showFact);
-showFact();
-
-/* ===================== Server status ===================== */
-async function loadServerStatus(){
-  const svStatus = document.getElementById('sv_status');
-  const svPlayers = document.getElementById('sv_players');
-  const svPing = document.getElementById('sv_ping');
-  const svVersion = document.getElementById('sv_version');
-  const svMotd = document.getElementById('sv_motd');
-
-  svStatus.textContent = 'Comprobando...';
-  try{
-    const url = CONFIG.MCSRVSTAT(CONFIG.SERVER_JAVA);
-    // check cache
-    const cacheKey = `svstatus_${CONFIG.SERVER_JAVA}`;
-    const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
-    if(cached && Date.now() - cached.ts < CONFIG.CACHE_TTL_MS){
-      applyServerData(cached.data); return;
-    }
-
-    const res = await fetchWithTimeout(url, {}, 9000);
-    if(!res.ok) throw new Error('no-ok');
-    const j = await res.json();
-    sessionStorage.setItem(cacheKey, JSON.stringify({ts:Date.now(), data:j}));
-    applyServerData(j);
-  }catch(err){
-    svStatus.textContent = 'No disponible (CORS/Offline)';
-    svPlayers.textContent = '-';
-    svPing.textContent = '-';
-    svVersion.textContent = '-';
-    svMotd.textContent = 'No disponible';
-  }
-
-  function applyServerData(j){
-    svStatus.textContent = j.online ? 'En línea' : 'Desconectado';
-    svPlayers.textContent = j.players ? `${j.players.online || 0} / ${j.players.max || '?'}` : '-';
-    svPing.textContent = j.ping ? `${j.ping} ms` : (j.online ? '—' : '-');
-    svVersion.textContent = j.version || '-';
-    const motd = j.motd && (j.motd.clean ? j.motd.clean.join(' ') : j.motd.raw) || '-';
-    svMotd.textContent = motd;
-  }
-}
-document.getElementById('refreshServer').addEventListener('click', loadServerStatus);
-loadServerStatus();
-setInterval(loadServerStatus, 30000);
-
-/* ===================== Discord invite counts ===================== */
-async function loadDiscordInvite(){
-  const target = document.getElementById('discordCounts');
-  try{
-    const url = CONFIG.DISCORD_INVITE_API(CONFIG.DISCORD_INVITE);
-    const cacheKey = `discord_inv_${CONFIG.DISCORD_INVITE}`;
-    const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
-    if(cached && Date.now() - cached.ts < CONFIG.CACHE_TTL_MS){
-      target.innerHTML = formatDiscordCounts(cached.data); return;
-    }
-
-    const res = await fetchWithTimeout(url, {}, 9000);
-    if(!res.ok) throw new Error('no-ok');
-    const j = await res.json();
-    sessionStorage.setItem(cacheKey, JSON.stringify({ts:Date.now(), data:j}));
-    target.innerHTML = formatDiscordCounts(j);
-  }catch(err){
-    target.innerHTML = `Miembros: <strong>—</strong><br>En línea: <strong>—</strong><br><small style="color:var(--muted)">API bloqueada por CORS o no disponible.</small>`;
-  }
-}
-function formatDiscordCounts(j){
-  const total = j.approximate_member_count ?? '—';
-  const online = j.approximate_presence_count ?? '—';
-  return `Miembros: <strong>${total}</strong><br>En línea: <strong>${online}</strong>`;
-}
-loadDiscordInvite();
-setInterval(loadDiscordInvite, 60000);
-
-/* ===================== Small utilities ===================== */
-function copyToClipboard(text){
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(text).then(()=> showToast('Copiado: ' + text), ()=> { prompt('Copiar manualmente:', text); });
-  } else { prompt('Copiar manualmente:', text); }
-}
-
-/* intersection reveal (simple) */
-const io = new IntersectionObserver((entries)=> {
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.style.opacity = 1;
-  });
-},{threshold:0.08});
-document.querySelectorAll('.skin-card, .server-box, .discord-box, .glass').forEach(el=> { el.style.opacity = 0; io.observe(el); });
-
-/* add year */
-document.getElementById('year').textContent = new Date().getFullYear();
-
-/* ========= SFTP NOTE =========
-   You provided: sftp://node-va5.holy.gg:2022
-   - Browsers cannot use SFTP directly.
-   - Use this SFTP URL (with username/password or SSH key) in your SFTP client (FileZilla, WinSCP, scp, rsync).
-   - Upload images, additional assets or enable CORS on your hosting if you want APIs to be accessible server-side.
-   - Example (terminal): `sftp -P 2022 user@node-va5.holy.gg` then `put your_asset.png`
-   - Once assets are uploaded to the server, reference them with HTTPS URLs in this page.
-   ============================ */
-
-</script>
+        // Create particles on page load
+        createParticles();
+    </script>
 </body>
 </html>
