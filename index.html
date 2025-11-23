@@ -346,6 +346,193 @@
             justify-content: center;
         }
 
+        /* Forums Section */
+        .forums-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .forum-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+            cursor: pointer;
+        }
+
+        body.light-mode .forum-card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .forum-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .forum-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Tutorials Section */
+        .tutorials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tutorial-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+            cursor: pointer;
+        }
+
+        body.light-mode .tutorial-card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .tutorial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .tutorial-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .difficulty-easy {
+            background-color: #10B981;
+            color: white;
+        }
+
+        .difficulty-medium {
+            background-color: #F59E0B;
+            color: white;
+        }
+
+        .difficulty-hard {
+            background-color: #EF4444;
+            color: white;
+        }
+
+        /* Mods Section */
+        .mods-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mod-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        body.light-mode .mod-card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .mod-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .mod-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mod-platform {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .platform-java {
+            background-color: #FF6B35;
+            color: white;
+        }
+
+        .platform-bedrock {
+            background-color: #4ECDC4;
+            color: white;
+        }
+
+        .platform-both {
+            background-color: #45B7D1;
+            color: white;
+        }
+
+        .mod-download {
+            margin-top: 1rem;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .mod-download:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Help Section */
+        .help-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .help-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+            cursor: pointer;
+        }
+
+        body.light-mode .help-card {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+
+        .help-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
         /* Server Section */
         .server-info {
             display: grid;
@@ -429,40 +616,6 @@
             transform: scale(1.05);
         }
 
-        /* Events Section */
-        .events-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .event-card {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            transition: var(--transition);
-            border-top: 4px solid var(--primary);
-        }
-
-        body.light-mode .event-card {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--glow);
-        }
-
-        .event-date {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-        }
-
         /* Discord Section */
         .discord-container {
             display: flex;
@@ -532,11 +685,23 @@
                 grid-template-columns: 1fr;
             }
 
-            .server-info {
+            .forums-container {
                 grid-template-columns: 1fr;
             }
 
-            .events-container {
+            .tutorials-container {
+                grid-template-columns: 1fr;
+            }
+
+            .mods-container {
+                grid-template-columns: 1fr;
+            }
+
+            .help-container {
+                grid-template-columns: 1fr;
+            }
+
+            .server-info {
                 grid-template-columns: 1fr;
             }
         }
@@ -592,7 +757,7 @@
 
         <!-- Tips Section -->
         <section id="tips">
-            <h2>📚 Tips y Datos Curiosos</h2>
+            <h2>📚 Tips y Ayudas de Minecraft</h2>
             <div class="tips-container" id="tipsContainer">
                 <!-- Tips will be generated here -->
             </div>
@@ -603,24 +768,154 @@
             </div>
         </section>
 
-        <!-- Events Section -->
-        <section id="events">
-            <h2>📅 Eventos del Servidor</h2>
-            <div class="events-container">
-                <div class="event-card">
-                    <span class="event-date">Todos los Sábados</span>
-                    <h3>🏆 Torneo PvP</h3>
-                    <p>Participa en nuestro torneo semanal de PvP con premios exclusivos para los ganadores.</p>
+        <!-- Help Section -->
+        <section id="help">
+            <h2>🆘 Ayudas Rápidas</h2>
+            <div class="help-container">
+                <div class="help-card" data-search="minecraft solucionar lag fps optimizacion">
+                    <h3>⚡ Optimizar Rendimiento</h3>
+                    <p>Soluciones para reducir lag y mejorar FPS en Minecraft Java y Bedrock.</p>
                 </div>
-                <div class="event-card">
-                    <span class="event-date">Cada 2 semanas</span>
-                    <h3>🏗️ Construcción en Equipo</h3>
-                    <p>Únete a otros jugadores para construir proyectos épicos en nuestro mundo creativo.</p>
+                <div class="help-card" data-search="minecraft conectarse servidor multiplayer error">
+                    <h3>🔗 Problemas de Conexión</h3>
+                    <p>Solucionar errores al conectarse a servidores multiplayer.</p>
                 </div>
-                <div class="event-card">
-                    <span class="event-date">Próximamente</span>
-                    <h3>🎉 Evento Especial</h3>
-                    <p>Estamos preparando un evento sorpresa con muchas recompensas y actividades.</p>
+                <div class="help-card" data-search="minecraft mods no funcionan solucion">
+                    <h3>🔧 Mods No Funcionan</h3>
+                    <p>Resolver problemas comunes con mods y versiones incompatibles.</p>
+                </div>
+                <div class="help-card" data-search="minecraft texturas no cargan solucion">
+                    <h3>🎨 Texturas No Cargadas</h3>
+                    <p>Arreglar problemas con paquetes de texturas y recursos.</p>
+                </div>
+                <div class="help-card" data-search="minecraft mundo corrupto recuperar">
+                    <h3>💾 Mundo Corrupto</h3>
+                    <p>Métodos para recuperar mundos dañados o corruptos.</p>
+                </div>
+                <div class="help-card" data-search="minecraft error java actualizar">
+                    <h3>☕ Error Java</h3>
+                    <p>Solucionar problemas relacionados con Java y actualizaciones.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forums Section -->
+        <section id="forums">
+            <h2>💬 Foros de la Comunidad</h2>
+            <div class="forums-container">
+                <div class="forum-card" data-search="minecraft construcciones modernas tutorial">
+                    <h3>🏗️ Construcciones y Proyectos</h3>
+                    <p>Comparte tus construcciones épicas, pide feedback y encuentra inspiración para tus próximos proyectos.</p>
+                    <div class="forum-stats">
+                        <span>📝 245 temas</span>
+                        <span>💬 1,842 respuestas</span>
+                    </div>
+                </div>
+                <div class="forum-card" data-search="minecraft mods texturas shaders">
+                    <h3>🔧 Mods y Texturas</h3>
+                    <p>Discute sobre mods, paquetes de texturas, shaders y comparte tus configuraciones favoritas.</p>
+                    <div class="forum-stats">
+                        <span>📝 189 temas</span>
+                        <span>💬 1,203 respuestas</span>
+                    </div>
+                </div>
+                <div class="forum-card" data-search="minecraft pvp estrategias farms">
+                    <h3>🎮 Gameplay y Estrategias</h3>
+                    <p>Comparte estrategias, técnicas de PvP, farms automáticas y consejos para sobrevivir.</p>
+                    <div class="forum-stats">
+                        <span>📝 312 temas</span>
+                        <span>💬 2,156 respuestas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tutorials Section -->
+        <section id="tutorials">
+            <h2>🎓 Tutoriales y Guías</h2>
+            <div class="tutorials-container">
+                <div class="tutorial-card" data-search="minecraft casa automatica moderna tutorial">
+                    <h3>🏠 Casa Automática Moderna</h3>
+                    <p>Aprende a construir una casa moderna con sistemas de redstone automáticos.</p>
+                    <span class="difficulty difficulty-medium">Intermedio</span>
+                </div>
+                <div class="tutorial-card" data-search="minecraft granja exp nether tutorial">
+                    <h3>⚡ Granja de EXP Optimizada</h3>
+                    <p>Guía completa para crear una granja de experiencia eficiente en el Nether.</p>
+                    <span class="difficulty difficulty-hard">Avanzado</span>
+                </div>
+                <div class="tutorial-card" data-search="minecraft agricultura automatica tutorial">
+                    <h3>🌾 Sistema de Agricultura Automática</h3>
+                    <p>Crea un sistema automático para cultivar y cosechar tus alimentos.</p>
+                    <span class="difficulty difficulty-easy">Principiante</span>
+                </div>
+                <div class="tutorial-card" data-search="minecraft biomas raros encontrar mesa hongos">
+                    <h3>🔍 Encontrar Biomas Raros</h3>
+                    <p>Técnicas y herramientas para localizar biomas poco comunes como mesa de hongos.</p>
+                    <span class="difficulty difficulty-medium">Intermedio</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mods Section -->
+        <section id="mods">
+            <h2>⚙️ Mods y Texturas Populares</h2>
+            <div class="mods-container">
+                <div class="mod-card" data-search="optifine minecraft descargar instalacion">
+                    <div class="mod-platform platform-java">JAVA</div>
+                    <div class="mod-icon">🔍</div>
+                    <h3>OptiFine</h3>
+                    <p>Mejora el rendimiento y añade soporte para shaders HD.</p>
+                    <div class="mod-download">Ver Tutorial</div>
+                </div>
+                <div class="mod-card" data-search="journeymap minecraft descargar instalacion">
+                    <div class="mod-platform platform-java">JAVA</div>
+                    <div class="mod-icon">🗺️</div>
+                    <h3>JourneyMap</h3>
+                    <p>Mapa en tiempo real que te ayuda a navegar por tu mundo.</p>
+                    <div class="mod-download">Ver Tutorial</div>
+                </div>
+                <div class="mod-card" data-search="jei minecraft just enough items descargar">
+                    <div class="mod-platform platform-java">JAVA</div>
+                    <div class="mod-icon">🧰</div>
+                    <h3>JEI</h3>
+                    <p>Just Enough Items - Navegador de recetas y objetos.</p>
+                    <div class="mod-download">Ver Tutorial</div>
+                </div>
+                <div class="mod-card" data-search="biomes o plenty minecraft descargar">
+                    <div class="mod-platform platform-java">JAVA</div>
+                    <div class="mod-icon">🏰</div>
+                    <h3>Biomes O' Plenty</h3>
+                    <p>Añade más de 80 nuevos biomas al juego.</p>
+                    <div class="mod-download">Ver Tutorial</div>
+                </div>
+                <div class="mod-card" data-search="minecraft bedrock addons mejores">
+                    <div class="mod-platform platform-bedrock">BEDROCK</div>
+                    <div class="mod-icon">📱</div>
+                    <h3>Bedrock Addons</h3>
+                    <p>Los mejores addons para Minecraft Bedrock Edition.</p>
+                    <div class="mod-download">Ver Tutorial</div>
+                </div>
+                <div class="mod-card" data-search="minecraft texture packs mejores">
+                    <div class="mod-platform platform-both">AMBOS</div>
+                    <div class="mod-icon">🎨</div>
+                    <h3>Faithful 32x32</h3>
+                    <p>Texturas fieles al vanilla pero en alta resolución.</p>
+                    <div class="mod-download">Ver Tutorial</div>
+                </div>
+                <div class="mod-card" data-search="minecraft shaders mejores">
+                    <div class="mod-platform platform-java">JAVA</div>
+                    <div class="mod-icon">✨</div>
+                    <h3>BSL Shaders</h3>
+                    <p>Shaders realistas con buen rendimiento y efectos visuales.</p>
+                    <div class="mod-download">Ver Tutorial</div>
+                </div>
+                <div class="mod-card" data-search="minecraft bedrock texture packs">
+                    <div class="mod-platform platform-bedrock">BEDROCK</div>
+                    <div class="mod-icon">🖼️</div>
+                    <h3>PureBDcraft</h3>
+                    <p>Pack de texturas estilo cómic para Bedrock Edition.</p>
+                    <div class="mod-download">Ver Tutorial</div>
                 </div>
             </div>
         </section>
@@ -673,10 +968,10 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>CrossCraft &copy; 2025 - Comunidad de Minecraft</p>
+            <p>CrossCraft &copy; 2023 - Comunidad de Minecraft</p>
             <p>No afiliado con Mojang o Microsoft</p>
             <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
-              ♥️mc creado por SoyMr 
+              ♥️ MC Creador SoyMr(ツ)
             </p>
         </div>
     </footer>
@@ -842,7 +1137,7 @@
         // Load random skin on page load
         loadRandomSkin();
 
-        // Tips and Curiosities
+        // Tips and Curiosities - Expanded Content
         const tipsContainer = document.getElementById('tipsContainer');
         const refreshTips = document.getElementById('refreshTips');
 
@@ -861,7 +1156,17 @@
             "Usa un yunque para reparar herramientas y armas combinándolas.",
             "Crea una granja de exp usando una spawner y un sistema de caída.",
             "Usa un escudo para bloquear ataques de esqueletos y creepers.",
-            "Combina una brújula con 8 papeles para crear un mapa."
+            "Combina una brújula con 8 papeles para crear un mapa.",
+            "Usa un reloj para saber la hora sin necesidad de ver el cielo.",
+            "Coloca bloques de slime para rebotar y evitar daño por caída.",
+            "Usa una escafandra para respirar más tiempo bajo el agua.",
+            "Crea un sistema de redstone con observadores para automatizar farms.",
+            "Usa un horno de blast para fundir minerales más rápido.",
+            "Combina una manzana dorada con una notch para crear una manzana encantada.",
+            "Usa un libro y pluma para escribir y firmar libros.",
+            "Crea un mapa de pared combinando 9 mapas vacíos.",
+            "Usa un soporte para armadura para mostrar tus armaduras.",
+            "Combina pólvora y papel para crear cohetes de fuegos artificiales."
         ];
 
         const curiosities = [
@@ -879,7 +1184,17 @@
             "Los aldeanos pueden reproducirse si tienen suficientes camas y comida.",
             "El sonido de los endermen son voces humanas reproducidas al revés.",
             "Minecraft tiene su propia película en desarrollo.",
-            "El bioma de las badlands está inspirado en el Gran Cañón de Arizona."
+            "El bioma de las badlands está inspirado en el Gran Cañón de Arizona.",
+            "El nombre 'creeper' viene de 'creep' (arrastrarse) por su movimiento sigiloso.",
+            "Los bloques de comandos fueron añadidos en la versión 1.4.2.",
+            "Minecraft Education Edition se usa en escuelas para enseñar programación.",
+            "El juego tiene su propio lenguaje de programación llamado 'MCfunction'.",
+            "Los axolotes fueron añadidos en la actualización Caves & Cliffs.",
+            "Minecraft tiene más de 140 millones de usuarios activos mensuales.",
+            "El bioma de las deep dark fue añadido en la actualización The Wild.",
+            "Los allays fueron añadidos en la versión 1.19 de Minecraft.",
+            "Minecraft está disponible en más de 30 idiomas diferentes.",
+            "El juego tiene su propia moneda llamada 'minecoin' en el marketplace."
         ];
 
         function generateTips() {
@@ -951,6 +1266,48 @@
                         button.innerHTML = '<span>➡️</span> Unirse';
                     }, 2000);
                 }, 1500);
+            });
+        });
+
+        // YouTube Search Functionality
+        function searchOnYouTube(query) {
+            const encodedQuery = encodeURIComponent(query);
+            window.open(`https://www.youtube.com/results?search_query=${encodedQuery}`, '_blank');
+        }
+
+        // Add click events to forum cards
+        const forumCards = document.querySelectorAll('.forum-card');
+        forumCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const searchQuery = card.getAttribute('data-search');
+                searchOnYouTube(searchQuery);
+            });
+        });
+
+        // Add click events to tutorial cards
+        const tutorialCards = document.querySelectorAll('.tutorial-card');
+        tutorialCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const searchQuery = card.getAttribute('data-search');
+                searchOnYouTube(searchQuery);
+            });
+        });
+
+        // Add click events to mod cards
+        const modCards = document.querySelectorAll('.mod-card');
+        modCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const searchQuery = card.getAttribute('data-search');
+                searchOnYouTube(searchQuery);
+            });
+        });
+
+        // Add click events to help cards
+        const helpCards = document.querySelectorAll('.help-card');
+        helpCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const searchQuery = card.getAttribute('data-search');
+                searchOnYouTube(searchQuery);
             });
         });
 
