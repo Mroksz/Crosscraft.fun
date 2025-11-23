@@ -46,7 +46,7 @@
             color: var(--text-light);
         }
 
-        /* Particles Background */
+      
         .particles {
             position: fixed;
             top: 0;
@@ -64,7 +64,7 @@
             opacity: 0.3;
         }
 
-        /* Header */
+      
         header {
             display: flex;
             justify-content: space-between;
@@ -157,7 +157,7 @@
             box-shadow: var(--glow);
         }
 
-        /* Main Content */
+      
         main {
             max-width: 1200px;
             margin: 0 auto;
@@ -196,7 +196,7 @@
             margin-left: 1rem;
         }
 
-        /* Skins Section */
+      
         .skin-controls {
             display: flex;
             flex-wrap: wrap;
@@ -311,7 +311,7 @@
             justify-content: center;
         }
 
-        /* Tips Section */
+       
         .tips-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -346,7 +346,7 @@
             justify-content: center;
         }
 
-        /* Forums Section */
+    
         .forums-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -379,7 +379,7 @@
             opacity: 0.8;
         }
 
-        /* Tutorials Section */
+    
         .tutorials-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -432,7 +432,7 @@
             color: white;
         }
 
-        /* Mods Section */
+    
         .mods-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -503,7 +503,7 @@
             background-color: var(--primary-dark);
         }
 
-        /* Help Section */
+    
         .help-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -533,7 +533,7 @@
             color: var(--primary);
         }
 
-        /* Server Section */
+      
         .server-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -616,8 +616,7 @@
             transform: scale(1.05);
         }
 
-        /* Discord Section */
-        .discord-container {
+         .discord-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -645,7 +644,7 @@
             box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
         }
 
-        /* Footer */
+       
         footer {
             background-color: rgba(15, 15, 15, 0.8);
             backdrop-filter: blur(10px);
@@ -663,7 +662,7 @@
             margin: 0 auto;
         }
 
-        /* Responsive */
+      
         @media (max-width: 768px) {
             header {
                 padding: 1rem 5%;
@@ -708,10 +707,10 @@
     </style>
 </head>
 <body>
-    <!-- Particles Background -->
+
     <div class="particles" id="particles"></div>
 
-    <!-- Header -->
+  
     <header>
         <div class="logo-container">
             <div class="logo">
@@ -725,9 +724,9 @@
         </button>
     </header>
 
-    <!-- Main Content -->
+ 
     <main>
-        <!-- Skins Section -->
+ 
         <section id="skins">
             <h2>🧱 Skins de Minecraft</h2>
             <div class="skin-controls">
@@ -755,7 +754,7 @@
             </div>
         </section>
 
-        <!-- Tips Section -->
+     
         <section id="tips">
             <h2>📚 Tips y Ayudas de Minecraft</h2>
             <div class="tips-container" id="tipsContainer">
@@ -768,7 +767,7 @@
             </div>
         </section>
 
-        <!-- Help Section -->
+        
         <section id="help">
             <h2>🆘 Ayudas Rápidas</h2>
             <div class="help-container">
@@ -799,7 +798,7 @@
             </div>
         </section>
 
-        <!-- Forums Section -->
+       
         <section id="forums">
             <h2>💬 Foros de la Comunidad</h2>
             <div class="forums-container">
@@ -830,7 +829,7 @@
             </div>
         </section>
 
-        <!-- Tutorials Section -->
+       
         <section id="tutorials">
             <h2>🎓 Tutoriales y Guías</h2>
             <div class="tutorials-container">
@@ -857,7 +856,7 @@
             </div>
         </section>
 
-        <!-- Mods Section -->
+       
         <section id="mods">
             <h2>⚙️ Mods y Texturas Populares</h2>
             <div class="mods-container">
@@ -920,7 +919,7 @@
             </div>
         </section>
 
-        <!-- Server Section -->
+       
         <section id="server">
             <h2>🌍 Servidor de Minecraft - Nación de Factos</h2>
             <div class="server-info">
@@ -953,7 +952,7 @@
             </div>
         </section>
 
-        <!-- Discord Section -->
+     
         <section id="discord">
             <h2>💬 Discord</h2>
             <div class="discord-container">
@@ -965,7 +964,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
+ 
     <footer>
         <div class="footer-content">
             <p>CrossCraft &copy; 2025 - Comunidad de Minecraft</p>
@@ -977,13 +976,12 @@
     </footer>
 
     <script>
-        // Theme Toggle
+       
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
         const themeText = document.getElementById('themeText');
         const body = document.body;
 
-        // Check for saved theme preference or default to dark
         const savedTheme = localStorage.getItem('theme') || 'dark';
         if (savedTheme === 'light') {
             body.classList.add('light-mode');
@@ -1004,7 +1002,7 @@
             }
         });
 
-        // Particles Background
+      
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 50;
@@ -1013,7 +1011,7 @@
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
 
-                // Random size and position
+                
                 const size = Math.random() * 5 + 2;
                 const posX = Math.random() * 100;
                 const posY = Math.random() * 100;
@@ -1023,7 +1021,7 @@
                 particle.style.left = `${posX}%`;
                 particle.style.top = `${posY}%`;
 
-                // Random animation
+           
                 const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 5;
 
@@ -1033,7 +1031,7 @@
             }
         }
 
-        // Add keyframes for floating animation
+   
         const style = document.createElement('style');
         style.textContent = `
             @keyframes float {
@@ -1045,7 +1043,6 @@
         `;
         document.head.appendChild(style);
 
-        // Skins Functionality
         const skinInput = document.getElementById('skinInput');
         const searchSkin = document.getElementById('searchSkin');
         const refreshSkin = document.getElementById('refreshSkin');
@@ -1058,21 +1055,21 @@
         let is3DView = false;
         let currentSkinName = '';
 
-        // Popular Minecraft usernames for random selection
+        
         const popularSkins = [
             'Notch', 'Dinnerbone', 'jeb_', 'MHF_Steve', 'MHF_Alex',
             'Technoblade', 'Dream', 'TommyInnit', 'WilburSoot',
             'Ph1LzA', 'CaptainSparklez', 'StampyCat', 'iHasCupquake'
         ];
 
-        // Load a random skin on page load
+        
         function loadRandomSkin() {
             const randomName = popularSkins[Math.floor(Math.random() * popularSkins.length)];
             currentSkinName = randomName;
             loadSkin(randomName);
         }
 
-        // Load skin based on username
+      
         function loadSkin(username) {
             skinLoading.style.display = 'block';
             skinImage.style.display = 'none';
@@ -1098,7 +1095,7 @@
             skinImage.src = skinUrl;
         }
 
-        // Search for a skin
+        
         searchSkin.addEventListener('click', () => {
             const username = skinInput.value.trim();
             if (username) {
@@ -1107,12 +1104,12 @@
             }
         });
 
-        // Refresh with random skin
+      
         refreshSkin.addEventListener('click', () => {
             loadRandomSkin();
         });
 
-        // Toggle between 2D and 3D view
+ 
         toggleView.addEventListener('click', () => {
             is3DView = !is3DView;
             viewText.textContent = is3DView ? 'Ver 2D' : 'Ver 3D';
@@ -1121,7 +1118,7 @@
             }
         });
 
-        // Download skin
+       
         downloadSkin.addEventListener('click', () => {
             if (currentSkinName) {
                 const downloadUrl = `https://mc-heads.net/skin/${currentSkinName}`;
@@ -1134,10 +1131,10 @@
             }
         });
 
-        // Load random skin on page load
+
         loadRandomSkin();
 
-        // Tips and Curiosities - Expanded Content
+       
         const tipsContainer = document.getElementById('tipsContainer');
         const refreshTips = document.getElementById('refreshTips');
 
@@ -1200,11 +1197,11 @@
         function generateTips() {
             tipsContainer.innerHTML = '';
             
-            // Shuffle arrays
+      
             const shuffledTips = [...tips].sort(() => 0.5 - Math.random());
             const shuffledCuriosities = [...curiosities].sort(() => 0.5 - Math.random());
             
-            // Add tips
+
             for (let i = 0; i < 3; i++) {
                 const tipCard = document.createElement('div');
                 tipCard.classList.add('tip-card');
@@ -1215,7 +1212,7 @@
                 tipsContainer.appendChild(tipCard);
             }
             
-            // Add curiosities
+      
             for (let i = 0; i < 3; i++) {
                 const tipCard = document.createElement('div');
                 tipCard.classList.add('tip-card');
@@ -1235,10 +1232,10 @@
             }, 300);
         });
 
-        // Generate tips on page load
+    
         generateTips();
 
-        // Server IP Copy Functionality
+      
         const copyButtons = document.querySelectorAll('.copy-btn');
         
         copyButtons.forEach(button => {
@@ -1254,7 +1251,7 @@
             });
         });
 
-        // Join Server Buttons
+    
         const joinButtons = document.querySelectorAll('.join-btn');
         
         joinButtons.forEach(button => {
@@ -1269,13 +1266,13 @@
             });
         });
 
-        // YouTube Search Functionality
+      
         function searchOnYouTube(query) {
             const encodedQuery = encodeURIComponent(query);
             window.open(`https://www.youtube.com/results?search_query=${encodedQuery}`, '_blank');
         }
 
-        // Add click events to forum cards
+  
         const forumCards = document.querySelectorAll('.forum-card');
         forumCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -1284,7 +1281,7 @@
             });
         });
 
-        // Add click events to tutorial cards
+      
         const tutorialCards = document.querySelectorAll('.tutorial-card');
         tutorialCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -1293,7 +1290,7 @@
             });
         });
 
-        // Add click events to mod cards
+       
         const modCards = document.querySelectorAll('.mod-card');
         modCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -1302,7 +1299,7 @@
             });
         });
 
-        // Add click events to help cards
+
         const helpCards = document.querySelectorAll('.help-card');
         helpCards.forEach(card => {
             card.addEventListener('click', () => {
@@ -1311,7 +1308,6 @@
             });
         });
 
-        // Create particles on page load
         createParticles();
     </script>
 </body>
